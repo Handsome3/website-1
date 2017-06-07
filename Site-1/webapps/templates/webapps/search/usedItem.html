@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>信息搜索-二手宝贝</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+	{% include "webapps/header.html" %}
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				<h1>
+					信息搜索 <small>二手宝贝</small>
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="row clearfix">
+		<div class="col-md-12 column" >
+			<ul class="nav nav-tabs">
+				<li>
+					 <a href="#">Carpool</a>
+				</li>
+				<li class="active">
+					 <a href="#">二手宝贝</a>
+				</li>
+				<li>
+					 <a href="#">Sublease</a>
+                </li>
+                <li>
+					 <a href="#">求合租</a>
+                </li>
+                <li>
+					 <a href="#">二手车</a>
+                </li>
+                <li>
+					 <a href="#">拼单</a>
+                </li>
+			</ul>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-3 column" style="margin:20px 0px;">
+			<form role="form">
+				<div class="form-group">
+					 			<label for="item_type">宝贝类型</label>
+                     			<select class="form-control" id="2item_type">
+                                	<option>家具</option>
+                                    <option>化妆品</option>
+                                    <option>服饰</option>
+                                    <option>数码产品</option>
+                                 </select>
+							</div>
+                            <div class="form-group">
+                            	<label for="item_name">关键字</label>
+                                <input type="text" id="2keyword" class="form-control" />
+                            </div>
+							<div class="form-group">
+					 			<label>售价范围</label>
+                                <div class="form-inline">
+                     				<input type="number" class="form-control" id="2leastPrice" style="width:30%" placeholder="最低"/>
+                                    <label>-</label>
+                                    <input type="number" class="form-control" id="2mostPrice" style="width:30%" placeholder="最高"/>
+                                </div>
+							</div>
+                            <div class="form-group">
+                            	<label>宝贝状态</label>
+                                <select class="form-control" id="2condition">
+                                	<option>全新</option>
+                                    <option>九成新</option>
+                                    <option>七成新</option>
+                                    <option>五成新</option>
+                                    <option>五成新以下</option>
+                                </select>
+                            </div>
+                <button type="submit" class="btn btn-lg btn-block btn-info">搜索</button>
+			</form>
+		</div>
+		<div class="col-md-9 column" style="margin:20px 0px;">
+        		<div class="row clearfix">
+					<div class="col-md-4 column">
+						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
+                 	</div>
+                 	<div class="col-md-5 column">
+						<div class="caption" style="margin:10px 40px">
+							<h3>
+								商品标题
+							</h3>
+							<p>
+								缩略介绍
+							</p>
+							<p>
+								 <a class="btn btn-primary" href="#">Action</a> 
+							</p>
+						</div>
+                     </div>
+				</div>
+                <hr>
+                <div class="row clearfix">
+					<div class="col-md-4 column">
+						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
+                 	</div>
+                 	<div class="col-md-5 column">
+						<div class="caption" style="margin:10px 40px">
+							<h3>
+								商品标题
+							</h3>
+							<p>
+								缩略介绍
+							</p>
+							<p>
+								 <a class="btn btn-primary" href="#">Action</a> 
+							</p>
+						</div>
+                     </div>
+				</div>
+                <hr>
+                <div class="row clearfix">
+					<div class="col-md-4 column">
+						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
+                 	</div>
+                 	<div class="col-md-5 column">
+						<div class="caption" style="margin:10px 40px">
+							<h3>
+								商品标题
+							</h3>
+							<p>
+								缩略介绍
+							</p>
+							<p>
+								 <a class="btn btn-primary" href="#">Action</a> 
+							</p>
+						</div>
+                     </div>
+				</div>
+                
+            <div class="row clearfix">    
+            	<div class="col-md-9 column">
+					<center><ul class="pagination">
+						<li>
+					 		<a href="#">Prev</a>
+						</li>
+						<li>
+					 		<a href="#">1</a>
+						</li>
+						<li>
+					 		<a href="#">2</a>
+						</li>
+						<li>
+					 		<a href="#">3</a>
+						</li>
+						<li>
+					 		<a href="#">4</a>
+						</li>
+						<li>
+					 		<a href="#">5</a>
+						</li>
+						<li>
+					 		<a href="#">Next</a>
+						</li>
+					</ul></center>
+            	</div>
+             </div>
+		</div>
+	</div>
+	{% include "webapps/footer.html" %}
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

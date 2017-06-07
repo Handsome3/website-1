@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>发布信息</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="container">
+	{% include "webapps/header.html" %}
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				<h1  align="left">
+					 发布信息
+				</h1>
+			</div>
+		</div>
+	</div>
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+       		<ul class="nav nav-tabs">
+					<li>
+						 <a href="carpool">Carpool</a>
+					</li>
+					<li class="active">
+						 <a href="used-item">二手宝贝</a>
+					</li>
+                    <li>
+                    	 <a href="sublease">Sublease</a>
+                    </li>
+                    <li>
+                    	 <a href="house">合租</a>
+                    </li>
+                    <li>
+                    	 <a href="used-car">二手车</a>
+                    </li>
+                    <li>
+                    	 <a href="merge-order">拼单</a>
+                    </li>
+				</ul>
+                            <form role="form" style="margin: 20px 80px">
+							<div class="form-group">
+					 			<label for="item_type">宝贝类型</label>
+                     			<select class="form-control js-example-basic-single" id="2item_type">
+                                	<option>家具</option>
+                                    <option>化妆品</option>
+                                    <option>服饰</option>
+                                    <option>数码产品</option>
+                                 </select>
+							</div>
+                            <div class="form-group">
+                            	<label for="item_name">宝贝名称</label>
+                                <input type="text" id="2item_name" class="form-control" />
+                            </div>
+							<div class="form-group">
+					 			<label for="2price">售价</label>
+                     			<input type="number" class="form-control" id="2price" />
+							</div>
+                            <div class="form-group">
+                            	<label>宝贝状态</label>
+                                <select class="form-control js-example-basic-single" id="2condition">
+                                	<option>全新</option>
+                                    <option>九成新</option>
+                                    <option>七成新</option>
+                                    <option>五成新</option>
+                                    <option>五成新以下</option>
+                                </select>
+                            </div>
+                           	<div class="form-group">
+                                	<textarea class="form-control" rows="3" placeholder="备注" id="2note"></textarea>
+                            </div>
+                            <div class="form-group">
+                            <label class="control-label">上传宝贝照片</label>
+                            <input id="2img" type="file" class="file" multiple>
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                					<center> <button type="submit" class="btn btn-block btn-success btn-default">发布</button></center>
+                            </div>
+							</form>
+					
+		</div>
+	</div>
+    
+   	{% include "webapps/footer.html" %}
+    
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script>
+		function initFileInput(ctrlName, uploadUrl) {    
+    		var control = $('#' + ctrlName); 
+    		control.fileinput({
+        		language: 'zh', //设置语言
+    		});
+		}
+		initFileInput("2img","");
+    	$(".js-example-basic-single").select2({
+			minimumResultsForSearch: Infinity
+		});
+		
+</script>
+</body>
+</html>
+

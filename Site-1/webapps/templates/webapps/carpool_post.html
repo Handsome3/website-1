@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Carpool Page</title>
+</head>
+<body>
+    <h1>Carpool Post Page</h1>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p><br>{% endif %}
+    {% if tb %}<p><strong>{{ tb }}</strong></p><br>{% endif %}
+    <form action="" method="post">
+    {% csrf_token %}
+        <label>user id: </label><input type="text" name="user_id"/>
+        <label>car brand:  </label><input type="text" name="car_brand"/>
+        <label>car model:  </label><input type="text" name="car_model"/>
+        <label>date: </label><input type="text" name="date"/>
+        <label>time:  </label><input type="text" name="time"/>
+        <label>departure from: </label><input type="text" name="depart_place"/>
+        <label>destination: </label><input type="text" name="destination"/>
+        <label>passenger num: </label><input type="text" name="passenger_num"/>
+        <label>price: </label><input type="text" name="price"/>
+        <label>note: </label><input type="text" name="note"/>
+        <label>city: </label><input type="text" name="city"/>
+        <label>state: </label><input type="text" name="state"/>
+    <input type="submit" value="Post" />
+    </form>
+
+</body>
+</html>

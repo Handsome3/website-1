@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>信息搜索-Carpool</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+	{% include "webapps/header.html" %}
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				<h1>
+					信息搜索 <small>Carpool</small>
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="row clearfix">
+		<div class="col-md-12 column" >
+			<ul class="nav nav-tabs">
+				<li class="active">
+					 <a href="#">Carpool</a>
+				</li>
+				<li>
+					 <a href="#">二手宝贝</a>
+				</li>
+				<li>
+					 <a href="#">Sublease</a>
+                </li>
+                <li>
+					 <a href="#">求合租</a>
+                </li>
+                <li>
+					 <a href="#">二手车</a>
+                </li>
+                <li>
+					 <a href="#">拼单</a>
+                </li>
+			</ul>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-3 column" style="margin:20px 0px;">
+			<form role="form">
+				<div class="form-group">
+					 <label for="date">出发日期</label>
+                     <input type="date" class="form-control" id="1date" />
+				</div>
+				<div class="form-group">
+					 <label for="datetime">出发时间</label>
+                     <input type="time" class="form-control" id="1datetime" />
+				</div>
+				<div class="form-group">
+					 <label for="depart_place">出发地</label>
+                     <input type="text" class="form-control" id="1depart_place" />
+				</div>
+				<div class="form-group">
+					 <label for="destination" >目的地</label>
+                     <input type="text" class="form-control" id="1destination" />
+				</div> 
+                <div class="form-group">
+					 <label for="passenger_num" >乘客人数</label>
+                     <input type="number" class="form-control" id="1passenger_num" />
+				</div> 
+                <div class="form-group">
+                	<label> 是否免费 </label>
+                    <br>
+                	<label class="checkbox-inline">
+    					<input type="radio" name="rideCharge" id="1chargeYes" value="free">否
+  					</label>
+  					<label class="checkbox-inline">
+    				<input type="radio" name="rideCharge" id="1chargeNo" value="notFree">是
+  					</label>       
+                </div>
+                <button type="submit" class="btn btn-info btn-lg btn-block">搜索</button>
+			</form>
+		</div>
+		<div class="col-md-9 column" style="margin:20px 0px;">
+        		<div class="row clearfix">
+					<div class="col-md-4 column">
+						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
+                 	</div>
+                 	<div class="col-md-5 column">
+						<div class="caption" style="margin:10px 40px">
+							<h3>
+								商品标题
+							</h3>
+							<p>
+								缩略介绍
+							</p>
+							<p>
+								 <a class="btn btn-primary" href="#">Action</a> 
+							</p>
+						</div>
+                     </div>
+				</div>
+                <hr>
+                <div class="row clearfix">
+					<div class="col-md-4 column">
+						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
+                 	</div>
+                 	<div class="col-md-5 column">
+						<div class="caption" style="margin:10px 40px">
+							<h3>
+								商品标题
+							</h3>
+							<p>
+								缩略介绍
+							</p>
+							<p>
+								 <a class="btn btn-primary" href="#">Action</a> 
+							</p>
+						</div>
+                     </div>
+				</div>
+                <hr>
+                <div class="row clearfix">
+					<div class="col-md-4 column">
+						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
+                 	</div>
+                 	<div class="col-md-5 column">
+						<div class="caption" style="margin:10px 40px">
+							<h3>
+								商品标题
+							</h3>
+							<p>
+								缩略介绍
+							</p>
+							<p>
+								 <a class="btn btn-primary" href="#">Action</a> 
+							</p>
+						</div>
+                     </div>
+				</div>
+                
+            <div class="row clearfix">    
+            	<div class="col-md-9 column">
+					<center><ul class="pagination">
+						<li>
+					 		<a href="#">Prev</a>
+						</li>
+						<li>
+					 		<a href="#">1</a>
+						</li>
+						<li>
+					 		<a href="#">2</a>
+						</li>
+						<li>
+					 		<a href="#">3</a>
+						</li>
+						<li>
+					 		<a href="#">4</a>
+						</li>
+						<li>
+					 		<a href="#">5</a>
+						</li>
+						<li>
+					 		<a href="#">Next</a>
+						</li>
+					</ul></center>
+            	</div>
+             </div>
+		</div>
+	</div>
+	{% include "webapps/footer.html" %}
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

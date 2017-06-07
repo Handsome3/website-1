@@ -1,0 +1,3 @@
+entrypoint: f
+env: flex
+runtime: python

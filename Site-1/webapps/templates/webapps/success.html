@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>提示信息</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+{% load static %}
+<body>
+<div class="container">
+	{% include 'webapps/header.html' %}
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<br>
+			<br>
+			<br>
+			<div class="jumbotron">
+				<center>
+				<h1>
+					{{info}}<br>
+				</h1>
+				<br>
+				<br>
+				
+				<p>
+					<strong id="second" style="color:red"></strong>秒页面将自动跳转到之前的页面
+				</p>
+				<br>
+				<p>
+					 <a class="btn btn-primary btn-large" href="{{redirect_path}}">如没有自动跳转，请点击这里</a>
+				</p>
+				</center>
+			</div>
+		</div>
+	</div>
+	{% include 'webapps/footer.html' %}
+</div>
+<script>
+	var t=3;
+	countdown();
+	function countdown(){
+		document.getElementById("second").innerHTML=t;
+		if (t==0)
+			window.location.href="{{redirect_path}}";
+		t=t-1;
+		console.log(t);
+		setTimeout("countdown()",1000);
+	}
+	console.log(t);
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
