@@ -3,7 +3,9 @@ from . import views
 from . import views_user
 from . import views_post
 from . import views_upload
-from . import views_search
+from . import views_detail
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = 'webapps'
 urlpatterns = [
@@ -17,8 +19,8 @@ urlpatterns = [
     url(r'searchmergeorder',views.searchMergeOrder),
 
     #User
-    url(r'user/loginpage',views_user.loginPage),
-    url(r'user/getuserinfo',views_user.getUserInfo),
+    url(r'user/loginpage',views_user.loginPage, name='loginPage'),
+    url(r'user/getuserinfo',views_user.getUserInfo, name='getuserinfo'),
     url(r'user/signup', views_user.signup),
     url(r'user/register', views_user.register),
     url(r'user/denglu', views_user.userlogin),
@@ -34,12 +36,15 @@ urlpatterns = [
     url(r'post/usedcar/submit', views_post.usedcarPost),
     url(r'postresult',views.getPostResult,name='postresult'),
 
-    #uploadFiles
+    #Ajax Request
     url(r'upload/usedcar', views_upload.usedcar),
+    url(r'deal/save', views_detail.saveDeal, name='saveDeal'),
+    url(r'deal/unsave', views_detail.unsaveDeal, name='unsaveDeal'),
+    url(r'deal/loadmore', views_detail.loadMoreDeal, name='loadMoreDeal'),
 
     #Item Detail
-    url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_search.getDealDetail),
+    url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_detail.getDealDetail, name='getDealDetail'),
 
     #Redirect
     url(r'redirect', views.redirect),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

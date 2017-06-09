@@ -17,6 +17,8 @@ class Deal(models.Model):
     contact_type = models.CharField(max_length=20,default='1')
     state = models.CharField(max_length=30,default="florida")
     city = models.CharField(max_length = 30,default="gainesville")
+    hot_index=models.FloatField(default=0)
+    title=models.CharField(max_length=50, default='deal')
     def __str__(self):
         return "deal_id: " + str(self.id) +" type:" +str(self.type)
 
@@ -90,7 +92,6 @@ class MergeOrder(models.Model):
         return str(self.deal_id) + " " + str(self.website)
 
 class Image(models.Model):
-    image_path = models.CharField(max_length=120)
     image = models.ImageField(upload_to='temp', default='')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal,on_delete=models.CASCADE)

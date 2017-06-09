@@ -3,3 +3,10 @@ img.small{
 	width:300px;
 	height:200px;
 }
+
+div.my-header{
+	height:80px;
+	width:100%;
+	background-color: black;
+	padding-top: 15px;
+}
