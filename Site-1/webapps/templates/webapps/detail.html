@@ -3,13 +3,12 @@
 <head>
 <meta charset="utf-8">
 <title>详细信息</title>
-{% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
 <body>
-<div class="container">
 	{% include "webapps/header.html" %}
+<div class="container">
     <div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="page-header">
@@ -19,10 +18,27 @@
 			</div>
 		</div>
 	</div>
-    
-	<div class="row clearfix">
+    <div class="row clearfix">
 		<div class="col-md-12 column">
-			<table class="table table-hover table-striped" style="width:80%; margin:0px auto">
+			<ul class="breadcrumb">
+				<li>
+					 <a href="#">Home</a>
+				</li>
+				<li>
+					 <a href="#">Library</a>
+				</li>
+				<li class="active">
+					Data
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-1 column">
+		</div>
+		<div class="col-md-10 column">
+			
+			<table class="table table-hover table-striped">
 				<thead>
 					<tr>
 						<th>
@@ -33,106 +49,138 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>
-							1
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-					</tr>
-					<tr class="success">
-						<td>
-							1
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-					</tr>
-					<tr class="error">
-						<td>
-							2
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-					</tr>
-					<tr class="warning">
-						<td>
-							3
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-					</tr>
-					<tr class="info">
-						<td>
-							4
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-					</tr>
+					{% for key, value in text.items %}
+						<tr class="{% cycle 'warning' 'info' %}">
+							<td> {{ key }} </td>
+							<td> {{ value }} </td>
+						</tr>
+					{% endfor %}
 				</tbody>
 			</table>
-            <center><div style="width:80%;">
+            
+            <div>
+            <hr>
+           	{% if images %}
             <h3 align="left">图片描述</h3>
             <div class="carousel slide" id="carousel-971961">
 				<ol class="carousel-indicators">
-					<li data-slide-to="0" data-target="#carousel-971961">
-					</li>
-					<li data-slide-to="1" data-target="#carousel-971961">
-					</li>
-					<li data-slide-to="2" data-target="#carousel-971961" class="active">
-					</li>
+					{% for img in images %}
+						<li data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %} class="active" {% endif %} data-target="#carousel-971961"></li>
+					{% endfor %}
 				</ol>
 				<div class="carousel-inner">
-					<div class="item">
-						<img alt="" src="v3/default.jpg" />
-						<div class="carousel-caption">
-							<h4>
-								First Thumbnail label
-							</h4>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-						</div>
+					{% for img in images %}
+					<div class="item {% if forloop.first %} active {% endif %}">
+						<img alt="" src="{{ img.image.url }}" />
 					</div>
-					<div class="item">
-						<img alt="" src="v3/default1.jpg" />
-						<div class="carousel-caption">
-							<h4>
-								Second Thumbnail label
-							</h4>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-						</div>
-					</div>
-					<div class="item active">
-						<img alt="" src="v3/default2.jpg" />
-						<div class="carousel-caption">
-							<h4>
-								Third Thumbnail label
-							</h4>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-						</div>
-					</div>
-				</div> <a class="left carousel-control" href="#carousel-971961" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-971961" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+					{% endfor %}
+				</div> 
+				<a class="left carousel-control" href="#carousel-971961" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-971961" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 			</div>
-            </div></center>
-            <center><div class="form-group" style="width:80%">
-            <hr>
-            <button type="submit" class="btn btn-default btn-info btn-lg btn-block">我感兴趣</button>
-            <br>
-            </div></center>
+           	{% endif %}
+            </div>
+            
+
+            <div id="contact_info" style="{% if not config.is_saved %} display:none {% endif %}">
+            	<hr>
+            	<table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th>
+                        		 用户联系信息
+							</th>
+							<th>
+							</th>
+						</tr>
+					</thead>
+					<tbody id="location">
+						{% if config.email %}
+						<tr>
+							<td>邮箱：</td>
+							<td>{{ config.email }}</td>
+						</tr>
+						{% endif %}
+						{% if config.phone %}
+						<tr>
+							<td>电话：</td>
+							<td>{{ config.phone }}</td>
+						</tr>
+						{% endif %}
+						{% if config.wechat %}
+						<tr>
+							<td>微信：</td>
+							<td>{{ config.wechat }}</td>
+						</tr>
+						{% endif %}
+					</tbody>
+				</table>
+            </div>
+            
+            <div class="form-group">
+            	<hr>
+            	<button id="save" class="btn btn-default btn-success btn-lg btn-block" {% if config.is_saved %} style="display: none" {% endif %}>我感兴趣</button>
+            	<button id="unsave" class="btn btn-default btn-warning btn-lg btn-block" {% if not config.is_saved %} style="display: none" {% endif %}>不感兴趣</button>
+            	<br>
+            </div>
+		</div>
+		
+		<div class="col-md-1 column">
 		</div>
 	</div>
     {% include "webapps/footer.html" %}
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+	$('.carousel').carousel({  
+    	interval: false,
+	}); 
+	$('#save').click(function(){
+		if ($('#loginInfo').length<=0){
+			alert("您尚未登录，登录后才能查看联系信息！");
+			window.location.href="{% url 'webapps:loginPage' %}/?next={{ request.get_full_path }}";
+		}
+		else{
+			$('#save').attr('style','display:none');
+			$('#contact_info').slideDown("slow");
+			$('#unsave').attr('style','');
+			$.ajax({
+				type: 'GET',
+				dataType: 'JSON',
+				data: {'deal_id': {{ config.deal_id }} },
+				url: "{% url 'webapps:saveDeal' %}",
+				success: function(data){
+					if (data.status='success'){
+						var t1,t2,t3;
+						if (data.contact.email)
+							t1="<tr><td>邮箱：</td><td>"+data.contact.email+"</td></tr>";
+						if (data.contact.phone)
+							t2="<tr><td>电话：</td><td>"+data.contact.phone+"</td></tr>";
+						if (data.contact.wechat)
+							t3="<tr><td>微信：</td><td>"+data.contact.wechat+"</td></tr>";
+						$('#location').append(t1,t2,t3);
+					};
+				}
+			});
+		}
+	});
+	$('#unsave').click(function(){
+		if ($('#loginInfo').length<=0){
+			alert("您尚未登录，登录后才能查看联系信息！");
+			window.location.href="{% url 'webapps:loginPage' %}/?next={{ request.get_full_path }}";
+		}
+		else{
+			$('#unsave').attr('style','display:none');
+			$('#contact_info').slideUp("slow");
+			$('#save').attr('style','');
+			$.ajax({
+				type: 'GET',
+				data: {'deal_id': {{ config.deal_id }} },
+				url: "{% url 'webapps:unsaveDeal' %}",
+			});
+			$('#location').empty();
+		}
+	});
+</script>
 </body>
 </html>
