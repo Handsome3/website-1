@@ -4,12 +4,13 @@
 {% load static %}
 <meta charset="utf-8">
 <title>个人中心</title>
+    <link href="{% static 'webapps/image/favicon.ico' %}" rel="icon">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
-<body style="background-color:#eee;">
+<body>
 	{% include "webapps/header.html" %}
-<div class="container" style="background-color: white">
+    <div class="container">
     <div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="page-header">
@@ -82,26 +83,26 @@
 					<tr>
 						<td>{{ record.title }}</td>
 						<td>{{ record.type }}</td>
-						<td>{{ record.create_time }}</td>
+                        <td>{{ record.create_time|date:'Y-m-d' }}</td>
 						<td>{{ record.expire_time|date:'Y-m-d' }}</td>
 						<td>{{ record.hot_index }}</td>
 						<td>
-                        	<button type="button" onclick="detail{{ forloop.counter }}()" class="btn btn-xs btn-info">详情</button><br> 
-                            <button type="button" onclick="edit{{ forloop.counter }}()" class="btn btn-xs btn-warning">修改</button><br> 
-                            <button type="button" onclick="delete{{ forloop.counter }}()" class="btn btn-xs btn-danger">删除</button><br>
-                            <script>
-								function detail{{ forloop.counter }}(){ window.location.href="{% url 'webapps:getDealDetail' record.id %}" };
-								function edit{{ forloop.counter }}(){ window.location.href="/" };
-								function delete{{ forloop.counter }}(){ window.location.href="/" };
-							</script>
-                       
+                            <a href="{% url 'webapps:getDealDetail' record.id %}" class="btn btn-xs btn-info">详情</a><br>
+                            <a href="" class="btn btn-xs btn-warning">修改</a><br>
+                            <a href="" class="btn btn-xs btn-danger">删除</a><br>
                         </td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<div class="loading" id="loading"  style="display: none">稍候，正在加载中</div>
-			<div class="loading" id="nomoreresults" style="display: none">没有更多结果了</div>
+            <div class="loading" id="loading" style="display: none; height:100px;">
+                <center><h3>稍候，正在加载中...</h3></center>
+            </div>
+            <div class="alert alert-dismissable alert-success" id="nomoreresults" style="display: none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>注意啦！</h4>
+                <strong>没有更多结果了。</strong>
+            </div>
 		</div>
 	</div>
 </div>

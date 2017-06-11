@@ -20,7 +20,12 @@ class Deal(models.Model):
     hot_index=models.FloatField(default=0)
     title=models.CharField(max_length=50, default='deal')
     def __str__(self):
-        return "deal_id: " + str(self.id) +" type:" +str(self.type)
+        if self.type == 'carpool':
+            return self.carpool.__str__()
+        elif self.type == 'usedcar':
+            return self.usedcar.__str__()
+        else:
+            return ''
 
 class Carpool(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
