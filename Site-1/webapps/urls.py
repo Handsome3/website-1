@@ -1,9 +1,5 @@
 from django.conf.urls import url
-from . import views
-from . import views_user
-from . import views_post
-from . import views_upload
-from . import views_detail
+from . import views, views_user, views_post, views_upload, views_detail, views_search
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -12,11 +8,7 @@ urlpatterns = [
     url(r'^$', views.index),
 
     #search
-    url(r'searchcarpool',views.searchCarpool),
-    url(r'searchuseditem',views.searchUsedItem),
-    url(r'searchhouse',views.searchHouse),
-    url(r'searchusedCar',views.searchUsedCar),
-    url(r'searchmergeorder',views.searchMergeOrder),
+                  url(r'search/usedcar', views_search.searchUsedcar, name='searchUsedcar'),
 
     #User
     url(r'user/loginpage',views_user.loginPage, name='loginPage'),

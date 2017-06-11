@@ -86,7 +86,7 @@ def getUserInfo(request):
     records=[]
     for deal in deals:
         record={'id':deal.id,
-                'title' : deal.title,
+                'title': deal.__str__(),
                 'type': deal.type,
                 'create_time' : deal.create_time,
                 'expire_time' : deal.expire_time,
