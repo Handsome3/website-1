@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .utilities import upload_to_path
 # Create your models here.
 
 class UserPro(models.Model):
@@ -90,11 +91,14 @@ class MergeOrder(models.Model):
         return str(self.deal_id) + " " + str(self.website)
 
 class Image(models.Model):
-    image_path = models.CharField(max_length=120)
-    image = models.ImageField(upload_to='temp', default='')
+    image = models.ImageField(upload_to=upload_to_path, default='')
+    img_seq = models.IntegerField(default='1')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
     def __str__(self):
         return str(self.image)
+
+
 
 
