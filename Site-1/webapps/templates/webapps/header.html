@@ -1,26 +1,30 @@
 <!doctype html>
 <html>
 <head>
+    {% load static %}
 <meta charset="utf-8">
 </head>
 <body>
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation" style="padding:0px 50px;">
-				<div class="navbar-header">
+<div class="container-fluid"
+     style="color:#cdbfe3;background-color:#6f5499;background-image:-webkit-gradient(linear,left top,left bottom,from(#563d7c),to(#6f5499));background-image:-webkit-linear-gradient(top,#563d7c 0,#6f5499 100%);background-image:-o-linear-gradient(top,#563d7c 0,#6f5499 100%);background-image:linear-gradient(to bottom,#563d7c 0,#6f5499 100%)">
+    <div class="container" style="padding: 0px 0px 0px 0px;">
+        <nav class="navbar navbar-default" role="navigation"
+             style="border:#FFF 0px solid; margin: 0px 0px 0px 0px; height:100px; padding: 0px 0px 0px 0px; border-radius:0; background:rgba(0,0,0,0); ">
+            <div class="navbar-header">
 					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
                      <span class="sr-only"></span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                     </button> 
-                     <a class="navbar-brand" href="/"><font color="yellow" size="+2">甘村信息网</font></a>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </button>
+                    <a class="navbar-brand" href="/"><img src="{% static 'webapps/image/logo.png' %}"></a>
 				</div>
-				
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-top: 40px;">
 					<ul class="nav navbar-nav">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">我要找信息<strong class="caret"></strong></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1" size="+0.5">我要找信息<strong
+                                    class="caret"></strong></font></a>
 							<ul class="dropdown-menu">
 								<li>
 									 <a href="/search-carpool">找Carpool</a>
@@ -35,7 +39,7 @@
 									 <a href="/search-house">求合租</a>
 								</li>
 								<li>
-									 <a href="/search-used-car">找二手车</a>
+                                    <a href="{% url 'webapps:searchUsedcar' %}">找二手车</a>
 								</li>
 								<li>
 									 <a href="/search-merge-order">求拼单</a>
@@ -43,7 +47,8 @@
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">我要发信息<strong class="caret"></strong></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1" size="+0.5">我要发信息<strong
+                                    class="caret"></strong></font></a>
 							<ul class="dropdown-menu">
 								<li>
 									 <a href="/post/carpool/page">我有Carpool</a>
@@ -69,15 +74,18 @@
 					<ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_authenticated %}
                         <li>
-							<p class="navbar-text">欢迎您， {{ request.user.first_name }}</p>
+                            <p id="loginInfo" class="navbar-text"><font color="DCF7A1"
+                                                                        size="+0.5">欢迎您， {{ request.user.first_name }}</font>
+                            </p>
                         </li>
 						<li>
                              <a href="/user/getuserinfo">
-                                    个人中心
+                                 <font color="DCF7A1" size="+0.5">个人中心</font>
                              </a>
 						</li>
 						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">选项<strong class="caret"></strong></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1" size="+0.5">选项<strong
+                                    class="caret"></strong></font></a>
 							<ul class="dropdown-menu">
 								<li>
 									 <a href="/user/changeuser">切换用户</a>
@@ -96,15 +104,10 @@
                         {% endif %}
 					</ul>
 
-
 				</div>
-				
-			</nav>
-		</div>
+		</nav>
 	</div>
-    <br>
-    <br>
-    <br>
+</div> 
 </body>
 </html>
 	
