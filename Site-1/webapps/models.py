@@ -1,5 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
+
 # Create your models here.
 
 class UserPro(models.Model):
@@ -19,6 +21,7 @@ class Deal(models.Model):
     city = models.CharField(max_length = 30,default="gainesville")
     hot_index=models.FloatField(default=0)
     title=models.CharField(max_length=50, default='deal')
+
     def __str__(self):
         if self.type == 'carpool':
             return self.carpool.__str__()
@@ -37,6 +40,7 @@ class Carpool(models.Model):
     price = models.FloatField()
     car_type = models.CharField(max_length=20,default="sedan")
     note = models.TextField(null=True, blank=True)
+
     def __str__(self):
         return "deal_id: "+ str(self.deal_id) + " from: "+ str(self.depart_place)+" to: " + str(self.destination)
 
@@ -48,6 +52,7 @@ class UsedCar(models.Model):
     mileage = models.IntegerField()
     price = models.IntegerField()
     note = models.TextField(null=True)
+
     def __str__(self):
         return "deal_id: "+ str(self.deal_id) + " brand: "+ str(self.car_brand)
 
@@ -58,6 +63,7 @@ class UsedItem(models.Model):
     condition = models.CharField(max_length=20)
     price = models.IntegerField()
     note = models.TextField(null=True)
+
     def __str__(self):
         return "deal_id: "+ str(self.deal_id) + " item_type: "+ str(self.item_type)
 
@@ -70,6 +76,7 @@ class Sublease(models.Model):
     end_date = models.DateField()
     renew = models.BooleanField(default=True)
     note = models.TextField(null=True)
+
     def __str__(self):
         return"deal_id: "+ str(self.deal_id) + " community: "+ str(self.community)
 
@@ -84,6 +91,7 @@ class HouseRent(models.Model):
 
     roommate_num = models.IntegerField()
     note = models.TextField(null=True)
+
     def __str__(self):
         return "deal_id: " + str(self.deal_id) + " community: " + str(self.community)
 
@@ -93,6 +101,7 @@ class MergeOrder(models.Model):
     order_type = models.CharField(max_length=30)
     duedate = models.DateField(default='2017-12-31')
     note = models.TextField(null=True)
+
     def __str__(self):
         return str(self.deal_id) + " " + str(self.website)
 
@@ -100,7 +109,27 @@ class Image(models.Model):
     image = models.ImageField(upload_to='temp', default='')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal,on_delete=models.CASCADE)
+
     def __str__(self):
         return str(self.image)
 
 
+class CarBrand(models.Model):
+    name = models.CharField(max_length=20)
+    name_ch = models.CharField(max_length=40)
+    icon = models.ImageField(upload_to='carbrand', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.name) + "(" + str(self.name_ch) + ")"
+
+
+class CarModel(models.Model):
+    brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    name_ch = models.CharField(max_length=60, blank=True, null=True)
+
+    def __str__(self):
+        if self.name_ch:
+            return str(self.name) + "(" + str(self.name_ch) + ")"
+        else:
+            return str(self.name)

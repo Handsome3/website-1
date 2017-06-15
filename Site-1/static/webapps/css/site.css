@@ -1,16 +1,10 @@
 @charset "UTF-8";
-img.small{
-	width:300px;
-	height:200px;
-}
-div.my-header{
-	height:80px;
-	width:100%;
-	background-color: black;
-	padding-top: 15px;
+img.my-img-sm {
+    width: 300px !important;
+    height: 200px !important;
 }
 
-a, h1, h2, h3, h4, h5, h6, h7, table {
+a, h1, h2, h3, h4, h5, h6, h7, table, label, select, option, p {
     font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
 }
 

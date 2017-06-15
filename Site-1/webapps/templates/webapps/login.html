@@ -7,8 +7,8 @@
 </head>
 
 <body>
+{% include "webapps/header.html" %}
 <div class="container">
-	{% include "webapps/header.html" with name=request.session.username %}
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="page-header">
@@ -19,9 +19,7 @@
 		</div>
 	</div>
 	<div class="row clearfix">
-		<div class="col-md-6 column">
-			<br>
-			<br>
+        <div class="col-md-6 column" style="height: 550px; padding-top: 100px;">
 			{% if info %}
 			<div class="alert alert-dismissable alert-info">
 				 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -64,7 +62,7 @@
 				<input type="hidden" name="next" value="{{ request.GET.next }}">
 			</form>
 		</div>
-		<div class="col-md-6 column">
+        <div class="col-md-6 column" style="padding-top: 50px;">
 			<div class="jumbotron"  style="background-color:darksalmon">
 				<h1>
 					微信登录
@@ -78,8 +76,8 @@
 			</div>
 		</div>
 	</div>
-	{% include "webapps/footer.html" %}
 </div>
+{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
