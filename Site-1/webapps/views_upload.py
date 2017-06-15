@@ -8,9 +8,11 @@ def usedcar(request):
         print(request.POST['deal_id'])
         deal=Deal.objects.get(id=request.POST['deal_id'])
         user=request.user
+        img_seq=1
         for img in images:
-            instance=Image(image=img, deal=deal)
+            instance=Image(image=img, deal=deal,user=user,img_seq=img_seq)
             instance.save()
+            img_seq=img_seq+1
         return JsonResponse({'status': 'success', 'deal_id': deal.id})
 
 
