@@ -5,26 +5,27 @@
 <meta charset="utf-8">
 <title>信息搜索-二手车</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
+    <link rel="stylesheet" href="{% static 'webapps/css/style.css' %}">
 </head>
 
 <body>
 	{% include "webapps/header.html" %}
-    <div class="container">
-
+    <div class="container" style="padding: 0px;">
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <div class="page-header">
+                <div class="page-header" style="margin: 0px; border: none;">
                     <h1>
                         信息搜索 <small>二手车</small>
                     </h1>
                 </div>
             </div>
         </div>
-
-        <div class="row clearfix">
-            <div class="col-md-12 column" >
-                <ul class="nav nav-tabs">
+    </div>
+    <div class="container" style="padding: 0px;">
+        <center>
+            <ul class="nav nav-tabs">
                     <li>
                         <a href="#">Carpool</a>
                     </li>
@@ -43,95 +44,175 @@
                     <li>
                         <a href="#">拼单</a>
                     </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row clearfix">
-            <div class="col-md-3 column" style="margin:20px 0px;">
+            </ul>
+        </center>
+    </div>
+    <div class="container-fluid" style="background-color: #eee;">
+        <div class="container">
+            <div id="leftDiv" class="col-md-4 column" style="padding:20px 10px; ">
                 <form role="form">
                     <div class="form-group">
                         <label>车辆年份</label>
-                        <input type="number" class="form-control" id="5year" />
+                        <select onChange="search()" name="year" class="form-control js-example-basic-single" id="year">
+                            <option value="0">无限制</option>
+                            <option value="1">1年以内</option>
+                            <option value="2">1-3年</option>
+                            <option value="3">3-5年</option>
+                            <option value="4">5-10年</option>
+                            <option value="5">10年以上</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <div class="form-inline">
-                            <label>车辆制造商</label><br/>
-                            <select class="form-control" id="5car_brand">
-                                <option>Nissan</option>
-                                <option>Chevelet</option>
+                            <label>制造商</label>
+                            <select onChange="search()" class="form-control js-example-basic-single" id="car_brand"
+                                    name="car_brand">
+                                <option value="0">无限制</option>
+                                <option value="Nissan">Nissan</option>
+                                <option value="Chevelet">Chevelet</option>
                             </select>
-                            <label>车辆型号</label>
-                            <select class="form-control" id="5car_model" >
-                                <option>Altima</option>
-                                <option>Insperia</option>
+                            <label>型号</label>
+                            <select onChange="search()" class="form-control js-example-basic-single" id="car_model"
+                                    name="car_model">
+                                <option value="0">无限制</option>
+                                <option value="Altima">Altima</option>
+                                <option value="Insperia">Insperia</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>最高里程</label>
-                        <input type="number" class="form-control" id="5mostMileage" />
+                        <label>里程</label>
+                        <select onChange="search()" name="mileage" class="form-control js-example-basic-single"
+                                id="mileage">
+                            <option value="0">无限制</option>
+                            <option value="1">1万迈以内</option>
+                            <option value="2">1-3万迈</option>
+                            <option value="3">3-5万迈</option>
+                            <option value="4">5-10万迈</option>
+                            <option value="5">10万迈以上</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>售价范围</label>
-                        <div class="form-inline">
-                            <input type="number" class="form-control" id="5leastPrice" style="width:30%" placeholder="最低"/>
-                            <label>-</label>
-                            <input type="number" class="form-control" id="5mostPrice" style="width:30%" placeholder="最高"/>
-                        </div>
+                        <select onChange="search()" name="price" class="form-control js-example-basic-single"
+                                id="price">
+                            <option value="0">无限制</option>
+                            <option value="1">5000以内</option>
+                            <option value="2">5000-10000刀</option>
+                            <option value="3">10000-15000刀</option>
+                            <option value="4">15000-20000刀</option>
+                            <option value="5">20000刀以上</option>
+                        </select>
                     </div>
-                    <button type="submit" class="btn btn-block btn-lg btn-info">搜索</button>
                 </form>
             </div>
-            <div class="col-md-9 column" style="margin:20px 0px; border-left: 1px solid #eee;">
-                {% for record in records %}
-                <div class="row clearfix">
-                    <div class="col-md-4 column">
-                        <img class="small" alt="300x200" src="{% static record.img.image.url %}"
-                             style="height:300px; width: 200px;"/>
-                    </div>
-                    <div class="col-md-5 column">
-                        <div class="caption" style="margin:10px 40px">
+        </div>
+    </div>
+    <div class="container" style="padding-top: 20px;">
+        <div id="result" class="row">
+            {% for record in records %}
+                <div class="col-sm-6 col-md-4 col-lg-3 ">
+                    <div class="thumbnail" style="cursor: pointer;"
+                         onClick="window.open('{% url 'webapps:getDealDetail' record.id %}')">
+                        {% if record.img %}
+                            <img class="small" src="{{ record.img.image.url }}" alt="300*200"
+                                 style="width: 100%; height: 225px;">
+                        {% else %}
+                            <img class="small" src="{% static 'webapps/image/image_error.svg' %}"
+                                 style="width: 100%; height: 225px;">
+                        {% endif %}
+                        <div class="caption">
                             <h3>
                                 {{ record.title }}
                             </h3>
                             <p>
                                 {{ record.year }}<br>
-                                {{ record.car_barnd }}<br>
+                                {{ record.car_brand }}<br>
                                 {{ record.car_model }}<br>
-                            </p>
-                            <p>
-                                <a class="btn btn-primary" href="{% url 'webapps:getDealDetail' record.id %}">详情</a>
                             </p>
                         </div>
                     </div>
                 </div>
-                <hr>
-            </div>
+            {% endfor %}
+        </div>
+        <div class="loading" id="loading" style="display: none; height:200px;">
+            <center>
+                <svg viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="circle" class="g-circles g-circles--v1">
+                        <circle id="12" transform="translate(35, 16.698730) rotate(-30) translate(-35, -16.698730) "
+                                cx="35" cy="16.6987298" r="10"></circle>
+                        <circle id="11" transform="translate(16.698730, 35) rotate(-60) translate(-16.698730, -35) "
+                                cx="16.6987298" cy="35" r="10"></circle>
+                        <circle id="10" transform="translate(10, 60) rotate(-90) translate(-10, -60) " cx="10" cy="60"
+                                r="10"></circle>
+                        <circle id="9" transform="translate(16.698730, 85) rotate(-120) translate(-16.698730, -85) "
+                                cx="16.6987298" cy="85" r="10"></circle>
+                        <circle id="8" transform="translate(35, 103.301270) rotate(-150) translate(-35, -103.301270) "
+                                cx="35" cy="103.30127" r="10"></circle>
+                        <circle id="7" cx="60" cy="110" r="10"></circle>
+                        <circle id="6" transform="translate(85, 103.301270) rotate(-30) translate(-85, -103.301270) "
+                                cx="85" cy="103.30127" r="10"></circle>
+                        <circle id="5" transform="translate(103.301270, 85) rotate(-60) translate(-103.301270, -85) "
+                                cx="103.30127" cy="85" r="10"></circle>
+                        <circle id="4" transform="translate(110, 60) rotate(-90) translate(-110, -60) " cx="110" cy="60"
+                                r="10"></circle>
+                        <circle id="3" transform="translate(103.301270, 35) rotate(-120) translate(-103.301270, -35) "
+                                cx="103.30127" cy="35" r="10"></circle>
+                        <circle id="2" transform="translate(85, 16.698730) rotate(-150) translate(-85, -16.698730) "
+                                cx="85" cy="16.6987298" r="10"></circle>
+                        <circle id="1" cx="60" cy="10" r="10"></circle>
+                    </g>
+                    <use xlink:href="#circle" class="use"/>
+                </svg>
+                <h3>稍候，正在加载中...</h3>
+            </center>
+        </div>
+        <div class="alert alert-dismissable alert-info" id="nomoreresults" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>抱歉！</h4>
+            <strong>没有更多结果了。</strong>
         </div>
     </div>
 	{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         var start, end = 10;
         var has_next ={{ config.has_next|lower }};
         $(document).ready(function () {
+            $(".js-example-basic-single").select2({
+                minimumResultsForSearch: Infinity
+            });
             $(window).scroll(function () {
                 if (parseFloat($(window).height()) + parseFloat($(window).scrollTop()) >= $(document).height() - 20 && has_next) {
+                    var config = {
+                        'year': $('#year option:selected').val(),
+                        'mileage': $('#mileage option:selected').val(),
+                        'car_brand': $('#car_brand option:selected').text(),
+                        'car_model': $('#car_model option:selected').text(),
+                        'price': $('#price option:selected').val(),
+                        'end': end,
+                    };
                     $('#loading').fadeIn();
-                    has_next = false,
+                    has_next = false;
                         $.ajax({
                             type: 'GET',
                             dataType: 'JSON',
-                            data: {'type': '{{ config.type }}', 'end': end},
-                            url: "{% url 'webapps:loadMoreDeal' %}",
+                            data: config,
+                            url: "{% url 'webapps:ajaxSearchUsedcar' %}",
                             success: function (data) {
                                 if (data.status = 'success') {
                                     $('#loading').fadeOut();
-                                    console.log(data);
-                                    console.log(data.records);
                                     for (i in data.records) {
-                                        $('#content').append("");
+                                        $('#result').append("<div class='col-sm-6 col-md-4 col-lg-3'>\
+											<div class='thumbnail' style='cursor: pointer;' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\">\
+											<img src='" + data.records[i].img_url + "' alt='300*200' style='width: 100%; height: 225px;'>\
+						  					<div class='caption'>\
+												<h3>" + data.records[i].title + "</h3>\
+												<p>" + data.records[i].year + "<br>" + data.records[i].car_brand + "<br>" + data.records[i].car_model + "<br></p>\
+											  </div></div></div>");
                                     }
                                     ;
                                     has_next = data.has_next;
@@ -140,13 +221,48 @@
                                         $('#nomoreresults').fadeIn();
                                 }
                                 ;
-
                             }
                         });
                 }
                 ;
             });
         });
+        function search() {
+            var config = {
+                'year': $('#year option:selected').val(),
+                'mileage': $('#mileage option:selected').val(),
+                'car_brand': $('#car_brand option:selected').text(),
+                'car_model': $('#car_model option:selected').text(),
+                'price': $('#price option:selected').val(),
+                'end': 0,
+            };
+            $('#nomoreresults').fadeOut();
+            $('#result').empty();
+            $('#loading').fadeIn();
+            $.ajax({
+                type: 'GET',
+                dataType: 'JSON',
+                data: config,
+                url: "{% url 'webapps:ajaxSearchUsedcar' %}",
+                success: function (data) {
+                    $('#loading').fadeOut();
+                    for (i in data.records) {
+                        $('#result').append("<div class='col-sm-6 col-md-4 col-lg-3'>\
+											<div class='thumbnail' style='cursor: pointer;' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\">\
+											<img src='" + data.records[i].img_url + "' alt='300*200' style='width: 100%; height: 225px;'>\
+						  					<div class='caption'>\
+												<h3>" + data.records[i].title + "</h3>\
+												<p>" + data.records[i].year + "<br>" + data.records[i].car_brand + "<br>" + data.records[i].car_model + "<br></p>\
+											  </div></div></div>");
+                    }
+                    ;
+                    has_next = data.has_next;
+                    end = 10;
+                    if (has_next == false)
+                        $('#nomoreresults').fadeIn();
+                },
+            });
+        };
     </script>
 </body>
 </html>

@@ -12,8 +12,8 @@
 </head>
 
 <body>
-<div class="container">
 	{% include "webapps/header.html" %}
+    <div class="container">
     <div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="page-header">
@@ -56,14 +56,12 @@
                             <div class="form-group">
                             <div class="form-inline">
 					 			<label>车辆制造商</label>
-                     			<select name="car_brand" class="form-control js-example-basic-single" id="5car_brand">
-                                	<option>Nissan</option>
-                                    <option>Chevelet</option>
+                                <select style="width: 30%" name="car_brand" class="form-control js-example-basic-single"
+                                        id="5car_brand">
                                 </select>
 					 			<label>车辆型号</label>
-                     			<select name="car_model" class="form-control js-example-basic-single" id="5car_model" >
-                                	<option>Altima</option>
-                                    <option>Insperia</option>
+                                <select style="width: 30%" name="car_model" class="form-control js-example-basic-single"
+                                        id="5car_model">
                                 </select>
 							</div>
                             </div>
@@ -116,10 +114,8 @@
 							</form>
 		</div>
 	</div>
-    
-    {% include "webapps/footer.html" %}
-    
 </div>
+    {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
@@ -162,8 +158,52 @@
 			.updateStatus('year', 'NOT_VALIDATED',null) 
 			.validateField('year'); 
 		});
-		$(".js-example-basic-single").select2({
-			minimumResultsForSearch: Infinity
+        $("#5car_brand").select2({
+            minimumResultsForSearch: Infinity,
+            language: "ch",
+            placeholder: "请选择车辆品牌",
+            ajax: {
+                url: "{% url 'webapps:getCarBrand' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+        }).on("select2:select", function () {
+            $('#5car_model').val("");
+            $("#5car_model").empty();
+        });
+        $('#5car_model').select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "请选择车辆型号",
+            ajax: {
+                url: "{% url 'webapps:getCarModel' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var id = $('#5car_brand').val();
+                    return {
+                        q: params.term,
+                        brand_id: id,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
 		});
 		$("#form").bootstrapValidator({
 			message:'表单不合法',
@@ -223,7 +263,7 @@
 	});	
 	var deal_id;
 	$('#5img').fileinput({
-			uploadUrl: '/upload/usedcar',
+        uploadUrl: "{% url 'webapps:uploadUsedcar' %}",
 			uploadAsync: false,
 			language: 'zh', 
 			maxFileSize: 100000,

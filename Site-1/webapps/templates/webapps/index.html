@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>甘村信息网</title>
+    <title>易活，轻松生活</title>
     {% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
@@ -13,76 +13,69 @@
 <div class="container">
     <div class="row clearfix">
 		<div class="col-md-12 column">
-			<div class="carousel slide" id="carousel-795962">
-				<ol class="carousel-indicators">
-					<li class="active" data-slide-to="0" data-target="#carousel-795962">
-					</li>
-					<li data-slide-to="1" data-target="#carousel-795962">
-					</li>
-					<li data-slide-to="2" data-target="#carousel-795962">
-					</li>
-				</ol>
-				<div class="carousel-inner">
-					<div class="item active">
-						<img alt="" src="{% static 'webapps/image/test.jpg' %}" />
-						<div class="carousel-caption">
-							<h4>
-								最全的信息
-							</h4>
-							<p>
-								网站信息全面，满足留学生活各种需求！
-							</p>
-						</div>
-					</div>
-					<div class="item">
-						<img alt="" src="{% static 'webapps/image/test.jpg' %}" />
-						<div class="carousel-caption">
-							<h4>
+            <div class="jumbotron" style="text-align: center; background-color: white; padding: 40px 0px 10px 0px;">
+                <img src="{% static 'webapps/image/logo2.png' %}"
+                     style="border: 2px solid #2E68AA; border-radius: 30px;">
+                <h3>简单生活，不仅是一句口号</h3>
+                <p>
+                    在这里你可以找到日常生活中需要的各种信息！
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="background-color: #eee; padding:20px 0px;">
+    <div class="container">
+        <div class="col-md-4 column" style="text-align: center; padding: 10px 20px;">
+            <img alt="" src="{% static 'webapps/image/comprehensive.svg' %}" style="width: 100%; height: 250px;"/>
+            <h2 style="margin-top: 0px;">
+                最全的信息
+            </h2>
+            <p style="margin: 0px 20px; font-size: 1.25em">
+                网站信息全面，满足留学生活各种需求！
+            </p>
+        </div>
+        <div class="col-md-4 column" style="text-align: center; padding: 10px 20px;">
+            <img alt="" src="{% static 'webapps/image/fast.svg' %}" style="width: 100%; height: 250px;"/>
+            <h2 style="margin-top: 0px;">
 								最新的信息
-							</h4>
-							<p>
+            </h2>
+            <p style="margin: 0px 20px; font-size: 1.25em">
 								网站信息更新快，每天超过一千条新的信息等你发掘！
 							</p>
-						</div>
-					</div>
-					<div class="item">
-						<img alt="" src="{% static 'webapps/image/test.jpg' %}" />
-						<div class="carousel-caption">
-							<h4>
-								最准的信息
-							</h4>
-							<p>
-								网站信息与微信账户关联，确保信息准确，减少不必要的风险！
-							</p>
-						</div>
-					</div>
-				</div> 
-                <a class="left carousel-control" href="#carousel-795962" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> 
-                <a class="right carousel-control" href="#carousel-795962" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-			</div>
-			<div class="jumbotron well">
-				<h1>
-					欢迎来到甘村信息网！
-				</h1>
-				<p>
-					在这里你可以找到村里你需要的各种信息！
-				</p>
-				<p>
-					 <a class="btn btn-primary btn-large" href="#">常见Q&A</a>
-				</p>
-                <div class="tabbable" id="tabs-773187">
-				<ul class="nav nav-tabs">
-					<li class="active" style="width:50%; text-align:center; height:50px;">
-						 <a href="#panel-686396" data-toggle="tab">
-                         我要找信息</a>
-					</li>
-					<li style="width:50%; text-align:center; height:50px;">
-						 <a href="#panel-524610" data-toggle="tab">我要发信息</a>
-					</li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="panel-686396" >
-						<table class="table" frame="void" style="margin:10px auto; text-align:center; background-color:white">
+        </div>
+        <div class="col-md-4 column" style="text-align: center; padding: 10px 20px;">
+            <img alt="" src="{% static 'webapps/image/accurate.svg' %}" style="width: 100%; height: 250px;"/>
+            <h2 style="margin-top: 0px;">
+                最准的信息
+            </h2>
+            <p style="margin: 0px 20px; font-size: 1.25em">
+                网站信息与微信账户关联，确保信息准确，减少不必要的风险！
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="container" style="margin-top: 20px;">
+    <div class="col-md-2 column">
+    </div>
+    <div class="col-md-8 column">
+        <center><h2><font color="#6f5499"><strong>现在体验！</strong></font></h2></center>
+        <div class="col-md-6 column" style="margin-bottom: 30px;">
+            <div style="width: 300px; height:300px; text-align: center; cursor:pointer; background-image:url('{% static 'webapps/image/upload.svg' %}'); background-repeat:no-repeat; background-position:50% 50%;"
+                 onClick="clickPost()">
+                <div style="padding-top:230px;"><h3>我要发布信息</h3></div>
+            </div>
+        </div>
+        <div class="col-md-6 column" style="margin-bottom: 30px;">
+            <div style="width: 300px; height:300px; text-align: center; cursor:pointer; background-image:url('{% static 'webapps/image/search.svg' %}'); background-repeat:no-repeat; background-position:50% 50%;"
+                 onClick="clickSearch()">
+                <div style="padding-top:230px;"><h3>我要查找信息</h3></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="searchOption" style=" display: none;">
+            <table class="table" frame="void" style="margin:10px auto; text-align:center; background-color:white">
 							<tbody>
 								<tr>
 									<td width="50%">
@@ -109,10 +102,10 @@
 									</td>
 								</tr>
 							</tbody>
-                       </table>
-					</div>
-					<div class="tab-pane" id="panel-524610">
-						<table class="table" frame="void" style="margin:10px auto; text-align:center; background-color:white">
+            </table>
+        </div>
+        <div id="postOption" style="display: none">
+            <table class="table" frame="void" style="margin:10px auto; text-align:center; background-color:white">
 							<tbody>
 								<tr>
 									<td width="50%">
@@ -139,17 +132,26 @@
 									</td>
 								</tr>
 							</tbody>
-                       </table>
-					</div>
-				</div>
-		</div>
-			</div>
-			
-	</div>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-2 column">
     </div>
 </div>
 {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+    function clickPost() {
+        $('#searchOption').hide();
+        $('#searchOption').slideUp(100);
+        $('#postOption').slideToggle("slow");
+    };
+    function clickSearch() {
+        $('#postOption').hide();
+        $('#postOption').slideUp(100);
+        $('#searchOption').slideToggle();
+    };
+</script>
 </body>
 </html>
