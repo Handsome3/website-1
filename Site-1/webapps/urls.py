@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'post/mergeorder/submit',views_post.mergeOrderPost),
     url(r'post/carpool/page',views_post.getCarpoolPage),
     url(r'post/carpool/submit', views_post.carpoolPost),
-    url(r'post/usedcar/page', views_post.getUsercarPage),
+    url(r'post/usedcar/page', views_post.usercarPage),
     url(r'post/usedcar/submit', views_post.usedcarPost),
     url(r'postresult',views.getPostResult,name='postresult'),
 

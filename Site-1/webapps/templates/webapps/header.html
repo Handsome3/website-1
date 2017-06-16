@@ -1,15 +1,9 @@
-<!doctype html>
-<html>
-<head>
-    {% load static %}
-<meta charset="utf-8">
-</head>
-<body>
+{% load static %}
 <div class="container-fluid"
      style="color:#cdbfe3;background-color:#6f5499;background-image:-webkit-gradient(linear,left top,left bottom,from(#563d7c),to(#6f5499));background-image:-webkit-linear-gradient(top,#563d7c 0,#6f5499 100%);background-image:-o-linear-gradient(top,#563d7c 0,#6f5499 100%);background-image:linear-gradient(to bottom,#563d7c 0,#6f5499 100%)">
     <div class="container" style="padding: 0px 0px 0px 0px;">
         <nav class="navbar navbar-default" role="navigation"
-             style="border:#FFF 0px solid; margin: 0px 0px 0px 0px; height:100px; padding: 0px 0px 0px 0px; border-radius:0; background:rgba(0,0,0,0); ">
+             style="border:#FFF 0px solid; margin: 0px 0px 0px 0px; height:80px; padding: 0px 0px 0px 0px; border-radius:0; background:rgba(0,0,0,0); ">
             <div class="navbar-header">
 					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
                      <span class="sr-only"></span>
@@ -98,7 +92,12 @@
                         {%  else %}
                             <li>
                                 <a href="/user/loginpage">
-                                    登录
+                                    <font color="DCF7A1" size="+0.5">登录</font>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/loginpage">
+                                    <font color="DCF7A1" size="+0.5">注册</font>
                                 </a>
                             </li>
                         {% endif %}
@@ -108,6 +107,4 @@
 		</nav>
 	</div>
 </div> 
-</body>
-</html>
 	

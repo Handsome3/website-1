@@ -14,6 +14,7 @@
 <body>
 <div class="container">
 	{% include "webapps/header.html" %}
+    <div class="container">
     <div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="page-header">
@@ -29,22 +30,22 @@
 		<div class="col-md-12 column">
                  <ul class="nav nav-tabs">
 					<li>
-						 <a href="/post/carpool/page">Carpool</a>
+						 <a href="carpool">Carpool</a>
 					</li>
 					<li>
-						 <a href="/post/useditem/page"> 二手宝贝</a>
+						 <a href="used-item">二手宝贝</a>
 					</li>
                     <li>
-                    	 <a href="/post/sublease/page">Sublease</a>
+                    	 <a href="sublease">Sublease</a>
                     </li>
                     <li>
-                    	 <a href="/post/houserent/page">合租</a>
+                    	 <a href="house">合租</a>
                     </li>
                     <li class="active">
-                    	 <a href="/post/usedcar/page">二手车</a>
+                    	 <a href="used-car">二手车</a>
                     </li>
                     <li>
-                    	 <a href="/post/mergeorder/page">拼单</a>
+                    	 <a href="merge-order">拼单</a>
                     </li>
 				</ul>
                             <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
@@ -120,6 +121,7 @@
     {% include "webapps/footer.html" %}
     
 </div>
+    {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
@@ -159,11 +161,55 @@
 			minViewMode: 2,
         }).on('hide',function(e) { 
 			$('#form').data('bootstrapValidator') 
-			.updateStatus('year', 'NOT_VALIDATED',null)
+			.updateStatus('year', 'NOT_VALIDATED',null) 
 			.validateField('year'); 
 		});
-		$(".js-example-basic-single").select2({
-			minimumResultsForSearch: Infinity
+        $("#5car_brand").select2({
+            minimumResultsForSearch: Infinity,
+            language: "ch",
+            placeholder: "请选择车辆品牌",
+            ajax: {
+                url: "{% url 'webapps:getCarBrand' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+        }).on("select2:select", function () {
+            $('#5car_model').val("");
+            $("#5car_model").empty();
+        });
+        $('#5car_model').select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "请选择车辆型号",
+            ajax: {
+                url: "{% url 'webapps:getCarModel' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var id = $('#5car_brand').val();
+                    return {
+                        q: params.term,
+                        brand_id: id,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
 		});
 		$("#form").bootstrapValidator({
 			message:'表单不合法',
