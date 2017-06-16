@@ -10,11 +10,12 @@ import sys, traceback
 from django.http import JsonResponse
 
 @login_required
-def carpoolPage(request):
+def getCarpoolPage(request):
     userPro=UserPro.objects.get(user=request.user)
     phone='' if userPro.phone=='1234567890' else userPro.phone
     wechat='' if userPro.wechat=='None' else userPro.wechat
     return render(request, 'webapps/publishInfo/carpool.html', {'phone':phone, 'wechat':wechat})
+
 
 @login_required
 def carpoolPost(request):
@@ -55,12 +56,14 @@ def carpoolPost(request):
         tb = traceback.format_exc()
         return render(request, 'webapps/carpool_post.html',{'error_message': error_type,'tb':tb})
 
+
 @login_required
-def usercarPage(request):
+def getUsercarPage(request):
     userPro = UserPro.objects.get(user=request.user)
     phone = '' if userPro.phone == '1234567890' else userPro.phone
     wechat = '' if userPro.wechat == 'None' else userPro.wechat
     return render(request, 'webapps/publishInfo/usedCar.html', {'phone': phone, 'wechat': wechat})
+
 
 @login_required
 def usedcarPost(request):
@@ -93,3 +96,193 @@ def usedcarPost(request):
                 return JsonResponse({"deal_id": deal.id, "status":"success"})
             else:
                 return JsonResponse({'status':'fail'})
+
+
+@login_required
+def getHouseRentPage(request):
+    userPro=UserPro.objects.get(user=request.user)
+    phone='' if userPro.phone=='1234567890' else userPro.phone
+    wechat='' if userPro.wechat=='None' else userPro.wechat
+    return render(request, 'webapps/publishInfo/house.html', {'phone':phone, 'wechat':wechat})
+
+
+@login_required
+def houseRentPost(request):
+    if request.method=='POST':
+        type = 'houserent'
+        create_time = datetime.date.today()
+        expire_time = create_time+ relativedelta.relativedelta(months=1)
+        user=request.user
+        contact= request.POST.getlist('contact_type[]')
+        contact_type=""
+        for i in contact:
+            contact_type+=i
+
+        # houserent fields
+        start_date = request.POST['start_date']
+        community = request.POST['community']
+        bedroom_num= request.POST['bedroom_num']
+        bathroom_num = request.POST['bathroom_num']
+        roommate_num = request.POST['roommate_num']
+        roommate_gender = request.POST['roommate_gender']
+        rent = request.POST['rent']
+        duration=request.POST['duration']
+        note = request._post['note']
+
+        #transaction
+        with transaction.atomic():
+            deal = Deal(type=type,create_time=create_time,expire_time=expire_time,posted_user=user, contact_type=contact_type)
+            deal.save()
+            houserent = HouseRent(deal = deal,start_date = start_date, community=community,bathroom_num=bathroom_num,bedroom_num=bedroom_num,
+                                  roommate_num=roommate_num,roommate_gender=roommate_gender,rent=rent,duration=duration,note=note)
+            houserent.save()
+        # redirect to a new URL:
+        if deal:
+            return JsonResponse({"deal_id": deal.id, "status":"success"})
+        else:
+            return JsonResponse({'status':'fail'})
+
+
+
+@login_required
+def getSubleasePage(request):
+    userPro=UserPro.objects.get(user=request.user)
+    phone='' if userPro.phone=='1234567890' else userPro.phone
+    wechat='' if userPro.wechat=='None' else userPro.wechat
+    return render(request, 'webapps/publishInfo/sublease.html', {'phone':phone, 'wechat':wechat})
+
+
+@login_required
+def subleasePost(request):
+    try:
+        if request.method=='POST':
+            type = 'houserent'
+            create_time = datetime.date.today()
+            expire_time = create_time+ relativedelta.relativedelta(months=1)
+            user=request.user
+            contact= request.POST.getlist('contact_type[]')
+            contact_type=""
+            for i in contact:
+                contact_type+=i
+            # carpool fields
+            date = request.POST['date']
+            time = request.POST['time']
+            depart= request.POST['depart']
+            destination = request.POST['destination']
+            passenger_num = request.POST['passenger_num']
+            price = request.POST['price']
+            car_type = request.POST['car_type']
+            note = request._post['note']
+
+            #transaction
+            with transaction.atomic():
+                deal = Deal(type=type,create_time=create_time,expire_time=expire_time,posted_user=user, contact_type=contact_type)
+                deal.save()
+                carpool = Carpool(deal = deal,date = date, time=time,depart_place = depart,destination=destination,
+                                  passenger_num=passenger_num,price=price, car_type=car_type,note=note)
+                carpool.save()
+
+            return views.confirmaAndRedirect(request, "发布成功", "/user/getuserinfo")
+
+        return render(request,'webapps/carpool_post.html')
+
+    except Exception as e:
+        error_type = repr(e)
+        tb = traceback.format_exc()
+        return render(request, 'webapps/carpool_post.html',{'error_message': error_type,'tb':tb})
+
+
+@login_required
+def getMergeOrderPage(request):
+    userPro=UserPro.objects.get(user=request.user)
+    phone='' if userPro.phone=='1234567890' else userPro.phone
+    wechat='' if userPro.wechat=='None' else userPro.wechat
+    return render(request, 'webapps/publishInfo/mergeOrder.html', {'phone':phone, 'wechat':wechat})
+
+
+@login_required
+def mergeOrderPost(request):
+    try:
+        if request.method=='POST':
+            type = 'houserent'
+            create_time = datetime.date.today()
+            expire_time = create_time+ relativedelta.relativedelta(months=1)
+            user=request.user
+            contact= request.POST.getlist('contact_type[]')
+            contact_type=""
+            for i in contact:
+                contact_type+=i
+            # carpool fields
+            date = request.POST['date']
+            time = request.POST['time']
+            depart= request.POST['depart']
+            destination = request.POST['destination']
+            passenger_num = request.POST['passenger_num']
+            price = request.POST['price']
+            car_type = request.POST['car_type']
+            note = request._post['note']
+
+            #transaction
+            with transaction.atomic():
+                deal = Deal(type=type,create_time=create_time,expire_time=expire_time,posted_user=user, contact_type=contact_type)
+                deal.save()
+                carpool = Carpool(deal = deal,date = date, time=time,depart_place = depart,destination=destination,
+                                  passenger_num=passenger_num,price=price, car_type=car_type,note=note)
+                carpool.save()
+
+            return views.confirmaAndRedirect(request, "发布成功", "/user/getuserinfo")
+
+        return render(request,'webapps/carpool_post.html')
+
+    except Exception as e:
+        error_type = repr(e)
+        tb = traceback.format_exc()
+        return render(request, 'webapps/carpool_post.html',{'error_message': error_type,'tb':tb})
+
+
+@login_required
+def getUsedItemPage(request):
+    userPro=UserPro.objects.get(user=request.user)
+    phone='' if userPro.phone=='1234567890' else userPro.phone
+    wechat='' if userPro.wechat=='None' else userPro.wechat
+    return render(request, 'webapps/publishInfo/usedItem.html', {'phone':phone, 'wechat':wechat})
+
+
+@login_required
+def usedItemPost(request):
+    try:
+        if request.method=='POST':
+            type = 'houserent'
+            create_time = datetime.date.today()
+            expire_time = create_time+ relativedelta.relativedelta(months=1)
+            user=request.user
+            contact= request.POST.getlist('contact_type[]')
+            contact_type=""
+            for i in contact:
+                contact_type+=i
+            # carpool fields
+            date = request.POST['date']
+            time = request.POST['time']
+            depart= request.POST['depart']
+            destination = request.POST['destination']
+            passenger_num = request.POST['passenger_num']
+            price = request.POST['price']
+            car_type = request.POST['car_type']
+            note = request._post['note']
+
+            #transaction
+            with transaction.atomic():
+                deal = Deal(type=type,create_time=create_time,expire_time=expire_time,posted_user=user, contact_type=contact_type)
+                deal.save()
+                carpool = Carpool(deal = deal,date = date, time=time,depart_place = depart,destination=destination,
+                                  passenger_num=passenger_num,price=price, car_type=car_type,note=note)
+                carpool.save()
+
+            return views.confirmaAndRedirect(request, "发布成功", "/user/getuserinfo")
+
+        return render(request,'webapps/carpool_post.html')
+
+    except Exception as e:
+        error_type = repr(e)
+        tb = traceback.format_exc()
+        return render(request, 'webapps/carpool_post.html',{'error_message': error_type,'tb':tb})

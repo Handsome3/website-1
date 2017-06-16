@@ -77,7 +77,8 @@ class Sublease(models.Model):
 class HouseRent(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     community = models.CharField(max_length=40)
-    house_type = models.CharField(max_length=20)
+    bedroom_num=models.IntegerField(default=1)
+    bathroom_num=models.IntegerField(default=1)
     rent = models.FloatField()
     start_date = models.DateField()
     duration = models.CharField(max_length=20,default='6 months')

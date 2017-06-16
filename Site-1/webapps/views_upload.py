@@ -3,7 +3,7 @@ from .models import Deal,Carpool,MergeOrder,UsedCar,Image,HouseRent,Sublease,Use
 from django.http import JsonResponse
 
 @login_required
-def usedcar(request):
+def uploadImg(request):
         images=request.FILES.getlist('images')
         print(request.POST['deal_id'])
         deal=Deal.objects.get(id=request.POST['deal_id'])

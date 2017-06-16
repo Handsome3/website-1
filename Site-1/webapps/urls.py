@@ -22,14 +22,22 @@ urlpatterns = [
 
     #Post
     #url(r'post/(?P<type>[a-z]+)', views.getPostPage),
-    url(r'post/carpool/page',views_post.carpoolPage),
+    url(r'post/houserent/page',views_post.getHouseRentPage),
+    url(r'post/houserent/submit',views_post.houseRentPost),
+    url(r'post/sublease/page',views_post.getSubleasePage),
+    url(r'post/sublease/submit',views_post.subleasePost),
+    url(r'post/useditem/page',views_post.getUsedItemPage),
+    url(r'post/useditem/submit',views_post.usedItemPost),
+    url(r'post/mergeorder/page',views_post.getMergeOrderPage),
+    url(r'post/mergeorder/submit',views_post.mergeOrderPost),
+    url(r'post/carpool/page',views_post.getCarpoolPage),
     url(r'post/carpool/submit', views_post.carpoolPost),
-    url(r'post/usedcar/page', views_post.usercarPage),
+    url(r'post/usedcar/page', views_post.getUsercarPage),
     url(r'post/usedcar/submit', views_post.usedcarPost),
     url(r'postresult',views.getPostResult,name='postresult'),
 
     #Ajax Request
-    url(r'upload/usedcar', views_upload.usedcar),
+    url(r'upload/images', views_upload.uploadImg),
     url(r'deal/save', views_detail.saveDeal, name='saveDeal'),
     url(r'deal/unsave', views_detail.unsaveDeal, name='unsaveDeal'),
     url(r'deal/loadmore', views_detail.loadMoreDeal, name='loadMoreDeal'),

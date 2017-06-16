@@ -29,22 +29,22 @@
 		<div class="col-md-12 column">
                  <ul class="nav nav-tabs">
 					<li>
-						 <a href="carpool">Carpool</a>
+						 <a href="/post/carpool/page">Carpool</a>
 					</li>
 					<li>
-						 <a href="used-item">二手宝贝</a>
+						 <a href="/post/useditem/page"> 二手宝贝</a>
 					</li>
                     <li>
-                    	 <a href="sublease">Sublease</a>
+                    	 <a href="/post/sublease/page">Sublease</a>
                     </li>
                     <li>
-                    	 <a href="house">合租</a>
+                    	 <a href="/post/houserent/page">合租</a>
                     </li>
                     <li class="active">
-                    	 <a href="used-car">二手车</a>
+                    	 <a href="/post/usedcar/page">二手车</a>
                     </li>
                     <li>
-                    	 <a href="merge-order">拼单</a>
+                    	 <a href="/post/mergeorder/page">拼单</a>
                     </li>
 				</ul>
                             <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
@@ -57,13 +57,13 @@
                             <div class="form-inline">
 					 			<label>车辆制造商</label>
                      			<select name="car_brand" class="form-control js-example-basic-single" id="5car_brand">
-                                	<option>Nissan</option>
-                                    <option>Chevelet</option>
+                                	<option value="Nissan">Nissan</option>
+                                    <option value="Cherolet">Cherolet</option>
                                 </select>
 					 			<label>车辆型号</label>
                      			<select name="car_model" class="form-control js-example-basic-single" id="5car_model" >
-                                	<option>Altima</option>
-                                    <option>Insperia</option>
+                                	<option value="Altima">Altima</option>
+                                    <option value="Insperia">Insperia</option>
                                 </select>
 							</div>
                             </div>
@@ -159,7 +159,7 @@
 			minViewMode: 2,
         }).on('hide',function(e) { 
 			$('#form').data('bootstrapValidator') 
-			.updateStatus('year', 'NOT_VALIDATED',null) 
+			.updateStatus('year', 'NOT_VALIDATED',null)
 			.validateField('year'); 
 		});
 		$(".js-example-basic-single").select2({
@@ -223,7 +223,7 @@
 	});	
 	var deal_id;
 	$('#5img').fileinput({
-			uploadUrl: '/upload/usedcar',
+			uploadUrl: '/upload/images',
 			uploadAsync: false,
 			language: 'zh', 
 			maxFileSize: 100000,
