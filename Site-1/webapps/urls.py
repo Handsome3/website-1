@@ -1,15 +1,14 @@
-from django.conf import settings
 from django.conf.urls import url
+from . import views, views_user, views_post, views_upload, views_detail, views_search
 from django.conf.urls.static import static
-
-from . import views, views_user, views_post, views_upload, views_detail, views_search, views_option
+from django.conf import settings
 
 app_name = 'webapps'
 urlpatterns = [
     url(r'^$', views.index),
 
     #search
-                  url(r'search/usedcar', views_search.usedcarPage, name='searchUsedcar'),
+                  url(r'search/usedcar', views_search.searchUsedcar, name='searchUsedcar'),
 
     #User
     url(r'user/loginpage',views_user.loginPage, name='loginPage'),
@@ -23,20 +22,25 @@ urlpatterns = [
 
     #Post
     #url(r'post/(?P<type>[a-z]+)', views.getPostPage),
-    url(r'post/carpool/page',views_post.carpoolPage),
+    url(r'post/houserent/page',views_post.getHouseRentPage),
+    url(r'post/houserent/submit',views_post.houseRentPost),
+    url(r'post/sublease/page',views_post.getSubleasePage),
+    url(r'post/sublease/submit',views_post.subleasePost),
+    url(r'post/useditem/page',views_post.getUsedItemPage),
+    url(r'post/useditem/submit',views_post.usedItemPost),
+    url(r'post/mergeorder/page',views_post.getMergeOrderPage),
+    url(r'post/mergeorder/submit',views_post.mergeOrderPost),
+    url(r'post/carpool/page',views_post.getCarpoolPage),
     url(r'post/carpool/submit', views_post.carpoolPost),
     url(r'post/usedcar/page', views_post.usercarPage),
     url(r'post/usedcar/submit', views_post.usedcarPost),
     url(r'postresult',views.getPostResult,name='postresult'),
 
     #Ajax Request
-                  url(r'ajax/upload/usedcar', views_upload.usedcar, name='uploadUsedcar'),
-                  url(r'ajax/deal/save', views_detail.saveDeal, name='saveDeal'),
-                  url(r'ajax/deal/unsave', views_detail.unsaveDeal, name='unsaveDeal'),
-                  url(r'ajax/deal/loadmore', views_detail.loadMoreDeal, name='loadMoreDeal'),
-                  url(r'ajax/s/usedcar', views_search.ajaxSearchUsedcar, name="ajaxSearchUsedcar"),
-                  url(r'ajax/options/carbrand', views_option.getCarBrand, name='getCarBrand'),
-                  url(r'ajax/options/carmodel', views_option.getCarModel, name='getCarModel'),
+    url(r'upload/images', views_upload.uploadImg),
+    url(r'deal/save', views_detail.saveDeal, name='saveDeal'),
+    url(r'deal/unsave', views_detail.unsaveDeal, name='unsaveDeal'),
+    url(r'deal/loadmore', views_detail.loadMoreDeal, name='loadMoreDeal'),
 
     #Item Detail
     url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_detail.getDealDetail, name='getDealDetail'),

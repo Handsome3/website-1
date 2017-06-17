@@ -12,6 +12,7 @@
 </head>
 
 <body>
+<div class="container">
 	{% include "webapps/header.html" %}
     <div class="container">
     <div class="row clearfix">
@@ -56,12 +57,14 @@
                             <div class="form-group">
                             <div class="form-inline">
 					 			<label>车辆制造商</label>
-                                <select style="width: 30%" name="car_brand" class="form-control js-example-basic-single"
-                                        id="5car_brand">
+                     			<select name="car_brand" class="form-control js-example-basic-single" id="5car_brand">
+                                	<option value="Nissan">Nissan</option>
+                                    <option value="Cherolet">Cherolet</option>
                                 </select>
 					 			<label>车辆型号</label>
-                                <select style="width: 30%" name="car_model" class="form-control js-example-basic-single"
-                                        id="5car_model">
+                     			<select name="car_model" class="form-control js-example-basic-single" id="5car_model" >
+                                	<option value="Altima">Altima</option>
+                                    <option value="Insperia">Insperia</option>
                                 </select>
 							</div>
                             </div>
@@ -114,6 +117,9 @@
 							</form>
 		</div>
 	</div>
+    
+    {% include "webapps/footer.html" %}
+    
 </div>
     {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -263,7 +269,7 @@
 	});	
 	var deal_id;
 	$('#5img').fileinput({
-        uploadUrl: "{% url 'webapps:uploadUsedcar' %}",
+			uploadUrl: '/upload/images',
 			uploadAsync: false,
 			language: 'zh', 
 			maxFileSize: 100000,
