@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 
-from . import views, views_user, views_post, views_upload, views_detail, views_search, views_option
+from . import views, views_user, views_post, views_upload, views_detail, views_search, views_option, views_edit
 
 app_name = 'webapps'
 urlpatterns = [
@@ -22,12 +22,17 @@ urlpatterns = [
     url(r'user/checkemail', views_user.checkEmail),
 
     #Post
-    #url(r'post/(?P<type>[a-z]+)', views.getPostPage),
     url(r'post/carpool/page',views_post.carpoolPage),
     url(r'post/carpool/submit', views_post.carpoolPost),
     url(r'post/usedcar/page', views_post.usercarPage),
     url(r'post/usedcar/submit', views_post.usedcarPost),
     url(r'postresult',views.getPostResult,name='postresult'),
+
+                  # Edit
+                  url(r'deal/edit/(?P<deal_id>[0-9]+)$', views_edit.editDeal, name='editDeal'),
+
+                  # Delete
+                  url(r'deal/delete/(?P<deal_id>[0-9]+)$', views_edit.deleteDeal, name='deleteDeal'),
 
     #Ajax Request
                   url(r'ajax/upload/usedcar', views_upload.usedcar, name='uploadUsedcar'),
@@ -37,6 +42,8 @@ urlpatterns = [
                   url(r'ajax/s/usedcar', views_search.ajaxSearchUsedcar, name="ajaxSearchUsedcar"),
                   url(r'ajax/options/carbrand', views_option.getCarBrand, name='getCarBrand'),
                   url(r'ajax/options/carmodel', views_option.getCarModel, name='getCarModel'),
+                  url(r'ajax/deleteimage', views_edit.deleteImage, name='deleteImage'),
+                  url(r'ajax/deal/edit', views_edit.ajaxEditDeal, name='ajaxEditDeal'),
 
     #Item Detail
     url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_detail.getDealDetail, name='getDealDetail'),

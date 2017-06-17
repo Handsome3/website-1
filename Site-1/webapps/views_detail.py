@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Deal,Carpool,MergeOrder,UsedCar,Image,HouseRent,Sublease,UsedItem, UserPro
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+
+from .models import Deal, UsedCar, Image, UserPro
+
 
 def getCarpool(text):
     pass
@@ -94,3 +95,4 @@ def loadMoreDeal(request):
     res['records']=records
     res['status']='success'
     return JsonResponse(res)
+

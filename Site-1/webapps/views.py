@@ -1,27 +1,13 @@
-from django.shortcuts import render
-
 # Create your views here.
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
     return render(request, 'webapps/index.html')
 
 #Search Pages
-def searchCarpool(request):
-    return HttpResponse("Search carpool")
 
-def searchUsedItem(request):
-    return HttpResponse("searchUsedItem")
-
-def searchHouse(request):
-    return HttpResponse("searchHouse")
-
-def searchUsedCar(request):
-    return HttpResponse("searchUsedCar")
-
-def searchMergeOrder(request):
-    return HttpResponse("searchMergeOrder")
 
 # Inform user information and Redirect page
 def confirmaAndRedirect(request, info, redirect_path):

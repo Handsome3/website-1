@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
-from .utilities import upload_to_path
 from django.db import models
+
+from .utilities import upload_to_path
+
 
 # Create your models here.
 
@@ -30,6 +32,27 @@ class Deal(models.Model):
         else:
             return ''
 
+
+class CarBrand(models.Model):
+    name = models.CharField(max_length=20)
+    name_ch = models.CharField(max_length=40)
+    icon = models.ImageField(upload_to='carbrand', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.name) + "(" + str(self.name_ch) + ")"
+
+
+class CarModel(models.Model):
+    brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    name_ch = models.CharField(max_length=60, blank=True, null=True)
+
+    def __str__(self):
+        if self.name_ch:
+            return str(self.name) + "(" + str(self.name_ch) + ")"
+        else:
+            return str(self.name)
+
 class Carpool(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     date = models.DateField()
@@ -47,8 +70,8 @@ class Carpool(models.Model):
 class UsedCar(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     year = models.IntegerField()
-    car_brand = models.CharField(max_length=30)
-    car_model = models.CharField(max_length=30)
+    car_brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
+    car_model = models.ForeignKey(CarModel, on_delete=models.CASCADE)
     mileage = models.IntegerField()
     price = models.IntegerField()
     note = models.TextField(null=True)
@@ -116,22 +139,4 @@ class Image(models.Model):
         return str(self.image)
 
 
-class CarBrand(models.Model):
-    name = models.CharField(max_length=20)
-    name_ch = models.CharField(max_length=40)
-    icon = models.ImageField(upload_to='carbrand', blank=True, null=True)
 
-    def __str__(self):
-        return str(self.name) + "(" + str(self.name_ch) + ")"
-
-
-class CarModel(models.Model):
-    brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
-    name_ch = models.CharField(max_length=60, blank=True, null=True)
-
-    def __str__(self):
-        if self.name_ch:
-            return str(self.name) + "(" + str(self.name_ch) + ")"
-        else:
-            return str(self.name)
