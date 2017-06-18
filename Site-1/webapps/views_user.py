@@ -8,6 +8,13 @@ from django.shortcuts import render
 from . import views
 from .models import UserPro, Deal
 
+typeDic = {'usedcar': '二手车',
+           'carpool': 'Carpool',
+           'useditem': '二手商品',
+           'houserent': '合租',
+           'sublease': 'Sublease',
+           'mergeorder': '拼单',
+           }
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -79,24 +86,38 @@ def checkEmail(request):
 @login_required
 def getUserInfo(request):
     type=request.GET.get('type', '')
-    config={'type' : type}
-    deals = Deal.objects.filter(posted_user=request.user).order_by('create_time')
+    is_save = request.GET.get('saved', False)
+
+    config = {'type': type, 'is_save': is_save}
+    if is_save:
+        deals = request.user.saved_by_users.all()
+    else:
+        deals = Deal.objects.filter(posted_user=request.user).order_by('create_time')
+
+    countPost = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
+    countSave = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
+    sumPost = Deal.objects.filter(posted_user=request.user).count()
+    sumSave = request.user.saved_by_users.all().count()
+    for k in countPost.keys():
+        countPost[k] = Deal.objects.filter(posted_user=request.user, type=k).count()
+        countSave[k] = request.user.saved_by_users.all().filter(type=k).count()
+    countPost.update({'total': sumPost})
+    countSave.update({'total': sumSave})
+
     if type:
         deals = deals.filter(type=type)
     deals = deals[:10]
     config['has_next'] = True if deals.count() == 10 else False
-    records=[]
-    countPost = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
-    for k in countPost.keys():
-        countPost[k] = Deal.objects.filter(posted_user=request.user, type=k).count()
+
+    records = []
     for deal in deals:
         record={'id':deal.id,
-                'title': deal.__str__(),
-                'type': deal.type,
+                'title': deal,
+                'type': typeDic[deal.type],
                 'create_time' : deal.create_time,
                 'expire_time' : deal.expire_time,
                 'hot_index' : deal.hot_index,
                 }
         records.append(record)
-    config.update({'countPost': countPost})
+    config.update({'countPost': countPost, 'countSave': countSave})
     return render(request, 'webapps/userInfo.html', {'records': records, 'config': config})

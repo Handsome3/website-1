@@ -65,7 +65,7 @@ class Carpool(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return "deal_id: "+ str(self.deal_id) + " from: "+ str(self.depart_place)+" to: " + str(self.destination)
+        return "记录序号 : " + str(self.deal_id) + "<br>出发地" + str(self.depart_place) + " to: " + str(self.destination)
 
 class UsedCar(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -77,7 +77,7 @@ class UsedCar(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "deal_id: "+ str(self.deal_id) + " brand: "+ str(self.car_brand)
+        return "记录序号 : " + str(self.deal_id) + "<br>车辆品牌 : " + str(self.car_brand) + "<br>车辆型号 : " + str(self.car_model)
 
 class UsedItem(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -88,7 +88,7 @@ class UsedItem(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "deal_id: "+ str(self.deal_id) + " item_type: "+ str(self.item_type)
+        return "记录序号 : " + str(self.deal_id) + "<br>商品分类 : " + str(self.item_type)
 
 class Sublease(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
