@@ -130,7 +130,6 @@ class MergeOrder(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to=upload_to_path, default='')
-    img_seq = models.IntegerField(default='1')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)

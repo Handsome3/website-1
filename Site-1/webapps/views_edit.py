@@ -1,9 +1,12 @@
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
+from mysite.settings import MEDIA_ROOT
 from .models import *
 from .views import confirmaAndRedirect
 from .views_detail import getContact
@@ -17,6 +20,11 @@ def deleteDeal(request, deal_id):
     else:
         for img in deal.image_set.all():
             img.image.delete()
+        s = "_"
+        path = os.path.join(MEDIA_ROOT, "images", s.join(['user', str(deal.posted_user.id)]),
+                            s.join(['deal', str(deal.id), str(deal.type)]))
+        path = path.replace('\\', '/')
+        os.rmdir(path)
         deal.delete()
         return confirmaAndRedirect(request, '删除成功！', reverse('webapps:getuserinfo'))
 

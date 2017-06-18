@@ -1,11 +1,13 @@
-from . import views
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.db import transaction
-from .models import UserPro, Deal
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db import transaction
+from django.http import JsonResponse
+from django.shortcuts import render
+
+from . import views
+from .models import UserPro, Deal
+
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -84,6 +86,9 @@ def getUserInfo(request):
     deals = deals[:10]
     config['has_next'] = True if deals.count() == 10 else False
     records=[]
+    countPost = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
+    for k in countPost.keys():
+        countPost[k] = Deal.objects.filter(posted_user=request.user, type=k).count()
     for deal in deals:
         record={'id':deal.id,
                 'title': deal.__str__(),
@@ -93,4 +98,5 @@ def getUserInfo(request):
                 'hot_index' : deal.hot_index,
                 }
         records.append(record)
+    config.update({'countPost': countPost})
     return render(request, 'webapps/userInfo.html', {'records': records, 'config': config})

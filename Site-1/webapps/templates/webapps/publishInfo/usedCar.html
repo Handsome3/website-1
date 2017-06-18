@@ -55,16 +55,19 @@
                      			<input name="year" type="text" class="datepicker form-control" placeholder="请选择年份" />
 							</div>
                             <div class="form-group">
-                            <div class="form-inline">
-					 			<label>车辆制造商</label>
-                                <select style="width: 30%" name="car_brand" class="form-control js-example-basic-single"
+                                <label class="col-sm-2" style="padding: 0px;">车辆制造商</label>
+                                <div class="col-sm-4" style="padding: 0px 20px 0px 0px;">
+                                    <select name="car_brand" class="form-control js-example-basic-single"
                                         id="5car_brand">
                                 </select>
-					 			<label>车辆型号</label>
-                                <select style="width: 30%" name="car_model" class="form-control js-example-basic-single"
+                                </div>
+                                <label class="col-sm-2" style="padding: 0px;">车辆型号</label>
+                                <div class="col-sm-4" style="padding: 0px;">
+                                    <select name="car_model" class="col-sm-4 form-control js-example-basic-single"
                                         id="5car_model">
                                 </select>
-							</div>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                             <div class="form-group">
 					 			<label>里程</label>
@@ -259,7 +262,21 @@
 						}
 					}
 				},
-			}
+                car_brand: {
+                    validators: {
+                        notEmpty: {
+                            message: '车辆品牌不能为空'
+                        },
+                    }
+                },
+                car_model: {
+                    validators: {
+                        notEmpty: {
+                            message: '车辆型号不能为空'
+                        },
+                    }
+                },
+            },
 		});
 	});	
 	var deal_id;

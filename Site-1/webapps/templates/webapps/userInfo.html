@@ -39,12 +39,18 @@
 					</div>
 					<div id="panel-element-943900" class="panel-collapse collapse">
 						<div class="panel-body">
-							<label><a href="{% url 'webapps:getuserinfo' %}?type=carpool">Carpool</a></label><br>
-                            <label><a href="{% url 'webapps:getuserinfo' %}?type=useditem">二手宝贝</a></label><br>
-                            <label><a href="#">Sublease</a></label><br>
-                            <label><a href="#">合租</a></label><br>
-                            <label><a href="{% url 'webapps:getuserinfo' %}?type=usedcar">二手车</a></label><br>
-                            <label><a href="#">拼单</a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=carpool">Carpool<font
+                                    color="red">({{ config.countPost.carpool }})</font></a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=useditem">二手宝贝<font
+                                    color="red">({{ config.countPost.useditem }})</font></a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=sublease">Sublease<font
+                                    color="red">({{ config.countPost.sublease }})</font></a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=houserent">合租<font
+                                    color="red">({{ config.countPost.houserent }})</font></a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=usedcar">二手车<font
+                                    color="red">({{ config.countPost.usedcar }})</font></a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=mergeorder">拼单<font
+                                    color="red">({{ config.countPost.mergeorder }})</font></a></label><br>
 						</div>
 					</div>
 				</div>
@@ -54,12 +60,16 @@
 					</div>
 					<div id="panel-element-111111" class="panel-collapse collapse">
 						<div class="panel-body">
-							<label><a href="#">Carpool</a></label><br>
-                            <label><a href="#">二手宝贝</a></label><br>
-                            <label><a href="#">Sublease</a></label><br>
-                            <label><a href="#">合租</a></label><br>
-                            <label><a href="#">二手车</a></label><br>
-                            <label><a href="#">拼单</a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=carpool&saved=True">Carpool</a></label><br>
+                            <label><a
+                                    href="{% url 'webapps:getuserinfo' %}?type=useditem&saved=True">二手宝贝</a></label><br>
+                            <label><a
+                                    href="{% url 'webapps:getuserinfo' %}?type=sublease&saved=True">Sublease</a></label><br>
+                            <label><a
+                                    href="{% url 'webapps:getuserinfo' %}?type=houserent&saved=True">合租</a></label><br>
+                            <label><a href="{% url 'webapps:getuserinfo' %}?type=usedcar&saved=True">二手车</a></label><br>
+                            <label><a
+                                    href="{% url 'webapps:getuserinfo' %}?type=mergeorder&saved=True">拼单</a></label><br>
 						</div>
 					</div>
 				</div>
