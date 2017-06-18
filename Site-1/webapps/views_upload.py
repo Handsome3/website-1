@@ -5,7 +5,7 @@ from .models import Deal, Image
 
 
 @login_required
-def usedcar(request):
+def uploadImg(request):
         images=request.FILES.getlist('images')
         deal=Deal.objects.get(id=request.POST['deal_id'])
         user=request.user
