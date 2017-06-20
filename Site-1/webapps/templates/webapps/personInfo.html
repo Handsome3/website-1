@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>个人中心</title>
+    <link href="{% static 'webapps/image/favicon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
+</head>
+<body>
+{% include "webapps/header.html" %}
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="page-header">
+                <h1>
+                    个人中心
+                    <small>信息修改</small>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-2 column">
+            <div class="my-user-leftbar">
+                <div class="panel-group" id="panel-322642">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-322642"
+                               href="#panel-element-461426"><label>个人信息修改</label></a>
+                        </div>
+                        <div id="panel-element-461426" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <label><a href="{% url 'webapps:editProfile' %}">联系方式修改</a></label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-322642"
+                               href="#panel-element-943900"><label>我发布的帖子</label></a>
+                        </div>
+                        <div id="panel-element-943900" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <label><a href="{% url 'webapps:getuserinfo' %}">全部<font
+                                        color="red">({{ config.countPost.total }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=carpool">Carpool<font
+                                        color="red">({{ config.countPost.carpool }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=useditem">二手宝贝<font
+                                        color="red">({{ config.countPost.useditem }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=sublease">Sublease<font
+                                        color="red">({{ config.countPost.sublease }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=houserent">合租<font
+                                        color="red">({{ config.countPost.houserent }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=usedcar">二手车<font
+                                        color="red">({{ config.countPost.usedcar }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=mergeorder">拼单<font
+                                        color="red">({{ config.countPost.mergeorder }})</font></a></label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-322642"
+                               href="#panel-element-111111"><label>我感兴趣的帖子</label></a>
+                        </div>
+                        <div id="panel-element-111111" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <label><a href="{% url 'webapps:getuserinfo' %}?saved=True">全部<font
+                                        color="red">({{ config.countSave.total }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=carpool&saved=True">Carpool<font
+                                        color="red">({{ config.countSave.carpool }})</font></a></label><br>
+                                <label><a
+                                        href="{% url 'webapps:getuserinfo' %}?type=useditem&saved=True">二手宝贝<font
+                                        color="red">({{ config.countSave.useditem }})</font></a></label><br>
+                                <label><a
+                                        href="{% url 'webapps:getuserinfo' %}?type=sublease&saved=True">Sublease<font
+                                        color="red">({{ config.countSave.sublease }})</font></a></label><br>
+                                <label><a
+                                        href="{% url 'webapps:getuserinfo' %}?type=houserent&saved=True">合租<font
+                                        color="red">({{ config.countSave.houserent }})</font></a></label><br>
+                                <label><a href="{% url 'webapps:getuserinfo' %}?type=usedcar&saved=True">二手车<font
+                                        color="red">({{ config.countSave.usedcar }})</font></a></label><br>
+                                <label><a
+                                        href="{% url 'webapps:getuserinfo' %}?type=mergeorder&saved=True">拼单<font
+                                        color="red">({{ config.countSave.mergeorder }})</font></a></label><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="my-panel">
+                <div class="my-panel-header">
+                    <h4 class="my-panel-title">个人信息</h4>
+                </div>
+                <div class="my-panel-body">
+                    <form id="infoform" class="form-horizontal" role="form" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="input01">邮箱:</label>
+                            <div class="controls col-sm-8">
+                                <p class="form-control-static">{{ request.user.username }}</p>
+                                <p class="help-block">不可修改</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="input01">用户名:</label>
+                            <div class="controls col-sm-8">
+                                <input name="username" type="text" placeholder="" class="input-sm"
+                                       value="{{ request.user.first_name }}">
+                                <p class="help-block">10个汉字以内</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="input01">微信ID:</label>
+                            <div class="controls col-sm-8">
+                                <input name="wechat" type="text" placeholder="" class="input-sm"
+                                       value="{{ request.user.userpro.wechat }}">
+                                <p class="help-block">常用的微信号</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">电话:</label>
+                            <div class="controls col-sm-8">
+                                <div class="input-prepend">
+                                    <span class="add-on">(1)</span>
+                                    <input name="phone" class="span2 input-sm" id="prependedInput" type="text"
+                                           value="{{ request.user.userpro.phone }}">
+                                </div>
+                                <p class="help-block">常用手机号</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">微信二维码:</label>
+                            <div class="controls col-sm-8">
+                                <input type="file">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <button class="btn btn-block btn-primary" onClick="changeProfile()">提交修改</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="infodiv" class="alert alert-dismissable" style="display: none;">
+                        <h4 id="infotitle"></h4>
+                        <p id="info"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="my-panel">
+                <div class="my-panel-header" style="background-color: #FFCC99;">
+                    <h4 class="my-panel-title">密码修改</h4>
+                </div>
+                <div class="my-panel-body">
+                    <form id="pwform" class="form-horizontal" role="form" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="input01">旧密码:</label>
+                            <div class="controls col-sm-8">
+                                <input name="oldpw" type="password" placeholder="" class="input-sm">
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="input01">新密码:</label>
+                            <div class="controls col-sm-8">
+                                <input name="newpw" type="password" placeholder="" class="input-sm">
+                                <p class="help-block">密码应为6位以上</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="input01">确认新密码:</label>
+                            <div class="controls col-sm-8">
+                                <input name="newpw2" type="password" placeholder="" class="input-sm">
+                                <p class="help-block">请输入相同的密码</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <button class="btn btn-block btn-danger" onClick="changepw()">确定</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="pwinfodiv" class="alert alert-dismissable" style="display: none;">
+                        <h4 id="pwinfotitle"></h4>
+                        <p id="pwinfo"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% include 'webapps/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
+<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#infoform').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username: {
+                    message: '无效的用户名',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            max: 20,
+                            message: '用户名长度不超过20个字符'
+                        },
+                    }
+                },
+                phone: {
+                    message: '不合法的电话号码',
+                    validators: {
+                        stringLength: {
+                            min: 10,
+                            max: 10,
+                            message: '电话号码长度应为10位'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: '电话号码只能由数字组成'
+                        }
+                    }
+                }
+            }
+        });
+        $('#pwform').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                oldpw: {
+                    validators: {
+                        notEmpty: {
+                            message: '旧密码不能为空'
+                        }
+                    }
+                },
+                newpw: {
+                    message: '密码无效',
+                    validators: {
+                        notEmpty: {
+                            message: '新密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 12,
+                            message: '密码长度应在6-12位'
+                        },
+                        identical: {
+                            field: 'newpw2',
+                            message: '两次密码不一致'
+                        }
+                    }
+                },
+                newpw2: {
+                    message: '密码无效',
+                    validators: {
+                        notEmpty: {
+                            message: '新密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 12,
+                            message: '密码长度应在6-12位'
+                        },
+                        identical: {
+                            field: 'newpw',
+                            message: '两次密码不一致'
+                        }
+                    }
+                },
+            }
+        });
+    });
+
+    function changepw() {
+        if ($('#pwform').data('bootstrapValidator').isValid()) {
+            $("#pwform").attr('action', '{% url 'webapps:changePw' %}');
+            $('#pwform').ajaxSubmit({
+                success: function (data) {
+                    $('#pwinfo').text(data.info);
+                    if (data.status == 'success') {
+                        $('#pwinfotitle').text('操作成功');
+                        $('#pwinfodiv').addClass('alert-success');
+                    }
+                    else {
+                        $('#pwinfotitle').text('错误');
+                        $('#pwinfodiv').addClass('alert-warning');
+                    }
+                    $('#pwinfodiv').css('display', '');
+                    setTimeout("$('#pwinfodiv').css('display', 'none')", 3000);
+                    $('#pwform').data('bootstrapValidator').resetForm(true);
+                    $('#pwform')[0].reset();
+                }
+            });
+        }
+    };
+
+    function changeProfile() {
+        $('#infoform').bootstrapValidator('validate');
+        if ($('#infoform').data('bootstrapValidator').isValid()) {
+            $("#infoform").attr('action', '{% url 'webapps:changeProfile' %}');
+            $('#infoform').ajaxSubmit({
+                success: function (data) {
+                    $('#infodiv').addClass('alert-success');
+                    $('#infotitle').text('操作成功');
+                    $('#info').text('您的个人信息已经更新！');
+                    $('#infodiv').css('display', '');
+                    setTimeout("$('#infodiv').css('display', 'none')", 3000);
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

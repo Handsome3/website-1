@@ -1,5 +1,7 @@
+import datetime
 import os
 
+from dateutil import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
@@ -24,7 +26,10 @@ def deleteDeal(request, deal_id):
         path = os.path.join(MEDIA_ROOT, "images", s.join(['user', str(deal.posted_user.id)]),
                             s.join(['deal', str(deal.id), str(deal.type)]))
         path = path.replace('\\', '/')
-        os.rmdir(path)
+        try:
+            os.rmdir(path)
+        except Exception:
+            pass
         deal.delete()
         return confirmaAndRedirect(request, '删除成功！', reverse('webapps:getuserinfo'))
 
@@ -46,6 +51,27 @@ def editDeal(request, deal_id):
         else:
             pass
 
+
+@login_required
+def stopDeal(request, deal_id):
+    deal = get_object_or_404(Deal, id=deal_id)
+    if request.user != deal.posted_user:
+        return confirmaAndRedirect(request, '出错啦！您不是发布者，无法修改', '/')
+    else:
+        deal.expire_time = datetime.datetime.now() - relativedelta.relativedelta(days=1)
+        deal.save()
+        return confirmaAndRedirect(request, '信息下架成功！', reverse('webapps:getuserinfo'))
+
+
+@login_required
+def repostDeal(request, deal_id):
+    deal = get_object_or_404(Deal, id=deal_id)
+    if request.user != deal.posted_user:
+        return confirmaAndRedirect(request, '出错啦！您不是发布者，无法修改', '/')
+    else:
+        deal.expire_time = datetime.datetime.now() + relativedelta.relativedelta(months=1)
+        deal.save()
+        return confirmaAndRedirect(request, '信息重新发布成功！', reverse('webapps:getuserinfo'))
 
 @login_required
 def deleteImage(request):

@@ -21,7 +21,7 @@
 		</div>
 	</div>
     <div class="row clearfix">
-		<div class="col-md-2 column">
+        <div class="col-md-2 column my-user-leftbar">
 			<div class="panel-group" id="panel-322642">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -29,7 +29,7 @@
 					</div>
 					<div id="panel-element-461426" class="panel-collapse collapse">
 						<div class="panel-body">
-							<label><a href="#">联系方式修改</a></label><br>
+                            <label><a href="{% url 'webapps:editProfile' %}">联系方式修改</a></label><br>
 						</div>
 					</div>
 				</div>
@@ -86,18 +86,20 @@
 			</div>
 		</div>
 
-        <div class="col-md-10 column" style="border-left: 2px solid #eee; height: 600px;">
-            <div class="col-sm-12 column" style="background-color: #eee;">
+        <div class="col-md-10 column" style="border-left: 2px solid #eee; min-height: 600px; height: auto;">
+            <div class="my-panel">
+                <div class="my-panel-header" style="border-bottom: none;">
                 <ul class="nav nav-tabs" style="padding-left: 25%">
-                    <li class="active" style="width: 35%; text-align: center; ">
-                        <a href="#">正在发布</a>
+                    <li {% if not config.is_overdue %} class="active"{% endif %}
+                                                       style="width: 35%; text-align: center; ">
+                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}">正在发布</a>
                     </li>
-                    <li style="width: 35%; text-align: center;">
-                        <a href="#">已过期</a>
+                    <li {% if config.is_overdue %} class="active"{% endif %} style="width: 35%; text-align: center;">
+                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}&overdue=True">已停止发布</a>
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-12 column">
+                <div class="my-panel-body">
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -121,9 +123,16 @@
                             <a target="_blank" href="{% url 'webapps:getDealDetail' record.id %}"
                                class="btn btn-xs btn-info">详情</a>
                             {% if not config.is_save %}
+                                {% if not config.is_overdue %}
                             <a target="_blank" href="{% url 'webapps:editDeal' record.id %}"
                                class="btn btn-xs btn-warning">修改</a>
-                                <a onClick="delCfm({{ record.id }})" class="btn btn-xs btn-danger">删除</a>
+                                    <a onClick="stopCfm({{ record.id }})" class="btn btn-xs btn-danger">下架</a>
+                                {% else %}
+                                    <a href="{% url 'webapps:repostDeal' record.id %}" class="btn btn-xs btn-success">重新发布</a>
+                                    <a onClick="delCfm({{ record.id }})" class="btn btn-xs btn-danger">彻底删除</a>
+                            {% endif %}
+                            {% else %}
+                                <a onClick="unsaveDeal({{ record.id }})" class="btn btn-xs btn-warning">移除</a>
                             {% endif %}
                         </td>
 					</tr>
@@ -139,10 +148,13 @@
                 <h4>注意啦！</h4>
                 <strong>没有更多结果了。</strong>
             </div>
+            </div>
 		</div>
-	</div>
+
+    </div>
 </div>
-    <div class="modal fade" id="delcfmModel" style="position: fixed; top:30%; left:0%;">
+
+    <div class="modal fade" id="stopcfmModel" style="position: fixed; top:30%; left:0%;">
         <div class="modal-dialog">
             <div class="modal-content message_align">
                 <div class="modal-header">
@@ -151,11 +163,28 @@
                     <h4 class="modal-title">提示信息</h4>
                 </div>
                 <div class="modal-body">
-                    <p>信息删除就无法恢复，您确认要删除吗？</p>
+                    <p>您确定要停止发布该条信息吗？</p>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="url"/>
-                    <a id="cfmBtn" class="btn btn-success" data-dismiss="modal">确定</a>
+                    <a id="stopcfmBtn" class="btn btn-success" data-dismiss="modal">确定</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delcfmModel" style="position: fixed; top:30%; left:0%;">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">重要提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确定要彻底删除该条信息吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <a id="delcfmBtn" class="btn btn-success" data-dismiss="modal">确定</a>
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 </div>
             </div>
@@ -207,11 +236,25 @@
 			};
 		});
 	});
+    function stopCfm(deal_id) {
+        $('#stopcfmBtn').bind("click", function () {
+            window.location.href = "/deal/stop/" + deal_id;
+        });
+        $('#stopcfmModel').modal();
+    };
     function delCfm(deal_id) {
-        $('#cfmBtn').bind("click", function () {
+        $('#delcfmBtn').bind("click", function () {
             window.location.href = "/deal/delete/" + deal_id;
         });
         $('#delcfmModel').modal();
+    };
+    function unsaveDeal(deal_id) {
+        $.ajax({
+            method: "get",
+            url: "{% url 'webapps:unsaveDeal' %}",
+            data: {'deal_id': deal_id}
+        });
+        window.location.reload();
     };
 </script>
 </body>

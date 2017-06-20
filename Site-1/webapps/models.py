@@ -65,7 +65,8 @@ class Carpool(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return "记录序号 : " + str(self.deal_id) + "<br>出发地" + str(self.depart_place) + " to: " + str(self.destination)
+        return "记录序号 : " + str(self.deal_id) + "<br>出发地 : " + str(self.depart_place) + "<br>目的地 : " + str(
+            self.destination)
 
 class UsedCar(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)

@@ -1,4 +1,6 @@
-from django.contrib.auth import authenticate, login, logout
+import datetime
+
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -83,31 +85,43 @@ def checkEmail(request):
         else:
             return JsonResponse({'valid' : 'true'})
 
+
+def countDeal(request):
+    countPost = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
+    countSave = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
+    for k in countPost.keys():
+        countPost[k] = Deal.objects.filter(posted_user=request.user, type=k).count()
+        countSave[k] = request.user.saved_by_users.all().filter(type=k).count()
+    sumPost = Deal.objects.filter(posted_user=request.user).count()
+    sumSave = request.user.saved_by_users.all().count()
+    countPost.update({'total': sumPost})
+    countSave.update({'total': sumSave})
+    return {'countPost': countPost, 'countSave': countSave}
+
+
 @login_required
 def getUserInfo(request):
-    type=request.GET.get('type', '')
-    is_save = request.GET.get('saved', False)
+    type = request.GET.get('type', '')
+    is_save = False if request.GET.get('saved', 'False') == 'False' else True
+    is_overdue = False if request.GET.get('overdue', 'False') == 'False' else True
 
-    config = {'type': type, 'is_save': is_save}
+    # filter the deals which fulfill the requirements of request
+    config = {'type': type, 'is_save': is_save, 'is_overdue': is_overdue}
     if is_save:
         deals = request.user.saved_by_users.all()
     else:
         deals = Deal.objects.filter(posted_user=request.user).order_by('create_time')
-
-    countPost = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
-    countSave = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
-    sumPost = Deal.objects.filter(posted_user=request.user).count()
-    sumSave = request.user.saved_by_users.all().count()
-    for k in countPost.keys():
-        countPost[k] = Deal.objects.filter(posted_user=request.user, type=k).count()
-        countSave[k] = request.user.saved_by_users.all().filter(type=k).count()
-    countPost.update({'total': sumPost})
-    countSave.update({'total': sumSave})
-
+    if is_overdue:
+        deals = deals.filter(expire_time__lt=datetime.datetime.now())
+    else:
+        deals = deals.filter(expire_time__gte=datetime.datetime.now())
     if type:
         deals = deals.filter(type=type)
     deals = deals[:10]
     config['has_next'] = True if deals.count() == 10 else False
+
+    # count the number of posts and saved posts
+    config.update(countDeal(request))
 
     records = []
     for deal in deals:
@@ -119,5 +133,43 @@ def getUserInfo(request):
                 'hot_index' : deal.hot_index,
                 }
         records.append(record)
-    config.update({'countPost': countPost, 'countSave': countSave})
+
     return render(request, 'webapps/userInfo.html', {'records': records, 'config': config})
+
+
+@login_required
+def editProfile(request):
+    config = {}
+    config.update(countDeal(request))
+    return render(request, 'webapps/personInfo.html', {'config': config})
+
+
+@login_required
+def changePw(request):
+    if request.method == "POST":
+        oldpw = request.POST['oldpw']
+        newpw = request.POST['newpw']
+        user = authenticate(username=request.user.username, password=oldpw)
+        if user is not None:
+            user.set_password(newpw)
+            user.save()
+            update_session_auth_hash(request, user)
+            return JsonResponse({'status': 'success', 'info': '密码修改成功，请牢记！'})
+        else:
+            return JsonResponse({'status': 'fail', 'info': '旧密码输入错误'})
+
+
+@login_required
+def changeProfile(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        wechat = request.POST['wechat']
+        phone = request.POST['phone']
+        user = User.objects.get(id=request.user.id)
+        with transaction.atomic():
+            user.first_name = username
+            user.userpro.wechat = wechat
+            user.userpro.phone = phone
+            user.save()
+            user.userpro.save()
+        return JsonResponse({'status': 'success'})
