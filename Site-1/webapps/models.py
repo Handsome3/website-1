@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
-from .utilities import upload_to_path
 from django.db import models
+
+from .utilities import upload_to_path
+
 
 # Create your models here.
 
@@ -30,6 +32,27 @@ class Deal(models.Model):
         else:
             return ''
 
+
+class CarBrand(models.Model):
+    name = models.CharField(max_length=20)
+    name_ch = models.CharField(max_length=40)
+    icon = models.ImageField(upload_to='carbrand', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.name) + "(" + str(self.name_ch) + ")"
+
+
+class CarModel(models.Model):
+    brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    name_ch = models.CharField(max_length=60, blank=True, null=True)
+
+    def __str__(self):
+        if self.name_ch:
+            return str(self.name) + "(" + str(self.name_ch) + ")"
+        else:
+            return str(self.name)
+
 class Carpool(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     date = models.DateField()
@@ -42,19 +65,20 @@ class Carpool(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return "deal_id: "+ str(self.deal_id) + " from: "+ str(self.depart_place)+" to: " + str(self.destination)
+        return "记录序号 : " + str(self.deal_id) + "<br>出发地 : " + str(self.depart_place) + "<br>目的地 : " + str(
+            self.destination)
 
 class UsedCar(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     year = models.IntegerField()
-    car_brand = models.CharField(max_length=30)
-    car_model = models.CharField(max_length=30)
+    car_brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
+    car_model = models.ForeignKey(CarModel, on_delete=models.CASCADE)
     mileage = models.IntegerField()
     price = models.IntegerField()
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "deal_id: "+ str(self.deal_id) + " brand: "+ str(self.car_brand)
+        return "记录序号 : " + str(self.deal_id) + "<br>车辆品牌 : " + str(self.car_brand) + "<br>车辆型号 : " + str(self.car_model)
 
 class UsedItem(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -65,7 +89,7 @@ class UsedItem(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "deal_id: "+ str(self.deal_id) + " item_type: "+ str(self.item_type)
+        return "记录序号 : " + str(self.deal_id) + "<br>商品分类 : " + str(self.item_type)
 
 class Sublease(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -109,7 +133,6 @@ class MergeOrder(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to=upload_to_path, default='')
-    img_seq = models.IntegerField(default='1')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
@@ -118,22 +141,4 @@ class Image(models.Model):
         return str(self.image)
 
 
-class CarBrand(models.Model):
-    name = models.CharField(max_length=20)
-    name_ch = models.CharField(max_length=40)
-    icon = models.ImageField(upload_to='carbrand', blank=True, null=True)
 
-    def __str__(self):
-        return str(self.name) + "(" + str(self.name_ch) + ")"
-
-
-class CarModel(models.Model):
-    brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
-    name_ch = models.CharField(max_length=60, blank=True, null=True)
-
-    def __str__(self):
-        if self.name_ch:
-            return str(self.name) + "(" + str(self.name_ch) + ")"
-        else:
-            return str(self.name)

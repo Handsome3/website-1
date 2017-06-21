@@ -1,13 +1,17 @@
 import datetime
-from . import views
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+import traceback
+
 from dateutil import relativedelta
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from .models import Deal, Carpool, MergeOrder, UsedCar, Image, HouseRent, Sublease, UsedItem, UserPro
 import sys, traceback
 from django.http import JsonResponse
+from django.shortcuts import render
+
+from . import views
+from .models import *
+
 
 
 @login_required
@@ -74,36 +78,36 @@ def getUsercarPage(request):
 
 @login_required
 def usedcarPost(request):
-    if request.method == 'POST':
-        type = 'usedcar'
-        create_time = datetime.date.today()
-        expire_time = create_time + relativedelta.relativedelta(months=1)
-        ### need to be changed
-        user = request.user
-        contact = request.POST.getlist('contact_type[]')
-        contact_type = ""
-        for i in contact:
-            contact_type += i
-        # usedcar fields
-        year = request.POST['year']
-        price = request.POST['price']
-        mileage = request.POST['mileage']
-        car_model = request.POST['car_model']
-        car_brand = request.POST['car_brand']
-        note = request.POST['note']
-        # transaction
-        with transaction.atomic():
-            deal = Deal(type=type, create_time=create_time, expire_time=expire_time, posted_user=user,
-                        contact_type=contact_type)
-            deal.save()
-            usedcar = UsedCar(deal=deal, year=year, car_brand=car_brand, car_model=car_model,
-                              price=price, mileage=mileage, note=note)
-            usedcar.save()
-        # redirect to a new URL:
-        if deal:
-            return JsonResponse({"deal_id": deal.id, "status": "success"})
-        else:
-            return JsonResponse({'status': 'fail'})
+        if request.method == 'POST':
+            type = 'usedcar'
+            create_time = datetime.date.today()
+            expire_time = create_time + relativedelta.relativedelta(months=1)
+            ### need to be changed
+            user = request.user
+            contact = request.POST.getlist('contact_type[]')
+            contact_type = ""
+            for i in contact:
+                contact_type += i
+            # usedcar fields
+            year = request.POST['year']
+            price = request.POST['price']
+            mileage = request.POST['mileage']
+            car_model_id = request.POST['car_model']
+            car_brand_id = request.POST['car_brand']
+            note = request.POST['note']
+            # transaction
+            with transaction.atomic():
+                deal = Deal(type=type, create_time=create_time, expire_time=expire_time, posted_user=user, contact_type=contact_type)
+                deal.save()
+                usedcar = UsedCar(deal=deal, year=year, car_brand=CarBrand.objects.get(id=car_brand_id),
+                                  car_model=CarModel.objects.get(id=car_model_id),
+                                  price=price, mileage=mileage, note=note)
+                usedcar.save()
+            # redirect to a new URL:
+            if deal:
+                return JsonResponse({"deal_id": deal.id, "status":"success"})
+            else:
+                return JsonResponse({'status':'fail'})
 
 
 @login_required
@@ -152,6 +156,7 @@ def houseRentPost(request):
             return JsonResponse({"deal_id": deal.id, "status": "success"})
         else:
             return JsonResponse({'status': 'fail'})
+
 
 
 @login_required

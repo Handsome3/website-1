@@ -115,4 +115,4 @@ def searchUsedcar(config):
         if config['mileage'] == 5:
             cars = cars.filter(price__gte=20000)
     cars = cars[config['start']:config['start'] + 10]
-    # return cars
+    return cars
