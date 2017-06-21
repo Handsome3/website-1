@@ -70,11 +70,12 @@ class UsedItem(models.Model):
 class Sublease(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     community = models.CharField(max_length=40)
-    house_type = models.CharField(max_length=20)
+    bedroom_num=models.IntegerField(default=1)
+    bathroom_num=models.IntegerField(default=1)
     rent = models.FloatField()
     start_date = models.DateField()
     end_date = models.DateField()
-    renew = models.BooleanField(default=True)
+    renewal = models.BooleanField(default=True)
     note = models.TextField(null=True)
 
     def __str__(self):

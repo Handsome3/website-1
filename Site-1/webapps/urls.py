@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import views, views_user, views_post, views_upload, views_detail, views_search
+from . import views, views_user, views_post, views_upload, views_detail, views_search,views_option
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'post/mergeorder/submit',views_post.mergeOrderPost),
     url(r'post/carpool/page',views_post.getCarpoolPage),
     url(r'post/carpool/submit', views_post.carpoolPost),
-    url(r'post/usedcar/page', views_post.usercarPage),
+    url(r'post/usedcar/page', views_post.getUsercarPage),
     url(r'post/usedcar/submit', views_post.usedcarPost),
     url(r'postresult',views.getPostResult,name='postresult'),
 
@@ -41,6 +41,8 @@ urlpatterns = [
     url(r'deal/save', views_detail.saveDeal, name='saveDeal'),
     url(r'deal/unsave', views_detail.unsaveDeal, name='unsaveDeal'),
     url(r'deal/loadmore', views_detail.loadMoreDeal, name='loadMoreDeal'),
+    url(r'option/carbrand',views_option.getCarBrand,name='getCarBrand'),
+    url(r'option/carmodel',views_option.getCarModel,name='getCarModel'),
 
     #Item Detail
     url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_detail.getDealDetail, name='getDealDetail'),

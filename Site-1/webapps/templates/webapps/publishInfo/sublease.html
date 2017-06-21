@@ -1,140 +1,316 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>发布信息</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>发布信息</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
 </head>
 
 <body>
 <div class="container">
-	{% include "webapps/header.html" %}
+    {% include "webapps/header.html" %}
     <div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1  align="left">
-					 发布信息
-				</h1>
-			</div>
-		</div>
-	</div>
+        <div class="col-md-12 column">
+            <div class="page-header">
+                <h1 align="left">
+                    发布信息
+                </h1>
+            </div>
+        </div>
+    </div>
     <div class="row clearfix">
-		<div class="col-md-12 column">
-        	<ul class="nav nav-tabs">
-                    <li>
-						 <a href="/post/carpool/page">Carpool</a>
-					</li>
-					<li>
-						 <a href="/post/useditem/page"> 二手宝贝</a>
-					</li>
-                    <li class="active">
-                    	 <a href="/post/sublease/page">Sublease</a>
-                    </li>
-                    <li>
-                    	 <a href="/post/houserent/page">合租</a>
-                    </li>
-                    <li>
-                    	 <a href="/post/usedcar/page">二手车</a>
-                    </li>
-                    <li>
-                    	 <a href="/post/mergeorder/page">拼单</a>
-                    </li>
-				</ul>
-                            <form role="form" style="margin:20px 80px">
-								<div class="form-group">
-                                <label>所在小区</label>
-                            	<select class="form-control js-example-basic-single" id="3community">
-                            		<option>Campus Lodge</option>
-                                	<option>Povilian</option>
-                            	</select>
-                                </div>
-                                <div class="form-group">
-                                <label>户型:</label>
-                                <div class="form-inline">              
-                                	<select class="form-control js-example-basic-single" id="3numOfBed">
-                                		<option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                	</select>
-                                    <label>卧室</label>
-                                    <select class="form-control js-example-basic-single" id="3numOfBath">
-                                    	<option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
-                                    <label>卫生间</label>
-                                </div>
-                                </div>
-                                <div class="form-group">
-                                	<label>月租</label>
-                                    <input type="number" class="form-control" id="3rent">
-                                </div>
-                                <div class="form-group">
-                                	<label>开始日期</label>
-                                    <input type="text" class="datepicker form-control" placeholder="请选择日期" />
-                                </div>
-                                <div class="form-group">
-                                	<label>结束日期</label>
-                                    <input type="text" class="datepicker form-control" placeholder="请选择日期" />
-                                </div>
-                                <div class="form-group">
-                                	<label>可否续租</label>
-                                    	<label class="checkbox-inline">
-                                    	<input type="radio" name="3renew" id="renewYes" value="1">是
-                                        </label>
-                                        <label class="checkbox-inline">
-                                        <input type="radio" name="3renew" id="renewNo" value="0">否
-                                        </label>
-                                </div>
-                                <div class="form-group">
-                                	<textarea class="form-control" rows="3" placeholder="备注" id="3note"></textarea>
-                            	</div>
-                            	<div class="form-group">
-                            		<label class="control-label">上传房屋照片</label>
-                            		<input id="3img" type="file" class="file" multiple>
-                            	</div>
-                                <hr>
-                                <div class="form-group">
-                					<center> <button type="submit" class="btn btn-block btn-success btn-default">发布</button></center>
-                            	</div>
-							</form>
-		</div>
-	</div>
-    
+        <div class="col-md-12 column">
+            <ul class="nav nav-tabs">
+                <li>
+                    <a href="/post/carpool/page">Carpool</a>
+                </li>
+                <li>
+                    <a href="/post/useditem/page"> 二手宝贝</a>
+                </li>
+                <li class="active">
+                    <a href="/post/sublease/page">Sublease</a>
+                </li>
+                <li>
+                    <a href="/post/houserent/page">合租</a>
+                </li>
+                <li>
+                    <a href="/post/usedcar/page">二手车</a>
+                </li>
+                <li>
+                    <a href="/post/mergeorder/page">拼单</a>
+                </li>
+            </ul>
+            <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>所在小区</label>
+                    <select name="community" class="form-control js-example-basic-single" id="3community">
+                        <option>Campus Lodge</option>
+                        <option>Pavilion</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>户型:</label>
+                    <div class="form-inline">
+                        <select name="bedroom_num" class="form-control js-example-basic-single" id="3numOfBed">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <label>卧室</label>
+                        <select name="bathroom_num" class="form-control js-example-basic-single" id="3numOfBath">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                        <label>卫生间</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>月租</label>
+                    <input name="rent" type="number" class="form-control" id="3rent">
+                </div>
+                <div class="form-group">
+                    <label>开始日期</label>
+                    <input name="start_date" type="text" class="datepicker form-control" placeholder="请选择日期" id="3start_date"/>
+                </div>
+                <div class="form-group">
+                    <label>结束日期</label>
+                    <input name="end_date" type="text" class="datepicker form-control" placeholder="请选择日期" id="3end_date"/>
+                </div>
+                <div class="form-group">
+                    <label>可否续租</label>
+                    <label class="checkbox-inline">
+                        <input name="renewal" type="radio" name="3renew" id="renewYes" value="1">是
+                    </label>
+                    <label class="checkbox-inline">
+                        <input name="renewal" type="radio" name="3renew" id="renewNo" value="0">否
+                    </label>
+                </div>
+                <div class="form-group">
+                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="3note"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">上传房屋照片</label>
+                    <input name="images" id="3img" type="file" class="file" multiple>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label>联系方式选择（可多选）</label>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            {% if not phone %}
+                                <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
+                                <a href="/user/set/phone">马上设置</a>
+                            {% else %}
+                                <input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
+                            {% endif %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            {% if not wechat %}
+                                <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
+                                <a href="/user/set/wechatid">马上设置</a>
+                            {% else %}
+                                <input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
+                            {% endif %}
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <center>
+                        <button id="submitbtn" onClick="submitForm()" class="btn btn-block btn-info btn-default">发布
+                        </button>
+                    </center>
+                </div>
+            </form>
+        </div>
+    </div>
+
     {% include "webapps/footer.html" %}
-    
+
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
+<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 <script>
-		function initFileInput(ctrlName, uploadUrl) {    
-    		var control = $('#' + ctrlName); 
-    		control.fileinput({
-        		language: 'zh', //设置语言
-    		});
-		}
-        initFileInput("3img","");
-		$(".datepicker").datepicker({
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    };
+    var csrftoken = getCookie('csrftoken');
+
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            orientation: "bottom",
             language: "zh-CN",
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
-            format: "mm-dd-yyyy",
-			todayHighlight: true,
+            format: "yyyy-mm-dd",
+            maxViewMode: 0,
+            minViewMode: 0,
+        }).on('hide', function () {
+            $('#form').data('bootstrapValidator')
+                .updateStatus('start_date', 'NOT_VALIDATED', null)
+                .validateField('start_date');
+            $('#form').data('bootstrapValidator')
+                .updateStatus('end_date', 'NOT_VALIDATED', null)
+                .validateField('end_date');
         });
-		$(".js-example-basic-single").select2({
-			minimumResultsForSearch: Infinity
-		});
+        $(".js-example-basic-single").select2({
+            minimumResultsForSearch: Infinity
+        });
+        $("#form").bootstrapValidator({
+            message: '表单不合法',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                start_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '起始日期不能为空',
+                        },
+                    }
+                },
+                end_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '结束日期不能为空',
+                        },
+                        callback: {
+                            message: '请选择正确的日期',
+                            callback: function(value,validator){
+                                var start = $('#3start_date').val();
+                                var end =$('#3end_date').val();
+                                return end>start;
+                            }
+                        }
+                    }
+                },
+                rent: {
+                    validators: {
+                        notEmpty: {
+                            message: '月租不能为空'
+                        },
+                        between: {
+                            min: 0,
+                            max: 10000,
+                            message: '请输入正确的数值'
+                        }
+                    }
+                },
+                renewal: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择可否续租'
+                        }
+                    }
+                },
+                'contact_type[]': {
+                    validators: {
+                        choice: {
+                            min: 1,
+                            max: 3,
+                            message: '请选择1到3种联系方式'
+                        }
+                    }
+                }
+            }
+        });
+    });    var deal_id;
+    $('#3img').fileinput({
+        uploadUrl: '/upload/images',
+        uploadAsync: false,
+        language: 'zh',
+        maxFileSize: 100000,
+        allowedFileTypes: ['image'],
+        showUpload: false,
+        removeFromPreviewOnError: true,
+        layoutTemplates: {
+            actionUpload: '',
+        },
+        uploadExtraData: function (previewId, index) {   //额外参数 返回json数组
+            return {
+                'deal_id': deal_id
+            };
+        },
+        maxFileCount: 9,
+        ajaxSettings: {
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        },
+    }).on("filebatchuploadsuccess", function (event, data) {
+        var response = data.response;
+        if (response.status == 'success') {
+            var str = "/redirect?info=发布成功&next=/deal/" + response.deal_id + "/detail";
+            console.log(str);
+            setTimeout("", 2000);
+            window.location.href = "/redirect?info=发布成功&next=/deal/" + response.deal_id + "/detail";
+        }
+    });
+    function submitForm() {
+
+        if ($('#form').data('bootstrapValidator').isValid()) {
+            $("#form").attr('action', '/post/sublease/submit');
+            $('#form').ajaxSubmit({
+                success: function (data) {
+                    if (data.status == 'success') {
+                        deal_id = data.deal_id;
+                        $("#submitbtn").attr("disabled", true);
+                        $('#3img').fileinput('upload');
+                    }
+                }
+            });
+        }
+        else
+            alert("请正确填写表单！");
+    };
 </script>
 </body>
 </html>
+
 

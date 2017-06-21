@@ -54,7 +54,7 @@
                     <label>所在小区</label>
                     <select name="community" class="form-control js-example-basic-single" id="4community">
                         <option>Campus Lodge</option>
-                        <option>Povilian</option>
+                        <option>Pavilion</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -159,156 +159,156 @@
                     </center>
                 </div>
             </form>
-            {% include "webapps/footer.html" %}
-        </div>
         </div>
     </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                crossorigin="anonymous"></script>
-        <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
-        <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-        <script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
-        <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
-        <script>
-            function getCookie(name) {
-                var cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = jQuery.trim(cookies[i]);
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
+    {% include "webapps/footer.html" %}
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
+<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    };
+    var csrftoken = getCookie('csrftoken');
+
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            orientation: "bottom",
+            language: "zh-CN",
+            autoclose: true,//选中之后自动隐藏日期选择框
+            clearBtn: true,//清除按钮
+            format: "yyyy-mm-dd",
+            maxViewMode: 0,
+            minViewMode: 0,
+        }).on('hide', function (e) {
+            $('#form').data('bootstrapValidator')
+                .updateStatus('start_date', 'NOT_VALIDATED', null)
+                .validateField('start_date');
+        });
+        $(".js-example-basic-single").select2({
+            minimumResultsForSearch: Infinity
+        });
+        $("#form").bootstrapValidator({
+            message: '表单不合法',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                start_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '起始日期不能为空'
+                        },
+                    }
+                },
+                rent: {
+                    validators: {
+                        notEmpty: {
+                            message: '月租不能为空'
+                        },
+                        between: {
+                            min: 0,
+                            max: 10000,
+                            message: '请输入正确的数值'
+                        }
+                    }
+                },
+                roommate_gender: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择室友性别偏好'
+                        }
+                    }
+                },
+                'contact_type[]': {
+                    validators: {
+                        choice: {
+                            min: 1,
+                            max: 3,
+                            message: '请选择1到3种联系方式'
                         }
                     }
                 }
-                return cookieValue;
-            };
-            function csrfSafeMethod(method) {
-                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-            };
-            var csrftoken = getCookie('csrftoken');
+            }
+        });
+    });
 
-            $(document).ready(function () {
-                $(".datepicker").datepicker({
-                    orientation: "bottom",
-                    language: "zh-CN",
-                    autoclose: true,//选中之后自动隐藏日期选择框
-                    clearBtn: true,//清除按钮
-                    format: "yyyy-mm-dd",
-                    maxViewMode: 0,
-                    minViewMode: 0,
-                }).on('hide', function (e) {
-                    $('#form').data('bootstrapValidator')
-                        .updateStatus('start_date', 'NOT_VALIDATED', null)
-                        .validateField('start_date');
-                });
-                $(".js-example-basic-single").select2({
-                    minimumResultsForSearch: Infinity
-                });
-                $("#form").bootstrapValidator({
-                    message: '表单不合法',
-                    feedbackIcons: {
-                        valid: 'glyphicon glyphicon-ok',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh'
-                    },
-                    fields: {
-                        start_date: {
-                            validators: {
-                                notEmpty: {
-                                    message: '起始日期不能为空'
-                                },
-                            }
-                        },
-                        rent: {
-                            validators: {
-                                notEmpty: {
-                                    message: '月租不能为空'
-                                },
-                                between:{
-                                    min:0,
-                                    max:10000,
-                                    message:'请输入正确的数值'
-                                }
-                            }
-                        },
-                        roommate_gender: {
-                            validators: {
-                                notEmpty: {
-                                    message: '请选择室友性别偏好'
-                                }
-                            }
-                        },
-                        'contact_type[]': {
-                            validators: {
-                                choice: {
-                                    min: 1,
-                                    max: 3,
-                                    message: '请选择1到3种联系方式'
-                                }
-                            }
-                        }
+    var deal_id;
+    $('#4img').fileinput({
+        uploadUrl: '/upload/images',
+        uploadAsync: false,
+        language: 'zh',
+        maxFileSize: 100000,
+        allowedFileTypes: ['image'],
+        showUpload: false,
+        removeFromPreviewOnError: true,
+        layoutTemplates: {
+            actionUpload: '',
+        },
+        uploadExtraData: function (previewId, index) {   //额外参数 返回json数组
+            return {
+                'deal_id': deal_id
+            };
+        },
+        maxFileCount: 9,
+        ajaxSettings: {
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        },
+    }).on("filebatchuploadsuccess", function (event, data) {
+        var response = data.response;
+        if (response.status == 'success') {
+            var str = "/redirect?info=发布成功&next=/deal/" + response.deal_id + "/detail";
+            console.log(str);
+            setTimeout("", 2000);
+            window.location.href = "/redirect?info=发布成功&next=/deal/" + response.deal_id + "/detail";
+        }
+    });
+    function submitForm() {
+
+        if ($('#form').data('bootstrapValidator').isValid()) {
+            $("#form").attr('action', '/post/houserent/submit');
+            $('#form').ajaxSubmit({
+                success: function (data) {
+                    if (data.status == 'success') {
+                        deal_id = data.deal_id;
+                        $("#submitbtn").attr("disabled", true);
+                        $('#4img').fileinput('upload');
                     }
-                });
+                }
             });
-
-            var deal_id;
-            $('#4img').fileinput({
-			uploadUrl: '/upload/images',
-			uploadAsync: false,
-			language: 'zh',
-			maxFileSize: 100000,
-			allowedFileTypes: ['image'],
-			showUpload: false,
-			removeFromPreviewOnError:true,
-			layoutTemplates: {
-				actionUpload:'',
-			},
-			uploadExtraData:function(previewId, index) {   //额外参数 返回json数组
-                 return {
-                         'deal_id':deal_id
-                        };
-                 },
-			maxFileCount: 9,
-			ajaxSettings: {
-               beforeSend: function(xhr, settings) {
-        			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            			xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        			}
-    			}
-           	},
-		}).on("filebatchuploadsuccess", function(event, data) {
-			var response=data.response;
-			if (response.status=='success'){
-				var str="/redirect?info=发布成功&next=/deal/"+response.deal_id+"/detail";
-				console.log(str);
-				setTimeout("",2000);
-				window.location.href="/redirect?info=发布成功&next=/deal/"+response.deal_id+"/detail";
-			}
-	});
-	function submitForm(){
-
-		if($('#form').data('bootstrapValidator').isValid()){
-			$("#form").attr('action','/post/houserent/submit');
-			$('#form').ajaxSubmit({
-				success: function(data){
-					if (data.status=='success'){
-						deal_id=data.deal_id;
-						$("#submitbtn").attr("disabled", true);
-						$('#4img').fileinput('upload');
-					}
-				}
-			});
-		}
-		else
-			alert("请正确填写表单！");
-	};
+        }
+        else
+            alert("请正确填写表单！");
+    };
 </script>
 </body>
 </html>
