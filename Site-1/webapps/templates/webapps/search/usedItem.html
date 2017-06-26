@@ -3,24 +3,18 @@
 <head>
 <meta charset="utf-8">
 <title>信息搜索-二手宝贝</title>
+{% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'webapps/css/nprogress.css' %}">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-<div class="container">
 	{% include "webapps/header.html" %}
-    <div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1>
-					信息搜索 <small>二手宝贝</small>
-				</h1>
-			</div>
-		</div>
-	</div>
-
-	<div class="row clearfix">
+<div class="container">
 		<div class="col-md-12 column" >
+		<div class="my-panel">
+			<div class="my-panel-header">
 			<ul class="nav nav-tabs">
 				<li>
 					 <a href="#">Carpool</a>
@@ -41,135 +35,108 @@
 					 <a href="#">拼单</a>
                 </li>
 			</ul>
+			</div>
+			<div class="my-panel-body">
+                          	{% for row in options %}
+                          		<div class="my-search-row">
+									<label class="col-sm-2 my-search-option-title">{{ row.name }} :</label>
+									<div class="col-sm-10 my-search-option-body">
+									{% if row.type == "exact" %}
+									{% for option in row.options %}
+									<a class="my-search-option" data-field="{{ row.field }}" data-type="{{ row.type }}" data-value="{{ option.value }}"><span class="my-search-option-space"></span><span>{{ option.label }}</span></a>
+									{% endfor %}
+                          	        {% endif %}
+                          	        {% if row.type == "between" %}
+                          	        {% for option in row.options %}
+									<a class="my-search-option" data-field="{{ row.field }}" data-type="{{ row.type }}" data-min="{{ option.min }}" data-max="{{ option.max }}"><span class="my-search-option-space"></span><span>{{ option.label }}</span></a>
+									{% endfor %}
+                          	        {% endif %}
+                           	        </div>
+                           	        <div class="clearfix"></div>
+                            	</div>
+                            {% endfor %}
+			</div>
 		</div>
+		<div id="result" class="row" style="min-height: 400px;">
+			{% for record in records %}
+                <div class="col-sm-6 col-md-4 col-lg-3 ">
+                    <div id="" class="thumbnail" style="cursor: pointer;"
+                         onClick="window.open('{% url 'webapps:getDealDetail' record.id %}')"
+                         onMouseOver="this.style.border='1px solid #6f5499'"
+                         onMouseOut="this.style.border='1px solid #ddd'">
+						<img src="{{ record.img_url }}" style="width: 100%; height:225px;">
+                        <div class="caption">
+                            <h4 style="color: #6f5499">
+                                ${{ record.price }}
+                            </h4>
+                            <p class="col-sm-3" align="left" style="padding: 0px; color: #999;" >
+                            	描述:<br>
+                            	日期:
+                            </p>
+                            <p class="col-sm-9" align="right">
+                                {{ record.title }}<br>
+                                {{ record.post_date|date:'Y-m-d' }}
+                            </p>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+		</div>	
+			
 	</div>
-	<div class="row clearfix">
-		<div class="col-md-3 column" style="margin:20px 0px;">
-			<form role="form">
-				<div class="form-group">
-					 			<label for="item_type">宝贝类型</label>
-                     			<select class="form-control" id="2item_type">
-                                	<option>家具</option>
-                                    <option>化妆品</option>
-                                    <option>服饰</option>
-                                    <option>数码产品</option>
-                                 </select>
-							</div>
-                            <div class="form-group">
-                            	<label for="item_name">关键字</label>
-                                <input type="text" id="2keyword" class="form-control" />
-                            </div>
-							<div class="form-group">
-					 			<label>售价范围</label>
-                                <div class="form-inline">
-                     				<input type="number" class="form-control" id="2leastPrice" style="width:30%" placeholder="最低"/>
-                                    <label>-</label>
-                                    <input type="number" class="form-control" id="2mostPrice" style="width:30%" placeholder="最高"/>
-                                </div>
-							</div>
-                            <div class="form-group">
-                            	<label>宝贝状态</label>
-                                <select class="form-control" id="2condition">
-                                	<option>全新</option>
-                                    <option>九成新</option>
-                                    <option>七成新</option>
-                                    <option>五成新</option>
-                                    <option>五成新以下</option>
-                                </select>
-                            </div>
-                <button type="submit" class="btn btn-lg btn-block btn-info">搜索</button>
-			</form>
-		</div>
-		<div class="col-md-9 column" style="margin:20px 0px;">
-        		<div class="row clearfix">
-					<div class="col-md-4 column">
-						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
-                 	</div>
-                 	<div class="col-md-5 column">
-						<div class="caption" style="margin:10px 40px">
-							<h3>
-								商品标题
-							</h3>
-							<p>
-								缩略介绍
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> 
-							</p>
-						</div>
-                     </div>
-				</div>
-                <hr>
-                <div class="row clearfix">
-					<div class="col-md-4 column">
-						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
-                 	</div>
-                 	<div class="col-md-5 column">
-						<div class="caption" style="margin:10px 40px">
-							<h3>
-								商品标题
-							</h3>
-							<p>
-								缩略介绍
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> 
-							</p>
-						</div>
-                     </div>
-				</div>
-                <hr>
-                <div class="row clearfix">
-					<div class="col-md-4 column">
-						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
-                 	</div>
-                 	<div class="col-md-5 column">
-						<div class="caption" style="margin:10px 40px">
-							<h3>
-								商品标题
-							</h3>
-							<p>
-								缩略介绍
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> 
-							</p>
-						</div>
-                     </div>
-				</div>
-                
-            <div class="row clearfix">    
-            	<div class="col-md-9 column">
-					<center><ul class="pagination">
-						<li>
-					 		<a href="#">Prev</a>
-						</li>
-						<li>
-					 		<a href="#">1</a>
-						</li>
-						<li>
-					 		<a href="#">2</a>
-						</li>
-						<li>
-					 		<a href="#">3</a>
-						</li>
-						<li>
-					 		<a href="#">4</a>
-						</li>
-						<li>
-					 		<a href="#">5</a>
-						</li>
-						<li>
-					 		<a href="#">Next</a>
-						</li>
-					</ul></center>
-            	</div>
-             </div>
-		</div>
-	</div>
-	{% include "webapps/footer.html" %}
 </div>
+	{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src='{% static 'webapps/js/nprogress.js' %}'></script>
+<script>
+	var sconfig={};
+	var end={{ config.end }}, has_next={{ config.has_next|lower }};
+	$(document).ready(function () {
+		$('.my-search-option-body').each(function(){$(this).children().first().attr('class','my-search-option-active')});
+	});
+	$('.my-search-option').click(function(){
+		$(this).parent().find('.my-search-option-active').attr('class','my-search-option');
+		$(this).attr('class','my-search-option-active');
+		var field = $(this).data('field'), type = $(this).data('type');
+		if (type=="exact")
+			sconfig[field]=[type, $(this).data('value')]
+		if (type=="between")
+			sconfig[field]=[type, $(this).data('min'), $(this).data('max')];
+		sconfig.end=0;
+		$.ajax({
+			url : '{% url 'webapps:ajaxUseditemSearch' %}',
+			data: sconfig,
+			type : 'GET',
+			dataType: 'JSON',
+			success: function(data){
+				$('#result').empty();
+				for (i in data.records) {
+						var txt="<div class='col-sm-6 col-md-4 col-lg-3'>\
+											<div class='thumbnail' style='cursor: pointer;' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\" onMouseOver=\"this.style.border='1px solid black'\" onMouseOut=\"this.style.border='1px solid #ddd'\">\
+											<img src='" + data.records[i].img_url + "' style='width: 100%; height: 225px;'>\
+						  					<div class='caption'>\
+												<h4 style='color: #6f5499'>$" + data.records[i].price + "</h4>\
+												<p class='col-sm-3' align='left' style='padding: 0px; color: #999' >描述:<br>日期:</p>\
+											<p class='col-sm-9' align='right'>\
+												"+data.records[i].title+"<br>\
+												"+data.records[i].post_date+"\
+											</p>\<div class='clearfix'></div>\
+											</div></div></div>";
+                        $('#result').append(txt);
+                    };
+			},
+		});
+		
+	});
+	$(document).ajaxStart(function(){
+		NProgress.start();
+	});
+	$(document).ajaxStop(function(){
+		NProgress.done();
+	});
+	
+</script>
 </body>
 </html>

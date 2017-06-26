@@ -11,22 +11,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-<div class="container">
     {% include "webapps/header.html" %}
+<div class="container-fluid" style="background-color: #F0F0F0;">
+<div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <div class="page-header">
-                <h1 align="left">
-                    发布信息
-                </h1>
-            </div>
-        </div>
-    </div>
-    <div class="row clearfix">
-        <div class="col-md-12 column">
+           <div class="my-panel">
             <ul class="nav nav-tabs">
                 <li>
                     <a href="/post/carpool/page">Carpool</a>
@@ -120,12 +114,12 @@
                     </center>
                 </div>
             </form>
+			</div>
         </div>
     </div>
-
-    {% include "webapps/footer.html" %}
-
 </div>
+	</div>
+	    {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -230,7 +224,6 @@
         }
     });
     function submitForm() {
-
         if ($('#form').data('bootstrapValidator').isValid()) {
             $("#form").attr('action', '/post/useditem/submit');
             $('#form').ajaxSubmit({
@@ -238,7 +231,7 @@
                     if (data.status == 'success') {
                         deal_id = data.deal_id;
                         $("#submitbtn").attr("disabled", true);
-                        $('#3img').fileinput('upload');
+                        $('#2img').fileinput('upload');
                     }
                 }
             });

@@ -4,7 +4,6 @@ import traceback
 from dateutil import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from .models import Deal, Carpool, MergeOrder, UsedCar, Image, HouseRent, Sublease, UsedItem, UserPro
 import sys, traceback
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -51,21 +50,12 @@ def carpoolPost(request):
             carpool = Carpool(deal=deal, date=date, time=time, depart_place=depart, destination=destination,
                               passenger_num=passenger_num, price=price, car_type=car_type, note=note)
             carpool.save()
+        if deal:
+            return JsonResponse({"deal_id": deal.id, "status": "success"})
+        else:
+            return JsonResponse({'status': 'fail'})
 
-            if deal:
-                return JsonResponse({"deal_id": deal.id, "status": "success"})
-            else:
-                return JsonResponse({'status': 'fail'})
-
-    #     return views.confirmaAndRedirect(request, "发布成功", "/user/getuserinfo")
-    #
-    # return render(request, 'webapps/carpool_post.html')
-    #
-    # except Exception as e:
-    #     error_type = repr(e)
-    #     tb = traceback.format_exc()
-    #     return render(request, 'webapps/carpool_post.html',{'error_message': error_type,'tb':tb})
-    #
+        return views.confirmaAndRedirect(request, "发布成功", "/user/getuserinfo")
 
 
 @login_required
@@ -183,8 +173,8 @@ def subleasePost(request):
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
         community = request.POST['community']
-        bedroom_num = request.POST['bedroom_num']
-        bathroom_num = request.POST['bathroom_num']
+        bedroom_num = int(request.POST['bedroom_num'])
+        bathroom_num = int(request.POST['bathroom_num'])
         renewal = request.POST['renewal']
         rent = request.POST['rent']
         note = request._post['note']
@@ -216,7 +206,7 @@ def getMergeOrderPage(request):
 @login_required
 def mergeOrderPost(request):
         if request.method == 'POST':
-            type = 'houserent'
+            type = 'mergeorder'
             create_time = datetime.date.today()
             expire_time = create_time + relativedelta.relativedelta(months=1)
             user = request.user

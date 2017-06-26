@@ -11,25 +11,18 @@
 <body>
 	{% include "webapps/header.html" %}
 <div class="container">
-    <div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1  align="center">
-					信息详情
-				</h1>
-			</div>
-		</div>
-	</div>
 	<div class="row clearfix">
-		<div class="col-md-1 column">
-		</div>
-		<div class="col-md-10 column">
-			
-			<table class="table table-hover table-striped">
+		<div class="col-md-offset-1 col-md-10 column">
+			<div class="my-panel">
+			<div class="my-panel-header">
+				<h1 class="my-panel-title">信息详情</h1>
+			</div>
+			<div class="my-panel-body" style="min-height: 600px;">
+			<h3>文字描述</h3>
+			<center><table class="table table-hover table-striped" style="width: 90%">
 				<thead>
 					<tr>
 						<th>
-                        	<h3>文字描述</h3>
 						</th>
 						<th>
 						</th>
@@ -37,85 +30,125 @@
 				</thead>
 				<tbody>
 					{% for key, value in text.items %}
-						<tr class="{% cycle 'warning' 'info' %}">
+						<tr>
 							<td> {{ key }} </td>
 							<td> {{ value }} </td>
 						</tr>
 					{% endfor %}
 				</tbody>
-			</table>
-            
+			</table></center>          
             <div>
-            <hr>
            	{% if images %}
-            <h3 align="left">图片描述</h3>
-            <div class="carousel slide" id="carousel-971961">
-				<ol class="carousel-indicators">
-					{% for img in images %}
-						<li data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %} class="active" {% endif %} data-target="#carousel-971961"></li>
-					{% endfor %}
-				</ol>
-				<div class="carousel-inner">
-					{% for img in images %}
-					<div class="item {% if forloop.first %} active {% endif %}">
-						<img alt="" src="{{ img.image.url }}" />
-					</div>
-					{% endfor %}
-				</div> 
-				<a class="left carousel-control" href="#carousel-971961" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-971961" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-			</div>
+            <table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th>
+                        		 <h3>图片描述</h3>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td>
+						<center><div class="carousel slide" id="carousel-971961" style="margin-top: 20px; width: 90%">
+									<ol class="carousel-indicators">
+										{% for img in images %}
+											<li data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %} class="active" {% endif %} data-target="#carousel-971961"></li>
+										{% endfor %}
+									</ol>
+									<div class="carousel-inner">
+										{% for img in images %}
+										<div class="item {% if forloop.first %} active {% endif %}">
+											<img alt="" src="{{ img.image.url }}" />
+										</div>
+										{% endfor %}
+									</div> 
+									<a class="left carousel-control" href="#carousel-971961" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-971961" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+						</div></center>
+						</td></tr>
+					</tbody>
+				</table>
+            
            	{% endif %}
             </div>
             
 
             <div id="contact_info" style="{% if not config.is_saved %} display:none {% endif %}">
-            	<hr>
             	<table class="table table-hover table-striped">
 					<thead>
 						<tr>
 							<th>
-                        		 用户联系信息
+                        		 <h4>用户联系信息</h4>
 							</th>
 							<th>
 							</th>
 						</tr>
 					</thead>
 					<tbody id="location">
-						{% if config.email %}
-						<tr>
-							<td>邮箱：</td>
-							<td>{{ config.email }}</td>
-						</tr>
-						{% endif %}
-						{% if config.phone %}
-						<tr>
-							<td>电话：</td>
-							<td>{{ config.phone }}</td>
-						</tr>
-						{% endif %}
-						{% if config.wechat %}
-						<tr>
-							<td>微信：</td>
-							<td>{{ config.wechat }}</td>
-						</tr>
-						{% endif %}
 					</tbody>
 				</table>
+            </div>            
             </div>
             
             <div class="form-group">
-            	<hr>
+            	{% if not config.is_author %}
             	<button id="save" class="btn btn-default btn-success btn-lg btn-block" {% if config.is_saved %} style="display: none" {% endif %}>我感兴趣</button>
             	<button id="unsave" class="btn btn-default btn-warning btn-lg btn-block" {% if not config.is_saved %} style="display: none" {% endif %}>不感兴趣</button>
+            	{% else %}
+
+            	<div class="col-sm-6"><button id="edit" class="btn btn-default btn-warning btn-lg btn-block" {% if config.is_overdue %} style="display: none" {% endif %}>修改</button></div>
+            	<div class="col-sm-6"><button id="stop" class="btn btn-default btn-danger btn-lg btn-block" {% if config.is_overdue %} style="display: none" {% endif %}>下架</button></div>
+            	<div class="clearfix"></div>
+            	
+            	<div class="col-sm-6"><button id="repost" class="btn btn-default btn-success btn-lg btn-block" {% if not config.is_overdue %} style="display: none" {% endif %}>重新发布</button></div>
+            	<div class="col-sm-6"><button id="delete" class="btn btn-default btn-danger btn-lg btn-block" {% if not config.is_overdue %} style="display: none" {% endif %}>彻底删除</button></div>
+            	<div class="clearfix"></div>
+            	{% endif %}
             	<br>
             </div>
+            
+            </div>
 		</div>
-		
 		<div class="col-md-1 column">
 		</div>
 	</div>
 </div>
     {% include "webapps/footer.html" %}
+<div class="modal fade" id="stopcfmModel" style="position: fixed; top:30%; left:0%;">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确定要停止发布该条信息吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <a id="stopcfmBtn" class="btn btn-success" data-dismiss="modal">确定</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delcfmModel" style="position: fixed; top:30%; left:0%;">
+        <div class="modal-dialog">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">重要提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确定要彻底删除该条信息吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <a id="delcfmBtn" class="btn btn-success" data-dismiss="modal">确定</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
@@ -167,6 +200,24 @@
 			});
 			$('#location').empty();
 		}
+	});
+	$('#stop').click(function(){
+		$('#stopcfmModel').modal();
+		$('#stopcfmBtn').bind("click", function () {
+				window.location.href="{% url 'webapps:stopDeal' config.deal_id %}?next={{ request.path }}";
+        });
+	});
+	$('#edit').click(function(){
+		window.location.href="{% url 'webapps:editDeal' config.deal_id %}?next={{ request.path }}";
+	});
+	$('#delete').click(function(){
+		$('#delcfmModel').modal();
+		$('#delcfmBtn').bind('click', function(){
+			window.location.href="{% url 'webapps:deleteDeal' config.deal_id %}?next={% url 'webapps:getuserinfo' %}";
+		});
+	});
+	$('#repost').click(function(){
+		window.location.href="{% url 'webapps:repostDeal' config.deal_id %}?next={{ request.path }}";
 	});
 </script>
 </body>

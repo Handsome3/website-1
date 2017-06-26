@@ -11,48 +11,26 @@
 
 <body>
 	{% include "webapps/header.html" %}
-    <div class="container" style="padding: 0px;">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <div class="page-header" style="margin: 0px; border: none;">
-                    <h1>
-                        信息搜索 <small>二手车</small>
-                    </h1>
-                </div>
+<div class="container">
+	<div class="col-md-12">
+	<div class="my-panel">
+            <div class="my-panel-header" style="background-color: white">
+				<h4>二手车&gt;</h4>
             </div>
-        </div>
-    </div>
-    <div class="container" style="padding: 0px;">
-        <center>
-            <ul class="nav nav-tabs">
-                    <li>
-                        <a href="#">Carpool</a>
-                    </li>
-                    <li>
-                        <a href="#">二手宝贝</a>
-                    </li>
-                    <li>
-                        <a href="#">Sublease</a>
-                    </li>
-                    <li>
-                        <a href="#">求合租</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">二手车</a>
-                    </li>
-                    <li>
-                        <a href="#">拼单</a>
-                    </li>
-            </ul>
-        </center>
-    </div>
-    <div class="container-fluid" style="background-color: #eee;">
-        <div class="container">
-            <div id="leftDiv" class="col-md-4 column" style="padding:20px 10px; ">
+            <div id="leftDiv" style="padding:20px 10px; background-color: #eee;">
                 <form role="form">
+                   	<div class="form-group">
+                   		<label class="col-sm-2">车辆年份:</label>
+                   		<a class="col-sm-1">1年以内</a>
+                   		<a class="col-sm-1">1-3年</a>
+                   		<a class="col-sm-1">3-5年</a>
+                   		<a class="col-sm-1">5-10年</a>
+                   		<a class="col-sm-1">10年以上</a>
+                   		<div class="clearfix"></div>
+					</div>
                     <div class="form-group">
                         <label>车辆年份</label>
-                        <select onChange="search()" name="year" class="form-control js-example-basic-single" id="year">
+                        <select onChange="search()" name="year" class="form-control js-example-basic-single s2" id="year">
                             <option value="0">无限制</option>
                             <option value="1">1年以内</option>
                             <option value="2">1-3年</option>
@@ -62,26 +40,22 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <div class="form-inline">
-                            <label>制造商</label>
+                            <label class="col-sm-2">制造商</label>
+                            <div class="col-sm-4">
                             <select onChange="search()" class="form-control js-example-basic-single" id="car_brand"
                                     name="car_brand">
-                                <option value="0">无限制</option>
-                                <option value="Nissan">Nissan</option>
-                                <option value="Chevelet">Chevelet</option>
                             </select>
-                            <label>型号</label>
-                            <select onChange="search()" class="form-control js-example-basic-single" id="car_model"
+                            </div> 
+                            <label class="col-sm-2">型号</label>
+                            <div class="col-sm-4">
+                            <select onChange="search()" class="form-control js-example-basic-single" disabled="disabled" id="car_model"
                                     name="car_model">
-                                <option value="0">无限制</option>
-                                <option value="Altima">Altima</option>
-                                <option value="Insperia">Insperia</option>
                             </select>
-                        </div>
+							</div>
                     </div>
                     <div class="form-group">
                         <label>里程</label>
-                        <select onChange="search()" name="mileage" class="form-control js-example-basic-single"
+                        <select onChange="search()" name="mileage" class="form-control js-example-basic-single s2"
                                 id="mileage">
                             <option value="0">无限制</option>
                             <option value="1">1万迈以内</option>
@@ -93,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label>售价范围</label>
-                        <select onChange="search()" name="price" class="form-control js-example-basic-single"
+                        <select onChange="search()" name="price" class="form-control js-example-basic-single s2"
                                 id="price">
                             <option value="0">无限制</option>
                             <option value="1">5000以内</option>
@@ -105,10 +79,8 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-    <div class="container" style="padding-top: 20px;">
-        <div id="result" class="row">
+	</div>
+        <div id="result" class="row" style="min-height: 400px;">
             {% for record in records %}
                 <div class="col-sm-6 col-md-4 col-lg-3 ">
                     <div id="" class="thumbnail" style="cursor: pointer;"
@@ -124,7 +96,7 @@
                         {% endif %}
                         <div class="caption">
                             <h4>
-                                {{ record.title }}
+                                {{ record.title|safe }}
                             </h4>
                             <p>
                                 {{ record.year }}<br>
@@ -135,7 +107,6 @@
                     </div>
                 </div>
             {% endfor %}
-        </div>
         <div class="loading" id="loading" style="display: none; height:200px;">
             <center>
                 <svg viewBox="0 0 120 120" version="1.1">
@@ -173,7 +144,9 @@
             <h4>抱歉！</h4>
             <strong>没有更多结果了。</strong>
         </div>
-    </div>
+	</div>
+</div>
+</div>
 	{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -182,9 +155,56 @@
         var start, end = 10;
         var has_next ={{ config.has_next|lower }};
         $(document).ready(function () {
-            $(".js-example-basic-single").select2({
-                minimumResultsForSearch: Infinity
-            });
+			$("#car_brand").select2({
+				minimumResultsForSearch: Infinity,
+				placeholder: "请选择车辆品牌",
+				ajax: {
+					url: "{% url 'webapps:getCarBrand' %}",
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						return {
+							q: params.term, // search term
+							page: params.page
+						};
+					},
+					processResults: function (data) {
+						return {
+							results: data.records,
+						};
+					},
+					cache: true,
+				},
+			}).on("select2:select", function () {
+				$('#car_model').val("");
+				$("#car_model").empty();
+			});
+			$('#car_model').select2({
+				minimumResultsForSearch: Infinity,
+				placeholder: "请选择车辆型号",
+				ajax: {
+					url: "{% url 'webapps:getCarModel' %}",
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						var id = $('#car_brand').val();
+						return {
+							q: params.term,
+							brand_id: id,
+						};
+					},
+					processResults: function (data) {
+						console.log(data);
+							return {
+								results: data.records,
+							};
+					},
+					cache: true,
+				},
+			});
+			$('.s2').select2({
+				minimumResultsForSearch: Infinity,
+			})
             $(window).scroll(function () {
                 if (parseFloat($(window).height()) + parseFloat($(window).scrollTop()) >= $(document).height() - 20 && has_next) {
                     var config = {
@@ -231,8 +251,8 @@
             var config = {
                 'year': $('#year option:selected').val(),
                 'mileage': $('#mileage option:selected').val(),
-                'car_brand': $('#car_brand option:selected').text(),
-                'car_model': $('#car_model option:selected').text(),
+                'car_brand': $('#car_brand option:selected').val(),
+                'car_model': $('#car_model option:selected').val(),
                 'price': $('#price option:selected').val(),
                 'end': 0,
             };
@@ -254,8 +274,7 @@
 												<h3>" + data.records[i].title + "</h3>\
 												<p>" + data.records[i].year + "<br>" + data.records[i].car_brand + "<br>" + data.records[i].car_model + "<br></p>\
 											  </div></div></div>");
-                    }
-                    ;
+                    };
                     has_next = data.has_next;
                     end = 10;
                     if (has_next == false)

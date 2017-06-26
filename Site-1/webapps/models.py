@@ -29,8 +29,14 @@ class Deal(models.Model):
             return self.carpool.__str__()
         elif self.type == 'usedcar':
             return self.usedcar.__str__()
-        else:
-            return ''
+        elif self.type == 'useditem':
+            return self.useditem.__str__()
+        elif self.type == 'sublease':
+            return self.sublease.__str__()
+        elif self.type == 'houserent':
+            return self.houserent.__str__()
+        elif self.type == 'mergeorder':
+            return self.mergeorder.__str__()
 
 
 class CarBrand(models.Model):
@@ -89,7 +95,7 @@ class UsedItem(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "记录序号 : " + str(self.deal_id) + "<br>商品分类 : " + str(self.item_type)
+        return str(self.item_name)+' '+str(self.condition)
 
 class Sublease(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)

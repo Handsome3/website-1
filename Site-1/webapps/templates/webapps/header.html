@@ -1,4 +1,14 @@
 {% load static %}
+<div class="container-fluid" style="background-color: white">
+<div class="container" >
+	<img src="{% static 'webapps/image/logo.png' %}">
+	<form class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" />
+						</div> <button type="submit" class="btn btn-default"> 搜索</button>
+	</form>
+</div>
+</div>
 <div class="container-fluid"
      style="color:#cdbfe3;background-color:#6f5499;background-image:-webkit-gradient(linear,left top,left bottom,from(#563d7c),to(#6f5499));background-image:-webkit-linear-gradient(top,#563d7c 0,#6f5499 100%);background-image:-o-linear-gradient(top,#563d7c 0,#6f5499 100%);background-image:linear-gradient(to bottom,#563d7c 0,#6f5499 100%)">
     <div class="container" style="padding: 0px 0px 0px 0px;">
@@ -11,20 +21,20 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                      </button>
-                    <a class="navbar-brand" href="/"><img src="{% static 'webapps/image/logo.png' %}"></a>
+                    <a class="navbar-brand" href="/"><font color="DCF7A1">易活</font></a>
 				</div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-top: 40px;">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1" size="+0.5">我要找信息<strong
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1">我要找信息<strong
                                     class="caret"></strong></font></a>
 							<ul class="dropdown-menu">
 								<li>
-									 <a href="/search-carpool">找Carpool</a>
+									 <a href="{% url 'webapps:searchCarpool' %}">找Carpool</a>
 								</li>
 								<li>
-									 <a href="/search-used-item">淘二手宝贝</a>
+									 <a href="{% url 'webapps:searchUsedItem' %}">淘二手宝贝</a>
 								</li>
 								<li>
 									 <a href="/search-sublease">求Sublease</a>
@@ -41,7 +51,7 @@
 							</ul>
 						</li>
 						<li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1" size="+0.5">我要发信息<strong
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1">我要发信息<strong
                                     class="caret"></strong></font></a>
 							<ul class="dropdown-menu">
 								<li>
@@ -68,17 +78,16 @@
 					<ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_authenticated %}
                         <li>
-                            <p id="loginInfo" class="navbar-text"><font color="DCF7A1"
-                                                                        size="+0.5">欢迎您， {{ request.user.first_name }}</font>
+                            <p id="loginInfo" class="navbar-text"><font color="DCF7A1">Hi， {{ request.user.first_name }}</font>
                             </p>
                         </li>
 						<li>
                              <a href="/user/getuserinfo">
-                                 <font color="DCF7A1" size="+0.5">个人中心</font>
+                                 <font color="DCF7A1">个人中心</font>
                              </a>
 						</li>
 						<li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1" size="+0.5">选项<strong
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="DCF7A1">选项<strong
                                     class="caret"></strong></font></a>
 							<ul class="dropdown-menu">
 								<li>
@@ -92,12 +101,12 @@
                         {%  else %}
                             <li>
                                 <a href="/user/loginpage">
-                                    <font color="DCF7A1" size="+0.5">登录</font>
+                                    <font color="DCF7A1">登录</font>
                                 </a>
                             </li>
                             <li>
                                 <a href="/user/loginpage">
-                                    <font color="DCF7A1" size="+0.5">注册</font>
+                                    <font color="DCF7A1">注册</font>
                                 </a>
                             </li>
                         {% endif %}

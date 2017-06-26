@@ -3,39 +3,60 @@ img.my-img-sm {
     width: 300px !important;
     height: 200px !important;
 }
-
-a, h1, h2, h3, h4, h5, h6, h7, table, label, select, option, p {
+a, h1, h2, h3, h4, h5, h6, h7, table, label, select, option, p, button {
     font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
 }
-
 div.my-panel {
     border: 1px solid #ddd !important;
     height: auto;
     border-radius: 10px;
     margin-bottom: 20px;
+	margin-top: 20px;
+	background-color: white!important;
 }
-
 .my-panel-header {
     background-color: #f5f5f5;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom: 1px solid #ddd;
 }
-
 .my-panel-body {
     padding: 20px;
 }
-
 .my-user-leftbar {
     min-height: 600px;
     height: auto;
+	margin-top: 30px;
 }
-
 .my-panel-title {
     margin-top: 0px;
     margin-left: 15px;
     margin-right: 15px;
     padding-top: 10px;
+}
+.my-search-row{
+	padding: 9px 0px 10px;
+	border-top: 1px dashed #ddd;
+}
+a.my-search-option{
+	margin: 0px 40px 0px 0px;
+	color: black;
+	cursor: pointer;
+}
+a.my-search-option:hover{
+	color:red;
+	text-decoration:none;
+}
+a.my-search-option-active{
+	margin: 0px 40px 0px 0px;
+	color:red;	
+}
+a.my-search-option-active:hover{
+	text-decoration:none;
+}
+.my-search-option-title{
+	color: #999;
+	margin: 0px;
 }
 svg {
     height: 100px;

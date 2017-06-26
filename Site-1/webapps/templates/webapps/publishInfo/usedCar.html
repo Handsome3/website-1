@@ -14,20 +14,11 @@
 
 <body>
 	{% include "webapps/header.html" %}
-    <div class="container">
+<div class="container-fluid" style="background-color: #F0F0F0;">
+<div class="container">
     <div class="row clearfix">
 		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1  align="left">
-					 发布信息
-				</h1>
-			</div>
-		</div>
-	</div>
-   	{{ error_message}}
-   	{{ tb }}
-    <div class="row clearfix">
-		<div class="col-md-12 column">
+              <div class="my-panel">
                  <ul class="nav nav-tabs">
                 <li>
                     <a href="/post/carpool/page">Carpool</a>
@@ -116,8 +107,10 @@
                 				<center> <button id="submitbtn" onClick="submitForm()" class="btn btn-block btn-info btn-default">发布</button></center>
                             </div>
 							</form>
+			</div>
 		</div>
 	</div>
+</div>
 </div>
     {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -281,7 +274,7 @@
 	});	
 	var deal_id;
 	$('#5img').fileinput({
-        uploadUrl: "{% url 'webapps:uploadUsedcar' %}",
+        uploadUrl: "{% url 'webapps:uploadImg' %}",
 			uploadAsync: false,
 			language: 'zh', 
 			maxFileSize: 100000,

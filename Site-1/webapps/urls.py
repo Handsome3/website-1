@@ -10,7 +10,9 @@ urlpatterns = [
     url(r'^$', views.index),
 
     #search
-                  url(r'search/usedcar', views_search.usedcarPage, name='searchUsedcar'),
+    url(r'search/usedcar', views_search.usedcarPage, name='searchUsedcar'),
+    url(r'search/useditem', views_search.useditemPage, name='searchUsedItem'),
+    url(r'search/carpool', views_search.carpoolPage, name='searchCarpool'),
 
     #User
     url(r'user/loginpage',views_user.loginPage, name='loginPage'),
@@ -21,7 +23,7 @@ urlpatterns = [
     url(r'user/logout', views_user.userlogout),
     url(r'user/changeuser', views_user.changeUser),
     url(r'user/checkemail', views_user.checkEmail),
-                  url(r'user/editProfile', views_user.editProfile, name='editProfile'),
+    url(r'user/editProfile', views_user.editProfile, name='editProfile'),
 
     #Post
     #url(r'post/(?P<type>[a-z]+)', views.getPostPage),
@@ -34,36 +36,35 @@ urlpatterns = [
     url(r'post/mergeorder/page',views_post.getMergeOrderPage),
     url(r'post/mergeorder/submit',views_post.mergeOrderPost),
     url(r'post/carpool/page',views_post.getCarpoolPage),
-    url(r'post/carpool/submit', views_post.carpoolPost),
+    url(r'post/carpool/submit', views_post.carpoolPost, name='carpoolPost'),
     url(r'post/usedcar/page', views_post.getUsercarPage),
     url(r'post/usedcar/submit', views_post.usedcarPost),
     url(r'postresult',views.getPostResult,name='postresult'),
 
-                  # Edit
-                  url(r'deal/edit/(?P<deal_id>[0-9]+)$', views_edit.editDeal, name='editDeal'),
-                  url(r'deal/repost/(?P<deal_id>[0-9]+)$', views_edit.repostDeal, name='repostDeal'),
-
-                  # Delete
-                  url(r'deal/stop/(?P<deal_id>[0-9]+)$', views_edit.stopDeal, name='stopDeal'),
-                  url(r'deal/delete/(?P<deal_id>[0-9]+)$', views_edit.deleteDeal, name='deleteDeal'),
+    # Edit
+    url(r'deal/edit/(?P<deal_id>[0-9]+)$', views_edit.editDeal, name='editDeal'),
+    url(r'deal/repost/(?P<deal_id>[0-9]+)$', views_edit.repostDeal, name='repostDeal'),
+    url(r'deal/stop/(?P<deal_id>[0-9]+)$', views_edit.stopDeal, name='stopDeal'),
+    url(r'deal/delete/(?P<deal_id>[0-9]+)$', views_edit.deleteDeal, name='deleteDeal'),
 
     #Ajax Request
-    url(r'upload/images', views_upload.uploadImg),
+    url(r'upload/images', views_upload.uploadImg, name='uploadImg'),
     url(r'deal/save', views_detail.saveDeal, name='saveDeal'),
     url(r'deal/unsave', views_detail.unsaveDeal, name='unsaveDeal'),
     url(r'deal/loadmore', views_detail.loadMoreDeal, name='loadMoreDeal'),
     url(r'option/carbrand',views_option.getCarBrand,name='getCarBrand'),
     url(r'option/carmodel',views_option.getCarModel,name='getCarModel'),
-                  url(r'ajax/deleteimage', views_edit.deleteImage, name='deleteImage'),
-                  url(r'ajax/deal/edit', views_edit.ajaxEditDeal, name='ajaxEditDeal'),
+    url(r'ajax/deleteimage', views_edit.deleteImage, name='deleteImage'),
+    url(r'ajax/deal/edit', views_edit.ajaxEditDeal, name='ajaxEditDeal'),
 
-                  url(r'ajax/options/carbrand', views_option.getCarBrand, name='getCarBrand'),
-                  url(r'ajax/options/carmodel', views_option.getCarModel, name='getCarModel'),
+    url(r'ajax/options/carbrand', views_option.getCarBrand, name='getCarBrand'),
+    url(r'ajax/options/carmodel', views_option.getCarModel, name='getCarModel'),
 
-                  url(r'ajax/user/changepw', views_user.changePw, name='changePw'),
-                  url(r'ajax/user/changeProfile', views_user.changeProfile, name='changeProfile'),
+    url(r'ajax/user/changepw', views_user.changePw, name='changePw'),
+    url(r'ajax/user/changeProfile', views_user.changeProfile, name='changeProfile'),
 
-                  url(r'ajax/s/usedcar', views_search.ajaxSearchUsedcar, name="ajaxSearchUsedcar"),
+    url(r'ajax/s/usedcar', views_search.ajaxSearchUsedcar, name="ajaxSearchUsedcar"),
+    url(r'ajax/s/useditem', views_search.ajaxUseditemSearch, name="ajaxUseditemSearch"),
 
     #Item Detail
     url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_detail.getDealDetail, name='getDealDetail'),

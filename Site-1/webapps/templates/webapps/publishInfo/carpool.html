@@ -8,23 +8,16 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-<div class="container">
 	{% include "webapps/header.html" %}
+<div class="container-fluid" style="background-color: #F0F0F0;">
+<div class="container">
     <div class="row clearfix">
 		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1  align="left">
-					 发布信息
-				</h1>
-			</div>
-		</div>
-	</div>
-    <div class="row clearfix">
-		<div class="col-md-12 column">
-				
+			<div class="my-panel">
 				<ul class="nav nav-tabs">
                     <li class="active">
 						 <a href="/post/carpool/page">Carpool</a>
@@ -45,7 +38,7 @@
                     	 <a href="/post/mergeorder/page">拼单</a>
                     </li>
 				</ul>
-                            <form id="form" role="form" style="margin: 10px 80px" method="post" action="/post/carpool/submit">
+                            <form id="form" role="form" style="margin: 10px 80px" method="post">
                             	{% csrf_token %}
 								<div class="form-group">  
             						<label>出发日期 </label>  
@@ -96,7 +89,7 @@
 									<div class="checkbox">
 										  <label>
 										  {% if not phone %}
-											<input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，<a href="/user/set/phone">马上设置</a>
+											<input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，<a href="{% url 'webapps:editProfile' %}">马上设置</a>
 										  {% else %}
 										  	<input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
 										  {% endif %}
@@ -105,7 +98,7 @@
                                		<div class="checkbox">
 										  <label>
 										  {% if not wechat %}
-											<input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，<a href="/user/set/wechatid">马上设置</a>
+											<input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，<a href="{% url 'webapps:editProfile' %}">马上设置</a>
 									  	  {% else %}
 										  	<input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
 										  {% endif %}
@@ -114,20 +107,22 @@
                                 </div>
                                 <hr>
                                 <div class="form-group">
-                					<center> <button type="submit" class="btn btn-block btn-info btn-default">发布</button></center>
+                					<center> <button onClick="submitForm()" class="btn btn-block btn-info btn-default">发布</button></center>
                                 </div>
 							</form>
+				</div>
 		</div>
-	</div> 
-    {% include "webapps/footer.html" %}
-    
+	</div>   
 </div>
+	</div>
+	    {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
+<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$(".datepicker").datepicker({
@@ -227,7 +222,24 @@
 			}
 		});
 	});
-	
+	function submitForm() {
+		$("#form").bootstrapValidator('validate');
+        if ($('#form').data('bootstrapValidator').isValid()) {
+            $("#form").attr('action', '{% url 'webapps:carpoolPost' %}');
+            $('#form').ajaxSubmit({
+                success: function (data) {
+                    if (data.status == 'success') {
+                        var str = "/redirect?info=发布成功&next=/deal/" + data.deal_id + "/detail";
+                        console.log(str);
+                        setTimeout("", 2000);
+                        window.location.href = "/redirect?info=发布成功&next=/deal/" + data.deal_id + "/detail";
+                    }
+                }
+            });
+        }
+        else
+            alert("请正确填写表单！");
+    };
 </script>
 </body>
 </html>

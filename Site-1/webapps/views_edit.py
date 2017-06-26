@@ -17,6 +17,7 @@ from .views_detail import getContact
 @login_required
 def deleteDeal(request, deal_id):
     deal = get_object_or_404(Deal, id=deal_id)
+    next = request.GET.get('next', '/')
     if request.user != deal.posted_user:
         return confirmaAndRedirect(request, '出错啦！您不是发布者，无法删除', '/')
     else:
@@ -31,14 +32,15 @@ def deleteDeal(request, deal_id):
         except Exception:
             pass
         deal.delete()
-        return confirmaAndRedirect(request, '删除成功！', reverse('webapps:getuserinfo'))
+        return confirmaAndRedirect(request, '删除成功！', next)
 
 
 @login_required
 def editDeal(request, deal_id):
     deal = get_object_or_404(Deal, id=deal_id)
+    next = request.GET.get('next', '/')
     if request.user != deal.posted_user:
-        return confirmaAndRedirect(request, '出错啦！您不是发布者，无法修改', '/')
+        return confirmaAndRedirect(request, '出错啦！您不是发布者，无法修改', next)
     else:
         userPro = UserPro.objects.get(user=request.user)
         phone = '' if userPro.phone == '1234567890' else userPro.phone
@@ -55,23 +57,25 @@ def editDeal(request, deal_id):
 @login_required
 def stopDeal(request, deal_id):
     deal = get_object_or_404(Deal, id=deal_id)
+    next = request.GET.get('next', '/')
     if request.user != deal.posted_user:
         return confirmaAndRedirect(request, '出错啦！您不是发布者，无法修改', '/')
     else:
         deal.expire_time = datetime.datetime.now() - relativedelta.relativedelta(days=1)
         deal.save()
-        return confirmaAndRedirect(request, '信息下架成功！', reverse('webapps:getuserinfo'))
+        return confirmaAndRedirect(request, '信息下架成功！', next)
 
 
 @login_required
 def repostDeal(request, deal_id):
     deal = get_object_or_404(Deal, id=deal_id)
+    next = request.GET.get('next', '/')
     if request.user != deal.posted_user:
         return confirmaAndRedirect(request, '出错啦！您不是发布者，无法修改', '/')
     else:
         deal.expire_time = datetime.datetime.now() + relativedelta.relativedelta(months=1)
         deal.save()
-        return confirmaAndRedirect(request, '信息重新发布成功！', reverse('webapps:getuserinfo'))
+        return confirmaAndRedirect(request, '信息重新发布成功！', next)
 
 @login_required
 def deleteImage(request):

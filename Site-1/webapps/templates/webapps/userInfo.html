@@ -12,15 +12,6 @@
 	{% include "webapps/header.html" %}
     <div class="container">
     <div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1>
-					个人中心 <small>主页</small>
-				</h1>
-			</div>
-		</div>
-	</div>
-    <div class="row clearfix">
         <div class="col-md-2 column my-user-leftbar">
 			<div class="panel-group" id="panel-322642">
 				<div class="panel panel-default">
@@ -86,8 +77,8 @@
 			</div>
 		</div>
 
-        <div class="col-md-10 column" style="border-left: 2px solid #eee; min-height: 600px; height: auto;">
-            <div class="my-panel">
+        <div class="col-md-10 column">
+            <div class="my-panel" style="min-height: 600px; height: auto;">
                 <div class="my-panel-header" style="border-bottom: none;">
                 <ul class="nav nav-tabs" style="padding-left: 25%">
                     <li {% if not config.is_overdue %} class="active"{% endif %}
@@ -130,7 +121,7 @@
                                 {% else %}
                                     <a href="{% url 'webapps:repostDeal' record.id %}" class="btn btn-xs btn-success">重新发布</a>
                                     <a onClick="delCfm({{ record.id }})" class="btn btn-xs btn-danger">彻底删除</a>
-                            {% endif %}
+                            	{% endif %}
                             {% else %}
                                 <a onClick="unsaveDeal({{ record.id }})" class="btn btn-xs btn-warning">移除</a>
                             {% endif %}
@@ -252,9 +243,11 @@
         $.ajax({
             method: "get",
             url: "{% url 'webapps:unsaveDeal' %}",
-            data: {'deal_id': deal_id}
-        });
-        window.location.reload();
+            data: {'deal_id': deal_id},
+			success: function(data){
+				window.location.reload();
+			}
+        }); 
     };
 </script>
 </body>
