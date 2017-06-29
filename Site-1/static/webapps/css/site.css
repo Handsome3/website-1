@@ -39,31 +39,40 @@ div.my-panel {
 	border-top: 1px dashed #ddd;
 }
 a.my-search-option{
-	margin: 0px 40px 0px 0px;
+	margin: 9px 40px 9px 0px;
 	color: black;
 	cursor: pointer;
+	display:inline-block;
 }
 a.my-search-option:hover{
 	color:red;
 	text-decoration:none;
 }
 a.my-search-option-active{
-	margin: 0px 40px 0px 0px;
+	margin: 9px 40px 9px 0px;
+	display:inline-block;
 	color:red;	
 }
 a.my-search-option-active:hover{
 	text-decoration:none;
 }
 .my-search-option-title{
+	display:inline-block;
 	color: #999;
-	margin: 0px;
+	margin: 9px 0 0 0;
+}
+.my-search-option-body{
+	padding: 0px;
+}
+.my-blockquote{cursor: pointer;}
+.my-blockquote:hover{
+-moz-box-shadow:2px 2px 5px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:2px 2px 5px #333333;
 }
 svg {
     height: 100px;
     width: 100px;
     margin: 0px;
     overflow: visible;
-    /*   border: 1px solid red; */
 }
 
 .g-circles {

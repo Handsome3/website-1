@@ -14,10 +14,10 @@
 	<div class="row clearfix">
 		<div class="col-md-offset-1 col-md-10 column">
 			<div class="my-panel">
-			<div class="my-panel-header">
-				<h1 class="my-panel-title">信息详情</h1>
+			<div class="my-panel-header" style="height: 40px;">
 			</div>
 			<div class="my-panel-body" style="min-height: 600px;">
+			<div>
 			<h3>文字描述</h3>
 			<center><table class="table table-hover table-striped" style="width: 90%">
 				<thead>
@@ -36,20 +36,21 @@
 						</tr>
 					{% endfor %}
 				</tbody>
-			</table></center>          
-            <div>
+			</table></center>    
+           	</div>      
+            <div style="margin-top: 50px;">
            	{% if images %}
-            <table class="table table-hover table-striped">
+          	<h3>图片描述</h3>
+            <center><table class="table table-hover table-striped" style="width: 90%">
 					<thead>
 						<tr>
 							<th>
-                        		 <h3>图片描述</h3>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr><td>
-						<center><div class="carousel slide" id="carousel-971961" style="margin-top: 20px; width: 90%">
+						<div class="carousel slide" id="carousel-971961" style="margin-top: 20px;">
 									<ol class="carousel-indicators">
 										{% for img in images %}
 											<li data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %} class="active" {% endif %} data-target="#carousel-971961"></li>
@@ -63,33 +64,42 @@
 										{% endfor %}
 									</div> 
 									<a class="left carousel-control" href="#carousel-971961" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-971961" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-						</div></center>
+						</div>
 						</td></tr>
 					</tbody>
-				</table>
+				</table></center>
             
            	{% endif %}
             </div>
             
 
-            <div id="contact_info" style="{% if not config.is_saved %} display:none {% endif %}">
-            	<table class="table table-hover table-striped">
+            <div id="contact_info" style="{% if not config.is_saved and not config.is_author %} display:none {% endif %} margin-top: 50px;">
+             <h3>用户联系信息</h3>
+            	<center><table class="table table-hover table-striped" style="width: 90%">
 					<thead>
 						<tr>
 							<th>
-                        		 <h4>用户联系信息</h4>
 							</th>
 							<th>
 							</th>
 						</tr>
 					</thead>
 					<tbody id="location">
+						{% if config.email %}
+							<tr><td>邮箱：</td><td>{{config.email}}</td></tr>
+						{% endif %}
+						{% if config.phone %}
+							<tr><td>电话：</td><td>{{config.phone}}</td></tr>
+						{% endif %}
+						{% if config.wechat %}
+							<tr><td>微信：</td><td>{{config.wechat}}</td></tr>
+						{% endif %}
 					</tbody>
-				</table>
+				</table></center>
             </div>            
             </div>
             
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 50px;">
             	{% if not config.is_author %}
             	<button id="save" class="btn btn-default btn-success btn-lg btn-block" {% if config.is_saved %} style="display: none" {% endif %}>我感兴趣</button>
             	<button id="unsave" class="btn btn-default btn-warning btn-lg btn-block" {% if not config.is_saved %} style="display: none" {% endif %}>不感兴趣</button>

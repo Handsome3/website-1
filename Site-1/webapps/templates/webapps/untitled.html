@@ -33,24 +33,7 @@
            	},
 </script>
 <body>
-<div class="tabbable" id="tabs-773187">
-    <ul class="nav nav-tabs">
-        <li class="active" style="width:50%; text-align:center; height:50px;">
-            <a href="#panel-686396" data-toggle="tab">
-                我要找信息</a>
-					</li>
-        <li style="width:50%; text-align:center; height:50px;">
-            <a href="#panel-524610" data-toggle="tab">我要发信息</a>
-					</li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="panel-686396">
 
-        </div>
-        <div class="tab-pane" id="panel-524610">
-
-        </div>
-    </div>
 			</div>
 <svg viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="circle" class="g-circles g-circles--v1">
@@ -79,16 +62,172 @@
     <use xlink:href="#circle" class="use"/>
 </svg>
 
-<div class='col-sm-6 col-md-4 col-lg-3'>											
-<div class='thumbnail' style='cursor: pointer;' onClick="window.open('/deal/9/detail')" onMouseOver="this.style.border='1px solid black'" onMouseOut="this.style.border='1px solid #ddd'">											
-<img src='/image/images/user_1/deal_9_useditem/img_2017-06-24_091748.805153.jpg' style='width: 100%; height: 225px;'>						  					
-<div class='caption'>												
-<h4>15</h4>												
-<p class='col-sm-3' align='left' style='padding: 0px; color: #999' >描述:<br>日期:</p>											
-<p class='col-sm-9' align='right'>												
-茶几 七成新<br>												
-2017-06-24											
-</p><div class='clearfix'></div>											
+									
+			<form role="form">
+				<div class="form-group">
+					 <label for="date">出发日期</label>
+                     <input type="date" class="form-control" id="1date" />
+				</div>
+				<div class="form-group">
+					 <label for="datetime">出发时间</label>
+                     <input type="time" class="form-control" id="1datetime" />
+				</div>
+				<div class="form-group">
+					 <label for="depart_place">出发地</label>
+                     <input type="text" class="form-control" id="1depart_place" />
+				</div>
+				<div class="form-group">
+					 <label for="destination" >目的地</label>
+                     <input type="text" class="form-control" id="1destination" />
+				</div> 
+                <div class="form-group">
+					 <label for="passenger_num" >乘客人数</label>
+                     <input type="number" class="form-control" id="1passenger_num" />
+				</div> 
+                <div class="form-group">
+                	<label> 是否免费 </label>
+                    <br>
+                	<label class="checkbox-inline">
+    					<input type="radio" name="rideCharge" id="1chargeYes" value="free">否
+  					</label>
+  					<label class="checkbox-inline">
+    				<input type="radio" name="rideCharge" id="1chargeNo" value="notFree">是
+  					</label>       
+                </div>
+                <button type="submit" class="btn btn-info btn-lg btn-block">搜索</button>
+			</form>									
 </div></div></div>
+
+
+var start, end = 10;
+        var has_next ={{ config.has_next|lower }};
+        $(document).ready(function () {
+			$("#car_brand").select2({
+				minimumResultsForSearch: Infinity,
+				placeholder: "请选择车辆品牌",
+				ajax: {
+					url: "{% url 'webapps:getCarBrand' %}",
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						return {
+							q: params.term, // search term
+							page: params.page
+						};
+					},
+					processResults: function (data) {
+						return {
+							results: data.records,
+						};
+					},
+					cache: true,
+				},
+			}).on("select2:select", function () {
+				$('#car_model').val("");
+				$("#car_model").empty();
+			});
+			$('#car_model').select2({
+				minimumResultsForSearch: Infinity,
+				placeholder: "请选择车辆型号",
+				ajax: {
+					url: "{% url 'webapps:getCarModel' %}",
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						var id = $('#car_brand').val();
+						return {
+							q: params.term,
+							brand_id: id,
+						};
+					},
+					processResults: function (data) {
+						console.log(data);
+							return {
+								results: data.records,
+							};
+					},
+					cache: true,
+				},
+			});
+			$('.s2').select2({
+				minimumResultsForSearch: Infinity,
+			})
+            $(window).scroll(function () {
+                if (parseFloat($(window).height()) + parseFloat($(window).scrollTop()) >= $(document).height() - 20 && has_next) {
+                    var config = {
+                        'year': $('#year option:selected').val(),
+                        'mileage': $('#mileage option:selected').val(),
+                        'car_brand': $('#car_brand option:selected').text(),
+                        'car_model': $('#car_model option:selected').text(),
+                        'price': $('#price option:selected').val(),
+                        'end': end,
+                    };
+                    $('#loading').fadeIn();
+                    has_next = false;
+                        $.ajax({
+                            type: 'GET',
+                            dataType: 'JSON',
+                            data: config,
+                            url: "{% url 'webapps:ajaxSearchUsedcar' %}",
+                            success: function (data) {
+                                if (data.status = 'success') {
+                                    $('#loading').fadeOut();
+                                    for (i in data.records) {
+                                        $('#result').append("<div class='col-sm-6 col-md-4 col-lg-3'>\
+											<div class='thumbnail' style='cursor: pointer;' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\"\ onMouseOver='this.style.border='1px solid black'' onMouseOut='this.style.border='1px solid #ddd''>\
+											<img src='" + data.records[i].img_url + "' alt='300*200' style='width: 100%; height: 225px;'>\
+						  					<div class='caption'>\
+												<h3>" + data.records[i].title + "</h3>\
+												<p>" + data.records[i].year + "<br>" + data.records[i].car_brand + "<br>" + data.records[i].car_model + "<br></p>\
+											  </div></div></div>");
+                                    }
+                                    ;
+                                    has_next = data.has_next;
+                                    end = data.end;
+                                    if (has_next == false)
+                                        $('#nomoreresults').fadeIn();
+                                }
+                                ;
+                            }
+                        });
+                }
+                ;
+            });
+        });
+        function search() {
+            var config = {
+                'year': $('#year option:selected').val(),
+                'mileage': $('#mileage option:selected').val(),
+                'car_brand': $('#car_brand option:selected').val(),
+                'car_model': $('#car_model option:selected').val(),
+                'price': $('#price option:selected').val(),
+                'end': 0,
+            };
+            $('#nomoreresults').fadeOut();
+            $('#result').empty();
+            $('#loading').fadeIn();
+            $.ajax({
+                type: 'GET',
+                dataType: 'JSON',
+                data: config,
+                url: "{% url 'webapps:ajaxSearchUsedcar' %}",
+                success: function (data) {
+                    $('#loading').fadeOut();
+                    for (i in data.records) {
+                        $('#result').append("<div class='col-sm-6 col-md-4 col-lg-3'>\
+											<div class='thumbnail' style='cursor: pointer;' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\" onMouseOver='this.style.border='1px solid black'' onMouseOut='this.style.border='1px solid #ddd''>\
+											<img src='" + data.records[i].img_url + "' alt='300*200' style='width: 100%; height: 225px;'>\
+						  					<div class='caption'>\
+												<h3>" + data.records[i].title + "</h3>\
+												<p>" + data.records[i].year + "<br>" + data.records[i].car_brand + "<br>" + data.records[i].car_model + "<br></p>\
+											  </div></div></div>");
+                    };
+                    has_next = data.has_next;
+                    end = 10;
+                    if (has_next == false)
+                        $('#nomoreresults').fadeIn();
+                },
+            });
+        };
 </body>
 </html>

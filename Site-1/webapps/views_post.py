@@ -55,8 +55,6 @@ def carpoolPost(request):
         else:
             return JsonResponse({'status': 'fail'})
 
-        return views.confirmaAndRedirect(request, "发布成功", "/user/getuserinfo")
-
 
 @login_required
 def getUsercarPage(request):

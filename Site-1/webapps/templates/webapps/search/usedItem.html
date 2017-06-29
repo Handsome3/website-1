@@ -1,9 +1,9 @@
+{% load static %}
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>信息搜索-二手宝贝</title>
-{% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'webapps/css/nprogress.css' %}">
     <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
@@ -17,41 +17,34 @@
 			<div class="my-panel-header">
 			<ul class="nav nav-tabs">
 				<li>
-					 <a href="#">Carpool</a>
+					 <a href="{% url 'webapps:searchCarpool' %}">Carpool</a>
 				</li>
 				<li class="active">
-					 <a href="#">二手宝贝</a>
+					 <a href="{% url 'webapps:searchUsedItem' %}">二手宝贝</a>
 				</li>
 				<li>
-					 <a href="#">Sublease</a>
+					 <a href="{% url 'webapps:searchSublease' %}">Sublease</a>
                 </li>
                 <li>
-					 <a href="#">求合租</a>
+					 <a href="{% url 'webapps:searchHouseRent' %}">求合租</a>
                 </li>
                 <li>
-					 <a href="#">二手车</a>
+					 <a href="{% url 'webapps:searchUsedcar' %}">二手车</a>
                 </li>
                 <li>
-					 <a href="#">拼单</a>
+					 <a href="{% url 'webapps:searchMergeOrder' %}">拼单</a>
                 </li>
 			</ul>
 			</div>
 			<div class="my-panel-body">
                           	{% for row in options %}
-                          		<div class="my-search-row">
+                            	<div class="my-search-row">
 									<label class="col-sm-2 my-search-option-title">{{ row.name }} :</label>
 									<div class="col-sm-10 my-search-option-body">
-									{% if row.type == "exact" %}
-									{% for option in row.options %}
-									<a class="my-search-option" data-field="{{ row.field }}" data-type="{{ row.type }}" data-value="{{ option.value }}"><span class="my-search-option-space"></span><span>{{ option.label }}</span></a>
-									{% endfor %}
-                          	        {% endif %}
-                          	        {% if row.type == "between" %}
-                          	        {% for option in row.options %}
-									<a class="my-search-option" data-field="{{ row.field }}" data-type="{{ row.type }}" data-min="{{ option.min }}" data-max="{{ option.max }}"><span class="my-search-option-space"></span><span>{{ option.label }}</span></a>
-									{% endfor %}
-                          	        {% endif %}
-                           	        </div>
+                            	{% for option in row.options %}
+									<a class="my-search-option" data-format="{{ row.format }}" data-field="{{ row.field }}" data-type="{{ row.type }}" {% for k,v in option.items %} data-{{k}}="{{v}}" {% endfor %}><span class="my-search-option-space"></span><span>{{ option.label }}</span></a>
+								{% endfor %}
+                           			</div>
                            	        <div class="clearfix"></div>
                             	</div>
                             {% endfor %}
@@ -99,11 +92,11 @@
 	$('.my-search-option').click(function(){
 		$(this).parent().find('.my-search-option-active').attr('class','my-search-option');
 		$(this).attr('class','my-search-option-active');
-		var field = $(this).data('field'), type = $(this).data('type');
+		var field = $(this).data('field'), type = $(this).data('type'), format = $(this).data('format');
 		if (type=="exact")
-			sconfig[field]=[type, $(this).data('value')]
+			sconfig[field]=[type, format, $(this).data('value')]
 		if (type=="between")
-			sconfig[field]=[type, $(this).data('min'), $(this).data('max')];
+			sconfig[field]=[type, format, $(this).data('min'), $(this).data('max')];
 		sconfig.end=0;
 		$.ajax({
 			url : '{% url 'webapps:ajaxUseditemSearch' %}',
