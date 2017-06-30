@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>信息修改</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
+</head>
+
+<body>
+{% include "webapps/header.html" %}
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="page-header">
+                <h1 align="left">
+                    信息修改
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>车辆年份</label>
+                    <input id="5year" name="year" type="text" class="datepicker form-control" placeholder="请选择年份"/>
+                </div>
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label>车辆制造商</label>
+                        <select style="width: 30%" name="car_brand" class="form-control js-example-basic-single"
+                                id="5car_brand">
+                        </select>
+                        <label>车辆型号</label>
+                        <select style="width: 30%" name="car_model" class="form-control js-example-basic-single"
+                                id="5car_model">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>里程</label>
+                    <input name="mileage" type="number" class="form-control" id="5mileage"/>
+                </div>
+                <div class="form-group">
+                    <label>售价</label>
+                    <input name="price" type="number" class="form-control" id="5price"/>
+                </div>
+                <div class="form-group">
+                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="5note"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">上传车辆照片</label>
+                    <input name="images" id="5img" type="file" multiple>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label>联系方式选择（可多选）</label>
+                    <div class="checkbox">
+                        <label>
+                            <input id="email" type="checkbox" value="1"
+                                   name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            {% if not phone %}
+                                <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
+                                <a href="/user/set/phone">马上设置</a>
+                            {% else %}
+                                <input id="phone" type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
+                            {% endif %}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            {% if not wechat %}
+                                <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
+                                <a href="/user/set/wechatid">马上设置</a>
+                            {% else %}
+                                <input id="wechat" type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }}
+                                联系我
+                            {% endif %}
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-inline" style="padding-bottom: 40px;">
+                    <div class="col-md-6 column">
+                        <button id="submitbtn" onClick="submitForm()" class="btn btn-warning btn-default btn-block">修改
+                        </button>
+                    </div>
+                    <div class="col-md-6 column">
+                        <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% include "webapps/footer.html" %}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
+<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    };
+    var csrftoken = getCookie('csrftoken');
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            orientation: "bottom",
+            language: "zh-CN",
+            autoclose: true,
+            clearBtn: true,
+            format: "yyyy",
+            maxViewMode: 2,
+            minViewMode: 2,
+        }).on('hide', function (e) {
+            $('#form').data('bootstrapValidator')
+                .updateStatus($('#5year'), 'NOT_VALIDATED', null)
+                .validateField($('#5year'));
+        });
+        $("#5car_brand").select2({
+            minimumResultsForSearch: Infinity,
+            language: "ch",
+            placeholder: "{{ deal.usedcar.car_brand }}",
+            ajax: {
+                url: "{% url 'webapps:getCarBrand' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+        }).on("select2:select", function () {
+            $('#5car_model').val("");
+            $("#5car_model").empty();
+        });
+        $('#5car_model').select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "{{ deal.usedcar.car_model }}",
+            ajax: {
+                url: "{% url 'webapps:getCarModel' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var id = $('#5car_brand').val();
+                    return {
+                        q: params.term,
+                        brand_id: id,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+        });
+        $("#form").bootstrapValidator({
+            message: '表单不合法',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                year: {
+                    validators: {
+                        notEmpty: {
+                            message: '年份不能为空'
+                        },
+                        between: {
+                            min: 2000,
+                            max: 2017,
+                            message: '请选择正确的年份'
+                        }
+                    }
+                },
+                mileage: {
+                    validators: {
+                        notEmpty: {
+                            message: '里程不能为空'
+                        },
+                        between: {
+                            min: 0,
+                            max: 200000,
+                            message: '请输入正确的里程'
+                        }
+                    }
+                },
+                price: {
+                    validators: {
+                        notEmpty: {
+                            message: '价格不能为空'
+                        },
+                        between: {
+                            min: 0,
+                            max: 1000000,
+                            message: '请输入正确的价格'
+                        }
+                    }
+                },
+                'contact_type[]': {
+                    validators: {
+                        choice: {
+                            min: 1,
+                            max: 3,
+                            message: '请选择1到3种联系方式'
+                        }
+                    }
+                },
+            }
+        });
+        function fillForm() {
+            $('#5year').val("{{ deal.usedcar.year }}");
+            $('#5car_brand').val("{{ deal.usedcar.car_brand.id }}");
+            $('#5car_model').val("{{ deal.usedcar.car_model.id }}");
+            $('#5mileage').val("{{ deal.usedcar.mileage }}");
+            $('#5price').val("{{ deal.usedcar.price }}");
+            $('#5note').val("{{ deal.usedcar.note|escapejs }}");
+            {% if "1" in deal.contact_type %}
+                $('#email').attr("checked", "true");
+            {% endif %}
+            {% if "2" in deal.contact_type %}
+                $('#phone').attr("checked", "true");
+            {% endif %}
+            {% if "3" in deal.contact_type %}
+                $('#wechat').attr("checked", "true");
+            {% endif %}
+            $("#form").bootstrapValidator('validate');
+        };
+        fillForm();
+    });
+    var deal_id;
+    $('#5img').fileinput({
+        uploadUrl: "{% url 'webapps:uploadImg' %}",
+        uploadAsync: false,
+        language: 'zh',
+        maxFileSize: 100000,
+        allowedFileTypes: ['image'],
+        showUpload: false,
+        removeFromPreviewOnError: true,
+        layoutTemplates: {
+            actionUpload: '',
+        },
+        uploadExtraData: {'deal_id': {{ deal.id }}},
+        maxFileCount: 9,
+        initialPreview: [
+            {% for img in images %}
+                "<img src='{{ img.image.url }}' class='file-preview-image' style='max-width:100%; max-height:100%;' alt='Desert' title='{{ img.id }}'>",
+            {% endfor %}
+        ],
+        initialPreviewConfig: [
+            {% for img in images %}
+                {
+                    caption: '{{ img }}',
+                    width: '120px',
+                    url: '{% url 'webapps:deleteImage' %}',
+                    key: {{ img.id }},
+                },
+            {% endfor %}
+        ],
+{#        防止重复上传图片？#}
+        overwriteInitial: false,
+        ajaxSettings: {
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        },
+        ajaxDeleteSettings: {
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        },
+    }).on("filebatchuploadsuccess", function (event, data) {
+        var response = data.response;
+        if (response.status == 'success') {
+            setTimeout("", 2000);
+            window.location.href = "/redirect?info=修改成功&next=/deal/" + response.deal_id + "/detail";
+        }
+    });
+    function submitForm() {
+        if ($('#form').data('bootstrapValidator').isValid()) {
+            $("#form").attr('action', '{% url 'webapps:editUsedcar' %}');
+            $('#form').ajaxSubmit({
+                data: {
+                    'deal_id': {{ deal.id }},
+                },
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $("#submitbtn").attr("disabled", true);
+{#在提交deal成功后上传图片，若图片上传不成功会有bug             #}
+                        $('#5img').fileinput('upload');
+                    }
+                }
+            });
+        }
+        else
+            alert("请正确填写表单！");
+    };
+</script>
+</body>
+</html>
+

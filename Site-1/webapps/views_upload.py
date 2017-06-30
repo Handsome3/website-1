@@ -13,6 +13,3 @@ def uploadImg(request):
             instance = Image(image=img, deal=deal, user=user)
             instance.save()
         return JsonResponse({'status': 'success', 'deal_id': deal.id})
-
-
-

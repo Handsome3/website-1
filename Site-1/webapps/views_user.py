@@ -124,6 +124,7 @@ def getUserInfo(request):
     config.update(countDeal(request))
 
     records = []
+    # 为什么不直接传Deal而是要构建一个record 的dic
     for deal in deals:
         record={'id':deal.id,
                 'title': deal,

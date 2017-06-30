@@ -6,23 +6,29 @@
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
           rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-    {% include "webapps/header.html" %}
-<div class="container-fluid" style="background-color: #F0F0F0;">
 <div class="container">
+    {% include "webapps/header.html" %}
     <div class="row clearfix">
         <div class="col-md-12 column">
-           <div class="my-panel">
+            <div class="page-header">
+                <h1 align="left">
+                    发布信息
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+
             <ul class="nav nav-tabs">
-                <li>
+                <li class="active">
                     <a href="/post/carpool/page">Carpool</a>
                 </li>
                 <li>
@@ -37,29 +43,50 @@
                 <li>
                     <a href="/post/usedcar/page">二手车</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="/post/mergeorder/page">拼单</a>
                 </li>
             </ul>
-            <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
+            <form id="form" role="form" style="margin: 10px 80px" method="post" action="/post/carpool/submit">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label>活动网址</label>
-                    <input name="website" type="url" class="form-control" id="6website"/>
+                    <label>出发日期 </label>
+                    <input type="text" class="datepicker form-control" id="1date" name="date"/>
                 </div>
                 <div class="form-group">
-                    <label>商品类型</label>
-                    <select name="order_type" class="form-control js-example-basic-single" id="6orderType">
-                        <option>化妆品</option>
-                        <option>零食</option>
+                    <label for="datetime">出发时间</label>
+                    <input type="time" class="form-control" id="1datetime" name="time"/>
+                </div>
+                <div class="form-group">
+                    <label for="depart_place">出发地</label>
+                    <select id="1depart" class="js-example-data-array-selected form-control" name="depart"></select>
+                </div>
+                <div class="form-group">
+                    <label for="destination">目的地</label>
+                    <select class="form-control js-example-data-array-selected" id="1destination"
+                            name="destination"></select>
+                </div>
+                <div class="form-group">
+                    <label for="passenger_num">最大乘客人数</label>
+                    <input type="number" class="form-control" id="1passenger_num" name="passenger_num"/>
+                </div>
+                <div class="form-group">
+                    <label for="price">人均价格</label>
+                    <input type="number" class="form-control" id="1price" name="price"/>
+                </div>
+                <div class="form-group">
+                    <label for="car_type">车辆类型</label>
+                    <select class="form-control js-example-basic-single" id="1car_type" name="car_type">
+                        <option value="couple">双门轿车</option>
+                        <option value="sedan">四门轿车</option>
+                        <option value="suv">五座SUV</option>
+                        <option value="7suv">7座SUV</option>
+                        <option value="truck">皮卡</option>
                     </select>
                 </div>
+                <hr>
                 <div class="form-group">
-                    <label>拼单截止日期</label>
-                    <input name="duedate" type="text" class="datepicker form-control" placeholder="请选择日期"/>
-                </div>
-                <div class="form-group">
-                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="6note"></textarea>
+                    <textarea class="form-control" rows="3" placeholder="备注" id="1note" name="note"></textarea>
                 </div>
                 <hr>
                 <div class="form-group">
@@ -91,32 +118,31 @@
                     </div>
                 </div>
                 <hr>
-                <div class="form-group">
-                    <center>
-                        <button id="submitbtn" onClick="submitForm()" class="btn btn-block btn-info btn-default">发布
+                <div class="form-inline" style="padding-bottom: 40px;">
+                    <div class="col-md-6 column">
+                        <button id="submitbtn" onClick="submitForm()" class="btn btn-warning btn-default btn-block">修改
                         </button>
-                    </center>
+                    </div>
+                    <div class="col-md-6 column">
+                        <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消</button>
+                    </div>
                 </div>
             </form>
-            </div>
         </div>
     </div>
-	</div>
-</div>
     {% include "webapps/footer.html" %}
+
+</div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
-<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
-<script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 <script>
-   function getCookie(name) {
+    function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
@@ -137,17 +163,23 @@
 
     $(document).ready(function () {
         $(".datepicker").datepicker({
-            orientation: "bottom",
             language: "zh-CN",
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
             format: "yyyy-mm-dd",
-            maxViewMode: 0,
-            minViewMode: 0,
+            todayHighlight: true,
+            startDate: "0",
         }).on('hide', function (e) {
             $('#form').data('bootstrapValidator')
-                .updateStatus('duedate', 'NOT_VALIDATED', null)
-                .validateField('duedate');
+                .updateStatus('date', 'NOT_VALIDATED', null)
+                .validateField('date');
+        });
+        var data = [{id: 0, text: "Gainesville"}];
+        $("#1depart").select2({
+            data: data
+        });
+        $("#1destination").select2({
+            data: data
         });
         $(".js-example-basic-single").select2({
             minimumResultsForSearch: Infinity
@@ -160,17 +192,58 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                website: {
+                date: {
+                    message: '请选择有效的日期',
                     validators: {
                         notEmpty: {
-                            message: '活动网址不能为空',
-                        },
+                            message: '出发日期不能为空',
+                        }
+                    },
+                },
+                time: {
+                    validators: {
+                        notEmpty: {
+                            message: '出发时间不能为空',
+                        }
                     }
                 },
-                duedate: {
+                depart: {
                     validators: {
                         notEmpty: {
-                            message: '截止日期不能为空',
+                            message: '出发地不能为空',
+                        }
+                    }
+                },
+                destination: {
+                    validators: {
+                        notEmpty: {
+                            message: '目的地不能为空',
+                        }
+                    }
+                },
+                passenger_num: {
+                    message: '请输入有效的人数',
+                    validators: {
+                        notEmpty: {
+                            message: '乘客人数不能为空',
+                        },
+                        between: {
+                            min: 1,
+                            max: 7,
+                            message: '乘客人数应在1-7之间'
+                        }
+                    }
+                },
+                price: {
+                    message: '请输入人均价格',
+                    validators: {
+                        notEmpty: {
+                            message: '价格不能为空'
+                        },
+                        between: {
+                            min: 0,
+                            max: 100,
+                            message: '价格只能在0-100之间'
                         }
                     }
                 },
@@ -182,14 +255,36 @@
                             message: '请选择1到3种联系方式'
                         }
                     }
-                }
+                },
             }
         });
+
+        function fillForm() {
+            $('#1date').val("{{ deal.carpool.date }}");
+            $('#1datetime').val("{{ deal.carpool.datetime }}");
+            $('#1depart').val("{{ deal.carpool.depart_place }}");
+            $('#1destination').val("{{ deal.carpool.destination }}");
+            $('#1passenger_num').val("{{ deal.carpool.passenger_num }}");
+            $('#1price').val("{{ deal.carpool.price }}");
+            $('#1car_type').val("{{ deal.carpool.car_type }}");
+            $('#1note').val("{{ deal.carpool.note|escapejs }}");
+            {% if "1" in deal.contact_type %}
+                $('#email').attr("checked", "true");
+            {% endif %}
+            {% if "2" in deal.contact_type %}
+                $('#phone').attr("checked", "true");
+            {% endif %}
+            {% if "3" in deal.contact_type %}
+                $('#wechat').attr("checked", "true");
+            {% endif %}
+            $("#form").bootstrapValidator('validate');
+        };
+        fillForm();
     });
     function submitForm() {
 
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '/post/mergeorder/submit');
+            $("#form").attr('action', '{% url 'webapps:editCarpool' %}');
             $('#form').ajaxSubmit({
                 success: function (data) {
                     if (data.status == 'success') {
@@ -204,6 +299,8 @@
         else
             alert("请正确填写表单！");
     };
+
 </script>
 </body>
 </html>
+

@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from mysite.settings import MEDIA_ROOT
+# from .mysite.settings import MEDIA_ROOT
 from .models import *
 from .views import confirmaAndRedirect
 from .views_detail import getContact
@@ -48,8 +48,11 @@ def editDeal(request, deal_id):
         contact = getContact(deal)
         images = deal.image_set.all()
         if deal.type == 'usedcar':
-            return render(request, 'webapps/edit/usedCar.html',
+            return render(request, 'webapps/edit/usedCarEdit.html',
                           {'deal': deal, 'phone': phone, 'wechat': wechat, 'images': images})
+        elif deal.type=='mergeorder':
+            return render(request,'webapps/edit/mergeOrderEdit.html',
+                          {'deal' : deal,'phone': phone, 'wechat':wechat})
         else:
             pass
 
@@ -87,16 +90,24 @@ def deleteImage(request):
         img.delete()
         return JsonResponse({'status': 'success'})
 
+@login_required
+def changeDealInfo(request):
+    deal = Deal.objects.get(id=request.POST['deal_id'])
+    if deal:
+        contact = request.POST.getlist('contact_type[]')
+        contact_type = ""
+        for i in contact:
+            contact_type += i
+        with transaction.atomic():
+            deal.contact_type = contact_type
+            deal.save()
+    return deal
 
 @login_required
-def ajaxEditDeal(request):
+def editUsedcar(request):
     if request.method == 'POST':
-        deal = Deal.objects.get(id=request.POST['deal_id'])
+        deal = changeDealInfo(request)
         if deal:
-            contact = request.POST.getlist('contact_type[]')
-            contact_type = ""
-            for i in contact:
-                contact_type += i
             year = request.POST['year']
             price = request.POST['price']
             mileage = request.POST['mileage']
@@ -112,7 +123,129 @@ def ajaxEditDeal(request):
                     deal.usedcar.car_model = CarModel.objects.get(id=car_model_id)
                 if car_brand_id:
                     deal.usedcar.car_brand = CarBrand.objects.get(id=car_brand_id)
-                deal.contact_type = contact_type
-                deal.save()
+                deal.usedcar.save()
+            return JsonResponse({'status': 'success'})
+
+
+@login_required
+def editCarpool(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            date = request.POST['date']
+            time = request.POST['time']
+            depart = request.POST['depart']
+            destination = request.POST['destination']
+            passenger_num = request.POST['passenger_num']
+            price = request.POST['price']
+            car_type = request.POST['car_type']
+            note = request._post['note']
+            with transaction.atomic():
+                deal.carpool.date= date
+                deal.carpool.price = price
+                deal.carpool.time = time
+                deal.carpool.depart_place = depart
+                deal.carpool.destination = destination
+                deal.carpool.passenger_num = passenger_num
+                deal.carpool.car_type = car_type
+                deal.carpool.note = note
+                deal.carpool.save()
+            return JsonResponse({'status': 'success'})
+
+
+
+@login_required
+def editUseditem(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            year = request.POST['year']
+            price = request.POST['price']
+            mileage = request.POST['mileage']
+            car_model_id = request.POST.get('car_model', '')
+            car_brand_id = request.POST.get('car_brand', '')
+            note = request.POST['note']
+            with transaction.atomic():
+                deal.usedcar.year = year
+                deal.usedcar.price = price
+                deal.usedcar.mileage = mileage
+                deal.usedcar.note = note
+                if car_model_id:
+                    deal.usedcar.car_model = CarModel.objects.get(id=car_model_id)
+                if car_brand_id:
+                    deal.usedcar.car_brand = CarBrand.objects.get(id=car_brand_id)
+                deal.usedcar.save()
+            return JsonResponse({'status': 'success'})
+
+
+@login_required
+def editMergeorder(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            year = request.POST['year']
+            price = request.POST['price']
+            mileage = request.POST['mileage']
+            car_model_id = request.POST.get('car_model', '')
+            car_brand_id = request.POST.get('car_brand', '')
+            note = request.POST['note']
+            with transaction.atomic():
+                deal.usedcar.year = year
+                deal.usedcar.price = price
+                deal.usedcar.mileage = mileage
+                deal.usedcar.note = note
+                if car_model_id:
+                    deal.usedcar.car_model = CarModel.objects.get(id=car_model_id)
+                if car_brand_id:
+                    deal.usedcar.car_brand = CarBrand.objects.get(id=car_brand_id)
+                deal.usedcar.save()
+            return JsonResponse({'status': 'success'})
+
+
+
+@login_required
+def editHouserent(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            year = request.POST['year']
+            price = request.POST['price']
+            mileage = request.POST['mileage']
+            car_model_id = request.POST.get('car_model', '')
+            car_brand_id = request.POST.get('car_brand', '')
+            note = request.POST['note']
+            with transaction.atomic():
+                deal.usedcar.year = year
+                deal.usedcar.price = price
+                deal.usedcar.mileage = mileage
+                deal.usedcar.note = note
+                if car_model_id:
+                    deal.usedcar.car_model = CarModel.objects.get(id=car_model_id)
+                if car_brand_id:
+                    deal.usedcar.car_brand = CarBrand.objects.get(id=car_brand_id)
+                deal.usedcar.save()
+            return JsonResponse({'status': 'success'})
+
+
+@login_required
+def editSublease(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            year = request.POST['year']
+            price = request.POST['price']
+            mileage = request.POST['mileage']
+            car_model_id = request.POST.get('car_model', '')
+            car_brand_id = request.POST.get('car_brand', '')
+            note = request.POST['note']
+            with transaction.atomic():
+                deal.usedcar.year = year
+                deal.usedcar.price = price
+                deal.usedcar.mileage = mileage
+                deal.usedcar.note = note
+                if car_model_id:
+                    deal.usedcar.car_model = CarModel.objects.get(id=car_model_id)
+                if car_brand_id:
+                    deal.usedcar.car_brand = CarBrand.objects.get(id=car_brand_id)
                 deal.usedcar.save()
             return JsonResponse({'status': 'success'})
