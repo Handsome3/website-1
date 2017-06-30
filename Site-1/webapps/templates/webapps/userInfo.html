@@ -30,6 +30,7 @@
 					</div>
 					<div id="panel-element-943900" class="panel-collapse collapse">
 						<div class="panel-body">
+                          	<label><a href="{% url 'webapps:getuserinfo' %}"><span class="badge pull-right">{{ config.countPost.total }}</span>全部</a></label><br>
                             <label><a href="{% url 'webapps:getuserinfo' %}">全部<font
                                     color="red">({{ config.countPost.total }})</font></a></label><br>
                             <label><a href="{% url 'webapps:getuserinfo' %}?type=carpool">Carpool<font
@@ -78,15 +79,15 @@
 		</div>
 
         <div class="col-md-10 column">
-            <div class="my-panel" style="min-height: 600px; height: auto;">
+            <div class="my-panel" style="min-height: 700px; height: auto;">
                 <div class="my-panel-header" style="border-bottom: none;">
                 <ul class="nav nav-tabs" style="padding-left: 25%">
                     <li {% if not config.is_overdue %} class="active"{% endif %}
                                                        style="width: 35%; text-align: center; ">
-                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}">正在发布</a>
+                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}">正在发布<span class="badge">10</span></a>
                     </li>
                     <li {% if config.is_overdue %} class="active"{% endif %} style="width: 35%; text-align: center;">
-                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}&overdue=True">已停止发布</a>
+                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}&overdue=True">已停止发布<span class="badge">10</span></a>
                     </li>
                 </ul>
             </div>
@@ -210,9 +211,9 @@
 								<td>"+data.records[i].expire_time+"</td>\
 								<td>"+data.records[i].hot_index+"</td>\
 								<td>\
-									<button type='button' onclick='' class='btn btn-xs btn-info'>详情</button><br>\
-									<button type='button' onclick='' class='btn btn-xs btn-warning'>修改</button><br>\
-									<button type='button' onclick='' class='btn btn-xs btn-danger'>删除</button><br>\
+									<button type='button' onclick='' class='btn btn-xs btn-info'>详情</button>\
+									<button type='button' onclick='' class='btn btn-xs btn-warning'>修改</button>\
+									<button type='button' onclick='' class='btn btn-xs btn-danger'>删除</button>\
 								</td>\
 								</tr>\
 								");

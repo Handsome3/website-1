@@ -13,7 +13,9 @@ urlpatterns = [
     url(r'search/usedcar', views_search.usedcarPage, name='searchUsedcar'),
     url(r'search/useditem', views_search.useditemPage, name='searchUsedItem'),
     url(r'search/carpool', views_search.carpoolPage, name='searchCarpool'),
-
+    url(r'search/houserent', views_search.houserentPage, name='searchHouseRent'),
+    url(r'search/mergeorder', views_search.mergeorderPage, name='searchMergeOrder'),
+    url(r'search/sublease', views_search.subleasePage, name='searchSublease'),
     #User
     url(r'user/loginpage',views_user.loginPage, name='loginPage'),
     url(r'user/getuserinfo',views_user.getUserInfo, name='getuserinfo'),
@@ -71,8 +73,12 @@ urlpatterns = [
     url(r'ajax/user/changepw', views_user.changePw, name='changePw'),
     url(r'ajax/user/changeProfile', views_user.changeProfile, name='changeProfile'),
 
-    url(r'ajax/s/usedcar', views_search.ajaxSearchUsedcar, name="ajaxSearchUsedcar"),
+    url(r'ajax/s/usedcar', views_search.ajaxUsedcarSearch, name="ajaxUsedcarSearch"),
     url(r'ajax/s/useditem', views_search.ajaxUseditemSearch, name="ajaxUseditemSearch"),
+    url(r'ajax/s/carpool', views_search.ajaxCarpoolSearch, name="ajaxCarpoolSearch"),
+    url(r'ajax/s/mergeorder', views_search.ajaxMergeOrderSearch, name="ajaxMergeOrderSearch"),
+    url(r'ajax/s/sublease', views_search.ajaxSubleaseSearch, name="ajaxSubleaseSearch"),
+    url(r'ajax/s/houserent', views_search.ajaxHouseRentSearch, name="ajaxHouseRentSearch"),
 
                   # Item Detail
                   url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_detail.getDealDetail, name='getDealDetail'),

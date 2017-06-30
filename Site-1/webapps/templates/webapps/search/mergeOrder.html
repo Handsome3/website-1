@@ -1,159 +1,148 @@
+{% load static %}
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>信息搜索-拼单</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'webapps/css/nprogress.css' %}">
+<link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-<div class="container">
 	{% include "webapps/header.html" %}
-    <div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1>
-					信息搜索 <small>拼单</small>
-				</h1>
-			</div>
-		</div>
-	</div>
-
-	<div class="row clearfix">
+<div class="container">
 		<div class="col-md-12 column" >
+		<div class="my-panel" style="min-height: 700px; height: auto;">
+		<div class="my-panel-header">
 			<ul class="nav nav-tabs">
-				<li>
-					 <a href="#">Carpool</a>
+				<li >
+					 <a href="{% url 'webapps:searchCarpool' %}">Carpool</a>
 				</li>
 				<li>
-					 <a href="#">二手宝贝</a>
+					 <a href="{% url 'webapps:searchUsedItem' %}">二手宝贝</a>
 				</li>
 				<li>
-					 <a href="#">Sublease</a>
+					 <a href="{% url 'webapps:searchSublease' %}">Sublease</a>
                 </li>
                 <li>
-					 <a href="#">求合租</a>
+					 <a href="{% url 'webapps:searchHouseRent' %}">求合租</a>
                 </li>
                 <li>
-					 <a href="#">二手车</a>
+					 <a href="{% url 'webapps:searchUsedcar' %}">二手车</a>
                 </li>
                 <li class="active">
-					 <a href="#">拼单</a>
+					 <a href="{% url 'webapps:searchMergeOrder' %}">拼单</a>
                 </li>
 			</ul>
 		</div>
-	</div>
+	<div class="my-panel-body">	
 	<div class="row clearfix">
-		<div class="col-md-3 column" style="margin:20px 0px;">
-        <form role="form">
-                      	<div class="form-group">
-                            <label>商品类型</label>
-                            <select class="form-control" id="6orderType">
-                                <option>化妆品</option>
-                                <option>零食</option>
-                              </select>
+		<div class="col-md-4 column">
+                        <div class="my-search-row">
+                            <label class="col-sm-5 my-search-option-title">截止日期:</label>
+                            <div class="col-sm-7" style="padding: 0px;">
+							<input placeholder="请选择日期" data-format="date" data-field="duedate" data-type="exact" data-value="无限制" type="text" class="datepicker form-control" id="date" name="duedate"/>
+							</div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="form-group">
-                            <label>拼单截止日期</label>
-                            <input type="date" class="form-control" id="6due" />
+                        <div class="my-search-row">
+                        	<label class="col-sm-5 my-search-option-title">关键字:</label>
+                           	<div class="col-sm-7" style="padding: 0px;">
+                            <input type="text" class="form-control" id="keyword" />
+							</div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="form-group">
-                        	<label>活动关键字</label>
-                            <input type="text" class="form-control" id="6keyword" />
-                        </div>
-            <button type="submit" class="btn btn-info btn-lg btn-block">搜索</button>
-        </form>
+                        {% for row in options %}
+									<div class="my-search-row">
+									<label class="col-sm-5 my-search-option-title">{{ row.name }} :</label>
+									<div class="col-sm-7 my-search-option-body">
+                            	{% for option in row.options %}
+									<a class="my-search-option" data-format="{{ row.format }}" data-field="{{ row.field }}" data-type="{{ row.type }}" {% for k,v in option.items %} data-{{k}}="{{v}}" {% endfor %}><span class="my-search-option-space"></span><span>{{ option.label }}</span></a><br>
+								{% endfor %}
+                           			</div>
+                           	        <div class="clearfix"></div>
+                            	</div>
+            			{% endfor %}
 		</div>
-		<div class="col-md-9 column" style="margin:20px 0px;">
-        		<div class="row clearfix">
-					<div class="col-md-4 column">
-						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
-                 	</div>
-                 	<div class="col-md-5 column">
-						<div class="caption" style="margin:10px 40px">
-							<h3>
-								商品标题
-							</h3>
-							<p>
-								缩略介绍
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> 
-							</p>
-						</div>
-                     </div>
-				</div>
-                <hr>
-                <div class="row clearfix">
-					<div class="col-md-4 column">
-						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
-                 	</div>
-                 	<div class="col-md-5 column">
-						<div class="caption" style="margin:10px 40px">
-							<h3>
-								商品标题
-							</h3>
-							<p>
-								缩略介绍
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> 
-							</p>
-						</div>
-                     </div>
-				</div>
-                <hr>
-                <div class="row clearfix">
-					<div class="col-md-4 column">
-						<img class="small" alt="300x200" src="test.jpg" style="margin:10px 20px;"/>
-                 	</div>
-                 	<div class="col-md-5 column">
-						<div class="caption" style="margin:10px 40px">
-							<h3>
-								商品标题
-							</h3>
-							<p>
-								缩略介绍
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> 
-							</p>
-						</div>
-                     </div>
-				</div>
-                
-            <div class="row clearfix">    
-            	<div class="col-md-9 column">
-					<center><ul class="pagination">
-						<li>
-					 		<a href="#">Prev</a>
-						</li>
-						<li>
-					 		<a href="#">1</a>
-						</li>
-						<li>
-					 		<a href="#">2</a>
-						</li>
-						<li>
-					 		<a href="#">3</a>
-						</li>
-						<li>
-					 		<a href="#">4</a>
-						</li>
-						<li>
-					 		<a href="#">5</a>
-						</li>
-						<li>
-					 		<a href="#">Next</a>
-						</li>
-					</ul></center>
-            	</div>
-             </div>
+		<div class="col-md-8 column" id="result">
+					{% for record in records %}
+        			<blockquote class="my-blockquote" onClick="window.open('{% url 'webapps:getDealDetail' record.id %}')">
+						<p>
+							<span style="color: #6f5499;" class="col-sm-3"><label>{{ record.order_type }}</label></span><span class="col-sm-9">{{ record.title }}</span><span class="clearfix"></span>
+						</p> <small>发布于{{ record.post_date|date:'Y-m-d' }} <cite>Source Title</cite></small>
+					</blockquote>
+					{% endfor %}    
+		</div> 
 		</div>
 	</div>
-	{% include "webapps/footer.html" %}
 </div>
+		</div>
+		</div>
+		{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src='{% static 'webapps/js/nprogress.js' %}'></script>
+<script>
+	var sconfig={};
+	var end={{ config.end }}, has_next={{ config.has_next|lower }};
+	$(document).ready(function () {
+		$('.my-search-option-body').each(function(){$(this).children().first().attr('class','my-search-option-active')});
+	});
+	$('#date').datepicker({
+         	language: "zh-CN",
+            autoclose: true,
+            clearBtn: true,
+            format: "yyyy-mm-dd",
+			todayHighlight: true,
+			startDate: "0",
+    }).on('hide', function(){
+		if ($(this).val()=="")
+			$(this).data('value', '无限制');
+		else
+			$(this).data('value', $(this).val());
+		search($(this));
+	});
+	$('.my-search-option').click(function(){
+		$(this).parent().find('.my-search-option-active').attr('class','my-search-option');
+		$(this).attr('class','my-search-option-active');
+		search($(this));
+	});
+	function search(obj){
+		var field = obj.data('field'), type = obj.data('type'), format = obj.data('format');
+		if (type=="exact")
+			sconfig[field]=[type, format, obj.data('value')];
+		if (type=="between")
+			sconfig[field]=[type, format, obj.data('min'), obj.data('max')];
+		sconfig.end=0;
+		console.log(sconfig);
+		$.ajax({
+			url : '{% url 'webapps:ajaxMergeOrderSearch' %}',
+			data: sconfig,
+			type : 'GET',
+			dataType: 'JSON',
+			success: function(data){
+				$('#result').empty();
+				for (i in data.records) {
+						var txt="<blockquote class='my-blockquote' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\">\
+						<p>\
+							<span style=\"color: #6f5499;\" class=\"col-sm-3\"><label>"+ data.records[i].order_type +"</label></span><span class=\"col-sm-9\">"+data.records[i].title+"</span><span class=\"clearfix\"></span>\
+						</p> <small>发布于"+data.records[i].post_date+"<cite>Source Title</cite></small>\
+					</blockquote>";
+                        $('#result').append(txt);
+                    };
+			},
+		});		
+	};
+	$(document).ajaxStart(function(){
+		NProgress.start();
+	});
+	$(document).ajaxStop(function(){
+		NProgress.done();
+	});
+</script>
 </body>
 </html>

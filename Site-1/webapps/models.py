@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from .utilities import upload_to_path
+import time
 
 
 # Create your models here.
@@ -71,8 +72,14 @@ class Carpool(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return "记录序号 : " + str(self.deal_id) + "<br>出发地 : " + str(self.depart_place) + "<br>目的地 : " + str(
-            self.destination)
+        d= {'couple': '双门轿车',
+            'sedan': '四门轿车',
+            'suv': '五座SUV',
+            '7suv': '七座SUV',
+            'truck': '皮卡或其他',
+        }
+        return "%s %s, 从 %s 到 %s, 车型为 %s" % (self.date, str(self.time)[:-3], self.depart_place,
+                                             self.destination, d[self.car_type])
 
 class UsedCar(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -84,7 +91,7 @@ class UsedCar(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "记录序号 : " + str(self.deal_id) + "<br>车辆品牌 : " + str(self.car_brand) + "<br>车辆型号 : " + str(self.car_model)
+        return "%d %s %s %d迈" % (self.year, self.car_brand, self.car_model, self.mileage)
 
 class UsedItem(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -109,7 +116,7 @@ class Sublease(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return"deal_id: "+ str(self.deal_id) + " community: "+ str(self.community)
+        return "%s 从 %s 到 %s %db%db" % (str(self.community), self.start_date, self.end_date, self.bedroom_num, self.bathroom_num)
 
 class HouseRent(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -120,12 +127,12 @@ class HouseRent(models.Model):
     start_date = models.DateField()
     duration = models.CharField(max_length=20,default='6 months')
     roommate_gender = models.CharField(max_length=6)
-
     roommate_num = models.IntegerField()
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "deal_id: " + str(self.deal_id) + " community: " + str(self.community)
+        return '%s 从 %s 开始 租期 %s %db%db %s' % (self.community, self.start_date, self.duration, self.bedroom_num,
+                                               self.bathroom_num, self.roommate_gender)
 
 class MergeOrder(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -135,7 +142,7 @@ class MergeOrder(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return str(self.deal_id) + " " + str(self.website)
+        return "活动网址为 %s, 截止于 %s" % (str(self.website), self.duedate)
 
 class Image(models.Model):
     image = models.ImageField(upload_to=upload_to_path, default='')
