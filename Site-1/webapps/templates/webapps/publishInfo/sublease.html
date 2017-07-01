@@ -180,6 +180,7 @@
             clearBtn: true,//清除按钮
             format: "yyyy-mm-dd",
             maxViewMode: 0,
+            startDate: "0",
             minViewMode: 0,
         }).on('hide', function () {
             $('#form').data('bootstrapValidator')
@@ -213,6 +214,7 @@
                             message: '结束日期不能为空',
                         },
                         callback: {
+{#                            日期对比可能存在问题#}
                             message: '请选择正确的日期',
                             callback: function(value,validator){
                                 var start = $('#3start_date').val();
@@ -252,7 +254,7 @@
                 }
             }
         });
-    });    
+    });
 	var deal_id;
     $('#3img').fileinput({
         uploadUrl: '/upload/images',

@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from mysite.settings import MEDIA_ROOT
+# from .mysite.settings import MEDIA_ROOT
 from .models import *
 from .views import confirmaAndRedirect
 from .views_detail import getContact
@@ -48,8 +48,23 @@ def editDeal(request, deal_id):
         contact = getContact(deal)
         images = deal.image_set.all()
         if deal.type == 'usedcar':
-            return render(request, 'webapps/edit/usedCar.html',
+            return render(request, 'webapps/edit/usedCarEdit.html',
                           {'deal': deal, 'phone': phone, 'wechat': wechat, 'images': images})
+        elif deal.type=='mergeorder':
+            return render(request,'webapps/edit/mergeOrderEdit.html',
+                          {'deal' : deal,'phone': phone, 'wechat':wechat})
+        elif deal.type=='carpool':
+            return render(request,'webapps/edit/carpoolEdit.html',
+                          {'deal': deal,'phone': phone,'wechat': wechat})
+        elif deal.type=='houserent':
+            return render(request,'webapps/edit/houseEdit.html',
+                          {'deal': deal,'phone': phone,'wechat': wechat,'images':images})
+        elif deal.type=='sublease':
+            return render(request,'webapps/edit/subleaseEdit.html',
+                          {'deal': deal,'phone': phone,'wechat': wechat,'images':images})
+        elif deal.type=='useditem':
+            return render(request,'webapps/edit/usedItemEdit.html',
+                          {'deal': deal,'phone': phone,'wechat': wechat,'images':images})
         else:
             pass
 
@@ -87,16 +102,24 @@ def deleteImage(request):
         img.delete()
         return JsonResponse({'status': 'success'})
 
+@login_required
+def changeDealInfo(request):
+    deal = Deal.objects.get(id=request.POST['deal_id'])
+    if deal:
+        contact = request.POST.getlist('contact_type[]')
+        contact_type = ""
+        for i in contact:
+            contact_type += i
+        with transaction.atomic():
+            deal.contact_type = contact_type
+            deal.save()
+    return deal
 
 @login_required
-def ajaxEditDeal(request):
+def editUsedcar(request):
     if request.method == 'POST':
-        deal = Deal.objects.get(id=request.POST['deal_id'])
+        deal = changeDealInfo(request)
         if deal:
-            contact = request.POST.getlist('contact_type[]')
-            contact_type = ""
-            for i in contact:
-                contact_type += i
             year = request.POST['year']
             price = request.POST['price']
             mileage = request.POST['mileage']
@@ -112,7 +135,125 @@ def ajaxEditDeal(request):
                     deal.usedcar.car_model = CarModel.objects.get(id=car_model_id)
                 if car_brand_id:
                     deal.usedcar.car_brand = CarBrand.objects.get(id=car_brand_id)
-                deal.contact_type = contact_type
-                deal.save()
                 deal.usedcar.save()
+            return JsonResponse({'status': 'success'})
+
+
+@login_required
+def editCarpool(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            date = request.POST['date']
+            time = request.POST['time']
+            depart = request.POST['depart']
+            destination = request.POST['destination']
+            passenger_num = request.POST['passenger_num']
+            price = request.POST['price']
+            car_type = request.POST['car_type']
+            note = request._post['note']
+            with transaction.atomic():
+                deal.carpool.date= date
+                deal.carpool.price = price
+                deal.carpool.time = time
+                deal.carpool.depart_place = depart
+                deal.carpool.destination = destination
+                deal.carpool.passenger_num = passenger_num
+                deal.carpool.car_type = car_type
+                deal.carpool.note = note
+                deal.carpool.save()
+            return JsonResponse({'status': 'success'})
+
+
+
+@login_required
+def editUseditem(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            item_type = request.POST['item_type']
+            item_name = request.POST['item_name']
+            price = request.POST['price']
+            condition = request.POST['condition']
+            note = request.POST['note']
+            with transaction.atomic():
+                deal.useditem.item_type=item_type
+                deal.useditem.item_name=item_name
+                deal.useditem.price=price
+                deal.useditem.condition=condition
+                deal.useditem.note=note
+                deal.useditem.save()
+            return JsonResponse({'status': 'success'})
+
+
+@login_required
+def editMergeorder(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            website = request.POST['website']
+            order_type = request.POST['order_type']
+            duedate = request.POST['duedate']
+            note = request._post['note']
+            with transaction.atomic():
+                deal.mergeorder.website=website
+                deal.mergeorder.order_type=order_type
+                deal.mergeorder.duedate=duedate
+                deal.mergeorder.note = note
+                deal.mergeorder.save()
+            return JsonResponse({'status': 'success'})
+
+
+
+@login_required
+def editHouserent(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            start_date = request.POST['start_date']
+            community = request.POST['community']
+            bedroom_num = request.POST['bedroom_num']
+            bathroom_num = request.POST['bathroom_num']
+            roommate_num = request.POST['roommate_num']
+            roommate_gender = request.POST['roommate_gender']
+            rent = request.POST['rent']
+            duration = request.POST['duration']
+            note = request._post['note']
+            with transaction.atomic():
+                deal.houserent.start_date=start_date
+                deal.houserent.community=community
+                deal.houserent.bedroom_num=bedroom_num
+                deal.houserent.bathroom_num=bathroom_num
+                deal.houserent.roommate_num=roommate_num
+                deal.houserent.roommate_gender=roommate_gender
+                deal.houserent.rent=rent
+                deal.houserent.duration=duration
+                deal.houserent.note=note
+                deal.houserent.save()
+            return JsonResponse({'status': 'success'})
+
+
+@login_required
+def editSublease(request):
+    if request.method == 'POST':
+        deal = changeDealInfo(request)
+        if deal:
+            start_date = request.POST['start_date']
+            end_date = request.POST['end_date']
+            community = request.POST['community']
+            bedroom_num = int(request.POST['bedroom_num'])
+            bathroom_num = int(request.POST['bathroom_num'])
+            renewal = request.POST['renewal']
+            rent = request.POST['rent']
+            note = request._post['note']
+            with transaction.atomic():
+                deal.sublease.start_date=start_date
+                deal.sublease.end_date=end_date
+                deal.sublease.community=community
+                deal.sublease.bedroom_num=bedroom_num
+                deal.sublease.bathroom_num=bathroom_num
+                deal.sublease.renewal=renewal
+                deal.sublease.rent=rent
+                deal.sublease.note=note
+                deal.sublease.save()
             return JsonResponse({'status': 'success'})

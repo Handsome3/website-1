@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>发布信息</title>
+    <title>信息修改</title>
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -11,21 +11,27 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-    {% include "webapps/header.html" %}
-<div class="container-fluid" style="background-color: #F0F0F0;">
 <div class="container">
+    {% include "webapps/header.html" %}
     <div class="row clearfix">
         <div class="col-md-12 column">
-           <div class="my-panel">
+            <div class="page-header">
+                <h1 align="left">
+                    信息修改
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
             <ul class="nav nav-tabs">
                 <li>
                     <a href="/post/carpool/page">Carpool</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="/post/useditem/page"> 二手宝贝</a>
                 </li>
                 <li>
@@ -37,36 +43,52 @@
                 <li>
                     <a href="/post/usedcar/page">二手车</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="/post/mergeorder/page">拼单</a>
                 </li>
             </ul>
             <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label>活动网址</label>
-                    <input name="website" type="url" class="form-control" id="6website"/>
-                </div>
-                <div class="form-group">
-                    <label>商品类型</label>
-                    <select name="order_type" class="form-control js-example-basic-single" id="6orderType">
+                    <label for="item_type">宝贝类型</label>
+                    <select name="item_type" class="form-control js-example-basic-single" id="2item_type">
+                        <option>家具</option>
                         <option>化妆品</option>
-                        <option>零食</option>
+                        <option>服饰</option>
+                        <option>数码产品</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>拼单截止日期</label>
-                    <input name="duedate" type="text" class="datepicker form-control" placeholder="请选择日期"/>
+                    <label for="item_name">宝贝名称</label>
+                    <input name="item_name" type="text" id="2item_name" class="form-control"/>
                 </div>
                 <div class="form-group">
-                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="6note"></textarea>
+                    <label for="2price">售价</label>
+                    <input name="price" type=text class="form-control" id="2price"/>
+                </div>
+                <div class="form-group">
+                    <label>宝贝状态</label>
+                    <select name="condition" class="form-control js-example-basic-single" id="2condition">
+                        <option>全新</option>
+                        <option>九成新</option>
+                        <option>七成新</option>
+                        <option>五成新</option>
+                        <option>五成新以下</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="2note"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">上传宝贝照片</label>
+                    <input name="images" id="2img" type="file" class="file" multiple>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label>联系方式选择（可多选）</label>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                            <input id="email" type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
                         </label>
                     </div>
                     <div class="checkbox">
@@ -75,7 +97,7 @@
                                 <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
                                 <a href="/user/set/phone">马上设置</a>
                             {% else %}
-                                <input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
+                                <input id="phone" type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
                             {% endif %}
                         </label>
                     </div>
@@ -85,25 +107,28 @@
                                 <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
                                 <a href="/user/set/wechatid">马上设置</a>
                             {% else %}
-                                <input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
+                                <input id="wechat" type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
                             {% endif %}
                         </label>
                     </div>
                 </div>
                 <hr>
-                <div class="form-group">
-                    <center>
-                        <button id="submitbtn" onClick="submitForm()" class="btn btn-block btn-info btn-default">发布
+                <div class="form-inline" style="padding-bottom: 40px;">
+                    <div class="col-md-6 column">
+                        <button id="submitbtn" onClick="submitForm()" class="btn btn-warning btn-default btn-block">修改
                         </button>
-                    </center>
+                    </div>
+                    <div class="col-md-6 column">
+                        <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消</button>
+                    </div>
                 </div>
             </form>
-            </div>
         </div>
     </div>
-	</div>
-</div>
+
     {% include "webapps/footer.html" %}
+
+</div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -116,7 +141,7 @@
 <script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
 <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 <script>
-   function getCookie(name) {
+    function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
@@ -136,20 +161,6 @@
     var csrftoken = getCookie('csrftoken');
 
     $(document).ready(function () {
-        $(".datepicker").datepicker({
-            orientation: "bottom",
-            language: "zh-CN",
-            autoclose: true,//选中之后自动隐藏日期选择框
-            clearBtn: true,//清除按钮
-            format: "yyyy-mm-dd",
-            startDate:"0",
-            maxViewMode: 0,
-            minViewMode: 0,
-        }).on('hide', function (e) {
-            $('#form').data('bootstrapValidator')
-                .updateStatus('duedate', 'NOT_VALIDATED', null)
-                .validateField('duedate');
-        });
         $(".js-example-basic-single").select2({
             minimumResultsForSearch: Infinity
         });
@@ -161,17 +172,17 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                website: {
+                item_name: {
                     validators: {
                         notEmpty: {
-                            message: '活动网址不能为空',
+                            message: '宝贝名称不能为空',
                         },
                     }
                 },
-                duedate: {
+                price: {
                     validators: {
                         notEmpty: {
-                            message: '截止日期不能为空',
+                            message: '价格不能为空'
                         }
                     }
                 },
@@ -186,18 +197,90 @@
                 }
             }
         });
+    function fillForm() {
+            $('#2price').val("{{ deal.useditem.price}}");
+            $('#2item_type').val("{{ deal.useditem.item_type }}");
+            $('#2item_name').val("{{ deal.useditem.item_name }}");
+            $('#2condition').val("{{ deal.useditem.condition }}");
+            $('#2note').val("{{ deal.useditem.note }}");
+            {% if "1" in deal.contact_type %}
+                $('#email').attr("checked", "true");
+            {% endif %}
+            {% if "2" in deal.contact_type %}
+                $('#phone').attr("checked", "true");
+            {% endif %}
+            {% if "3" in deal.contact_type %}
+                $('#wechat').attr("checked", "true");
+            {% endif %}
+            $("#form").bootstrapValidator('validate');
+        };
+        fillForm();
+    });
+    var deal_id;
+    $('#2img').fileinput({
+        uploadUrl: "{% url 'webapps:uploadImg' %}",
+        uploadAsync: false,
+        language: 'zh',
+        maxFileSize: 100000,
+        allowedFileTypes: ['image'],
+        showUpload: false,
+        removeFromPreviewOnError: true,
+        layoutTemplates: {
+            actionUpload: '',
+        },
+        uploadExtraData: {'deal_id': {{ deal.id }}},
+        maxFileCount: 9,
+        initialPreview: [
+            {% for img in images %}
+                "<img src='{{ img.image.url }}' class='file-preview-image' style='max-width:100%; max-height:100%;' alt='Desert' title='{{ img.id }}'>",
+            {% endfor %}
+        ],
+        initialPreviewConfig: [
+            {% for img in images %}
+                {
+                    caption: '{{ img }}',
+                    width: '120px',
+                    url: '{% url 'webapps:deleteImage' %}',
+                    key: {{ img.id }},
+                },
+            {% endfor %}
+        ],
+{#        防止重复上传图片？#}
+        overwriteInitial: false,
+        ajaxSettings: {
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        },
+        ajaxDeleteSettings: {
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        },
+    }).on("filebatchuploadsuccess", function (event, data) {
+        var response = data.response;
+        if (response.status == 'success') {
+            setTimeout("", 2000);
+            window.location.href = "/redirect?info=修改成功&next=/deal/" + response.deal_id + "/detail";
+        }
     });
     function submitForm() {
 
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '{% url 'webapps:editMergeOrder' %}');
+            $("#form").attr('action', '{% url 'webapps:editUsedItem' %}');
             $('#form').ajaxSubmit({
+                data:{
+                    'deal_id': {{ deal.id }},
+                },
                 success: function (data) {
                     if (data.status == 'success') {
-                        var str = "/redirect?info=发布成功&next=/deal/" + data.deal_id + "/detail";
-                        console.log(str);
-                        setTimeout("", 2000);
-                        window.location.href = str;
+                        deal_id = data.deal_id;
+                        $("#submitbtn").attr("disabled", true);
+                        $('#2img').fileinput('upload');
                     }
                 }
             });
@@ -208,3 +291,4 @@
 </script>
 </body>
 </html>
+
