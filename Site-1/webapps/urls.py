@@ -8,14 +8,9 @@ from . import views, views_user, views_post, views_upload, views_detail, views_s
 app_name = 'webapps'
 urlpatterns = [
     url(r'^$', views.index),
-
     #search
-    url(r'search/usedcar', views_search.usedcarPage, name='searchUsedcar'),
-    url(r'search/useditem', views_search.useditemPage, name='searchUsedItem'),
-    url(r'search/carpool', views_search.carpoolPage, name='searchCarpool'),
-    url(r'search/houserent', views_search.houserentPage, name='searchHouseRent'),
-    url(r'search/mergeorder', views_search.mergeorderPage, name='searchMergeOrder'),
-    url(r'search/sublease', views_search.subleasePage, name='searchSublease'),
+    url(r'search/(?P<type>[a-z]+)$', views_search.searchPage, name="searchPage"),
+
     #User
     url(r'user/loginpage',views_user.loginPage, name='loginPage'),
     url(r'user/getuserinfo',views_user.getUserInfo, name='getuserinfo'),
@@ -28,20 +23,8 @@ urlpatterns = [
     url(r'user/editProfile', views_user.editProfile, name='editProfile'),
 
     #Post
-    #url(r'post/(?P<type>[a-z]+)', views.getPostPage),
-    url(r'post/houserent/page',views_post.getHouseRentPage),
-    url(r'post/houserent/submit',views_post.houseRentPost),
-    url(r'post/sublease/page',views_post.getSubleasePage),
-    url(r'post/sublease/submit',views_post.subleasePost),
-    url(r'post/useditem/page',views_post.getUsedItemPage),
-    url(r'post/useditem/submit',views_post.usedItemPost),
-    url(r'post/mergeorder/page',views_post.getMergeOrderPage),
-    url(r'post/mergeorder/submit',views_post.mergeOrderPost),
-    url(r'post/carpool/page',views_post.getCarpoolPage),
-    url(r'post/carpool/submit', views_post.carpoolPost, name='carpoolPost'),
-    url(r'post/usedcar/page', views_post.getUsercarPage),
-    url(r'post/usedcar/submit', views_post.usedcarPost),
-    url(r'postresult',views.getPostResult,name='postresult'),
+    url(r'post/(?P<type>[a-z]+)/page', views_post.postPage, name="postPage"),
+    url(r'post/(?P<type>[a-z]+)/submit', views_post.submitPost, name='submitPost'),
 
     # Edit
     url(r'deal/edit/(?P<deal_id>[0-9]+)$', views_edit.editDeal, name='editDeal'),
@@ -53,7 +36,7 @@ urlpatterns = [
     url(r'upload/images', views_upload.uploadImg, name='uploadImg'),
     url(r'deal/save', views_detail.saveDeal, name='saveDeal'),
     url(r'deal/unsave', views_detail.unsaveDeal, name='unsaveDeal'),
-    url(r'deal/loadmore', views_detail.loadMoreDeal, name='loadMoreDeal'),
+    url(r'deal/loadmore', views_user.loadMoreDeal, name='loadMoreDeal'),
     url(r'option/carbrand',views_option.getCarBrand,name='getCarBrand'),
     url(r'option/carmodel',views_option.getCarModel,name='getCarModel'),
     url(r'ajax/deleteimage', views_edit.deleteImage, name='deleteImage'),
@@ -65,12 +48,7 @@ urlpatterns = [
     url(r'ajax/user/changepw', views_user.changePw, name='changePw'),
     url(r'ajax/user/changeProfile', views_user.changeProfile, name='changeProfile'),
 
-    url(r'ajax/s/usedcar', views_search.ajaxUsedcarSearch, name="ajaxUsedcarSearch"),
-    url(r'ajax/s/useditem', views_search.ajaxUseditemSearch, name="ajaxUseditemSearch"),
-    url(r'ajax/s/carpool', views_search.ajaxCarpoolSearch, name="ajaxCarpoolSearch"),
-    url(r'ajax/s/mergeorder', views_search.ajaxMergeOrderSearch, name="ajaxMergeOrderSearch"),
-    url(r'ajax/s/sublease', views_search.ajaxSubleaseSearch, name="ajaxSubleaseSearch"),
-    url(r'ajax/s/houserent', views_search.ajaxHouseRentSearch, name="ajaxHouseRentSearch"),
+    url(r'ajax/s/(?P<type>[a-z]+)$', views_search.ajaxSearch, name='ajaxSearch'),
 
     #Item Detail
     url(r'^deal/(?P<deal_id>[0-9]+)/detail$', views_detail.getDealDetail, name='getDealDetail'),

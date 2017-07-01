@@ -85,7 +85,6 @@ def checkEmail(request):
         else:
             return JsonResponse({'valid' : 'true'})
 
-
 def countDeal(request):
     countPost = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
     countSave = {'usedcar': 0, 'carpool': 0, 'houserent': 0, 'sublease': 0, 'mergeorder': 0, 'useditem': 0}
@@ -98,7 +97,6 @@ def countDeal(request):
     countSave.update({'total': sumSave})
     return {'countPost': countPost, 'countSave': countSave}
 
-
 @login_required
 def getUserInfo(request):
     type = request.GET.get('type', '')
@@ -110,7 +108,7 @@ def getUserInfo(request):
     if is_save:
         deals = request.user.saved_by_users.all()
     else:
-        deals = Deal.objects.filter(posted_user=request.user).order_by('create_time')
+        deals = Deal.objects.filter(posted_user=request.user).order_by('-create_time')
     if is_overdue:
         deals = deals.filter(expire_time__lt=datetime.datetime.now())
     else:
@@ -136,13 +134,37 @@ def getUserInfo(request):
 
     return render(request, 'webapps/userInfo.html', {'records': records, 'config': config})
 
+@login_required
+def loadMoreDeal(request):
+    res={}
+    type=request.GET['type']
+    start=int(request.GET['end'])
+    deals = Deal.objects.filter(posted_user=request.user).order_by('-create_time')
+    if type:
+        deals = deals.filter(type=type)
+    deals=deals[start:start+10]
+    res['has_next']=True if deals.count()==10 else False
+    res['end']=start+10
+    res['type']=type
+    records = []
+    for deal in deals:
+        record = {'id': deal.id,
+                  'title': deal.__str__(),
+                  'type': typeDic[deal.type],
+                  'create_time': deal.create_time,
+                  'expire_time': deal.expire_time,
+                  'hot_index': deal.hot_index,
+                  }
+        records.append(record)
+    res['records']=records
+    res['status']='success'
+    return JsonResponse(res)
 
 @login_required
 def editProfile(request):
     config = {}
     config.update(countDeal(request))
     return render(request, 'webapps/personInfo.html', {'config': config})
-
 
 @login_required
 def changePw(request):
@@ -157,7 +179,6 @@ def changePw(request):
             return JsonResponse({'status': 'success', 'info': '密码修改成功，请牢记！'})
         else:
             return JsonResponse({'status': 'fail', 'info': '旧密码输入错误'})
-
 
 @login_required
 def changeProfile(request):

@@ -48,13 +48,13 @@
                             <div class="form-group">
                                 <label class="col-sm-2" style="padding: 0px;">车辆制造商</label>
                                 <div class="col-sm-4" style="padding: 0px 20px 0px 0px;">
-                                    <select name="car_brand" class="form-control js-example-basic-single"
+                                    <select name="car_brand_id" class="form-control js-example-basic-single"
                                         id="5car_brand">
                                 </select>
                                 </div>
                                 <label class="col-sm-2" style="padding: 0px;">车辆型号</label>
                                 <div class="col-sm-4" style="padding: 0px;">
-                                    <select name="car_model" class="col-sm-4 form-control js-example-basic-single"
+                                    <select name="car_model_id" class="col-sm-4 form-control js-example-basic-single"
                                         id="5car_model">
                                 </select>
                                 </div>
@@ -255,14 +255,14 @@
 						}
 					}
 				},
-                car_brand: {
+                car_brand_id: {
                     validators: {
                         notEmpty: {
                             message: '车辆品牌不能为空'
                         },
                     }
                 },
-                car_model: {
+                car_model_id: {
                     validators: {
                         notEmpty: {
                             message: '车辆型号不能为空'

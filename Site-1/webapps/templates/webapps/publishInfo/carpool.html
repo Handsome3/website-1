@@ -50,7 +50,7 @@
 								</div>
 								<div class="form-group">
 					 				<label for="depart_place">出发地</label>
-                     				<select id="1depart" class="js-example-data-array-selected form-control" name="depart"></select>
+                     				<select id="1depart" class="js-example-data-array-selected form-control" name="depart_place"></select>
 								</div>
 								<div class="form-group">
 					 				<label for="destination" >目的地</label>
@@ -170,7 +170,7 @@
 						}
 					}	
 				},
-				depart: {
+				depart_place: {
 					validators:{
 						notEmpty:{
 							message: '出发地不能为空',
@@ -225,7 +225,7 @@
 	function submitForm() {
 		$("#form").bootstrapValidator('validate');
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '{% url 'webapps:carpoolPost' %}');
+            $("#form").attr('action', '{% url 'webapps:submitPost' 'carpool' %}');
             $('#form').ajaxSubmit({
                 success: function (data) {
                     if (data.status == 'success') {

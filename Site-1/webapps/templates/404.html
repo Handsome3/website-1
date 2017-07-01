@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>提示信息</title>
+    {% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
+</head>
+
+<body>
+	{% include 'webapps/header.html' %}
+    <div class="container-fluid" style="background-color: #eee;">
+        <div class="row clearfix">
+            <div class="col-md-12 column" style="height: 700px; ">
+                <br>
+                <br>
+                <br>
+                <div class="jumbotron">
+                    <center>
+                        <h1>
+                            Oops...<br>
+                        </h1>
+                        <br>
+                        <br>
+                        <p>
+                            该条信息被作者下架或者已经过期了！
+                        </p>
+                        <br>
+                        <p>
+							您可以看看相似的信息哦
+                        </p>
+                    </center>
+                    <hr>
+                </div>
+            </div>
+        </div>
+</div>
+    {% include 'webapps/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

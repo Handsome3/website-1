@@ -6,6 +6,13 @@ from .models import Deal, UsedCar, Image, UserPro
 
 import datetime
 
+typeDic = {'usedcar': '二 手 车',
+           'carpool': 'Carpool',
+           'useditem': '二 手 商 品',
+           'houserent': '合 租',
+           'sublease': 'Sublease',
+           'mergeorder': '拼 单',
+           }
 
 def getCarpool(deal):
     carpool = deal.carpool
@@ -118,7 +125,7 @@ def getDealDetail(request, deal_id):
     if (request.user.is_authenticated() and not is_saved and is_overdue and not is_author) or (not request.user.is_authenticated() and is_overdue):
         return render(request, 'webapps/error.html')
 
-    config = {'is_overdue' : is_overdue, 'is_saved' : is_saved, 'is_author' : is_author, 'deal_id': deal.id}
+    config = {'is_overdue' : is_overdue, 'is_saved' : is_saved, 'is_author' : is_author, 'deal_id': deal.id, 'deal_type': typeDic[deal.type]}
     config.update(getContact(deal))
 
     d = {
@@ -151,30 +158,4 @@ def unsaveDeal(request):
     deal.saved_users.remove(request.user)
     deal.save()
     return JsonResponse({'status': 'success'})
-
-@login_required
-def loadMoreDeal(request):
-    res={}
-    type=request.GET['type']
-    start=int(request.GET['end'])
-    deals = Deal.objects.filter(posted_user=request.user).order_by('create_time')
-    if type:
-        deals = deals.filter(type=type)
-    deals=deals[start:start+10]
-    res['has_next']=True if deals.count()==10 else False
-    res['end']=start+10
-    res['type']=type
-    records = []
-    for deal in deals:
-        record = {'id': deal.id,
-                  'title': deal.__str__(),
-                  'type': deal.type,
-                  'create_time': deal.create_time,
-                  'expire_time': deal.expire_time,
-                  'hot_index': deal.hot_index,
-                  }
-        records.append(record)
-    res['records']=records
-    res['status']='success'
-    return JsonResponse(res)
 

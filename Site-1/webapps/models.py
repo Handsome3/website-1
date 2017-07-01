@@ -39,7 +39,6 @@ class Deal(models.Model):
         elif self.type == 'mergeorder':
             return self.mergeorder.__str__()
 
-
 class CarBrand(models.Model):
     name = models.CharField(max_length=20)
     name_ch = models.CharField(max_length=40)
@@ -47,7 +46,6 @@ class CarBrand(models.Model):
 
     def __str__(self):
         return str(self.name) + "(" + str(self.name_ch) + ")"
-
 
 class CarModel(models.Model):
     brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)

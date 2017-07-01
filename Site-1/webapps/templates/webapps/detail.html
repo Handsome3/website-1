@@ -14,7 +14,8 @@
 	<div class="row clearfix">
 		<div class="col-md-offset-1 col-md-10 column">
 			<div class="my-panel">
-			<div class="my-panel-header" style="height: 40px;">
+			<div class="my-panel-header" style="text-align: center;">
+				<p style="padding-top:10px; font-size: 24px; color:#6f5499; font-weight: 550; "> {{ config.deal_type }} </p>
 			</div>
 			<div class="my-panel-body" style="min-height: 600px;">
 			<div>
@@ -73,7 +74,7 @@
             </div>
             
 
-            <div id="contact_info" style="{% if not config.is_saved and not config.is_author %} display:none {% endif %} margin-top: 50px;">
+            <div id="contact_info" style="margin-top: 50px;">
              <h3>用户联系信息</h3>
             	<center><table class="table table-hover table-striped" style="width: 90%">
 					<thead>
@@ -85,6 +86,7 @@
 						</tr>
 					</thead>
 					<tbody id="location">
+					{% if config.is_author or config.is_saved %}
 						{% if config.email %}
 							<tr><td>邮箱：</td><td>{{config.email}}</td></tr>
 						{% endif %}
@@ -94,6 +96,9 @@
 						{% if config.wechat %}
 							<tr><td>微信：</td><td>{{config.wechat}}</td></tr>
 						{% endif %}
+					{% else %}
+						<tr><td>点击收藏后即可查看联系方式</td><td></td></tr>
+					{% endif %}
 					</tbody>
 				</table></center>
             </div>            
@@ -172,7 +177,6 @@
 		}
 		else{
 			$('#save').attr('style','display:none');
-			$('#contact_info').slideDown("slow");
 			$('#unsave').attr('style','');
 			$.ajax({
 				type: 'GET',
@@ -181,6 +185,7 @@
 				url: "{% url 'webapps:saveDeal' %}",
 				success: function(data){
 					if (data.status='success'){
+						$('#location').empty();
 						var t1,t2,t3;
 						if (data.contact.email)
 							t1="<tr><td>邮箱：</td><td>"+data.contact.email+"</td></tr>";
@@ -201,7 +206,6 @@
 		}
 		else{
 			$('#unsave').attr('style','display:none');
-			$('#contact_info').slideUp("slow");
 			$('#save').attr('style','');
 			$.ajax({
 				type: 'GET',

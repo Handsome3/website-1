@@ -15,71 +15,13 @@ d = {
         'houserent': HouseRent.objects.all(),
     }
 
-def searchDeal(config):
-    deals = Deal.objects.filter(expire_time__gte=datetime.datetime.now().date())
-    if 'user' in config:
-        deals = deals.filter(posted_user=config['user'])
-    if 'type' in config:
-        deals = deals.filter(type=config['type'])
-    if 'field' in config:
-        for k, v in config['field']:
-            deals = deals.filter(k=v)
-    if 'order_by' in config:
-        deals = deals.order_by(config['order_by'])
-    start = 0 if config['end'] - 10 < 0 else config['end'] - 10
-    deals = deals[start: config['end']]
-    return deals
-
-def searchUsedcar(config):
-    cars = UsedCar.objects.filter(deal__expire_time__gte=datetime.datetime.now().date())
-    curyear = datetime.datetime.now().year
-    if config['year'] != 0:
-        if config['year'] == 1:
-            cars = cars.filter(year__gte=curyear - 1)
-        if config['year'] == 2:
-            cars = cars.filter(year__lt=curyear - 1).filter(year__gte=curyear - 3)
-        if config['year'] == 3:
-            cars = cars.filter(year__lt=curyear - 3).filter(year__gte=curyear - 5)
-        if config['year'] == 4:
-            cars = cars.filter(year__lt=curyear - 5).filter(year__gte=curyear - 10)
-        if config['year'] == 5:
-            cars = cars.filter(year__lt=curyear - 10)
-    if config['car_brand'] != '无限制':
-        cars = cars.filter(car_brand_id=int(config['car_brand']))
-    if config['car_model'] != '无限制':
-        cars = cars.filter(car_model_id=int(config['car_model']))
-    if config['mileage'] != 0:
-        if config['mileage'] == 1:
-            cars = cars.filter(mileage__lt=10000)
-        if config['mileage'] == 2:
-            cars = cars.filter(mileage__lt=30000).filter(mileage__gte=10000)
-        if config['mileage'] == 3:
-            cars = cars.filter(mileage__lt=50000).filter(mileage__gte=30000)
-        if config['mileage'] == 4:
-            cars = cars.filter(mileage__lt=100000).filter(mileage__gte=50000)
-        if config['mileage'] == 5:
-            cars = cars.filter(mileage__gte=100000)
-    if config['price'] != 0:
-        if config['price'] == 1:
-            cars = cars.filter(price__lt=5000)
-        if config['mileage'] == 2:
-            cars = cars.filter(price__lt=10000).filter(price__gte=5000)
-        if config['mileage'] == 3:
-            cars = cars.filter(price__lt=15000).filter(price__gte=10000)
-        if config['mileage'] == 4:
-            cars = cars.filter(price__lt=20000).filter(price__gte=15000)
-        if config['mileage'] == 5:
-            cars = cars.filter(price__gte=20000)
-    cars = cars[config['start']:config['start'] + 10]
-    return cars
-
 def generateRecords(deals, type):
     res=[]
     if type =='useditem' or type == 'usedcar':
         for deal in deals:
             record = {
                 'id' : deal.deal.id,
-                'price' : deal.price,
+                'caption' : deal.price,
                 'title' : deal.__str__(),
                 'post_date' : deal.deal.create_time,
             }
@@ -92,7 +34,7 @@ def generateRecords(deals, type):
         for deal in deals:
             record= {
                 'id': deal.deal.id,
-                'price': deal.price,
+                'caption': deal.price,
                 'title': deal.__str__(),
                 'post_date': deal.deal.create_time,
             }
@@ -101,7 +43,7 @@ def generateRecords(deals, type):
         for deal in deals:
             record= {
                 'id': deal.deal.id,
-                'order_type': deal.order_type,
+                'caption': deal.order_type,
                 'title': deal.__str__(),
                 'post_date': deal.deal.create_time,
             }
@@ -110,7 +52,7 @@ def generateRecords(deals, type):
         for deal in deals:
             record= {
                 'id': deal.deal.id,
-                'rent': deal.rent,
+                'caption': deal.rent,
                 'title': deal.__str__(),
                 'post_date': deal.deal.create_time,
             }
@@ -175,27 +117,26 @@ def search(config):
     deals= deals.order_by(config['order_by'])[start : start+12]
     return deals
 
-#usedcar
-def usedcarPage(request):
-    config = {'type': 'usedcar',
+def searchPage(request, type):
+    config = {'type': type,
               'is_overdue': False,
               'sconfig': '',
               'order_by': '-deal__create_time',
               'start': 0,
               }
     deals = search(config)
-    records = generateRecords(deals, 'usedcar')
+    records = generateRecords(deals, type)
     config = {'end': 12}
     if deals.count() == 12:
         config.update({'has_next': True})
     else:
         config.update({'has_next': False})
-    options = usedcarSearchOptions()
-    return render(request, 'webapps/search/usedCar.html', {'records': records, 'config': config, 'options': options})
+    options = getSearchOptions(type)
+    return render(request, 'webapps/search/'+type+'.html', {'records': records, 'config': config, 'options': options})
 
-def ajaxUsedcarSearch(request):
+def ajaxSearch(request, type):
     sconfig = transferSearchConfig(request.GET.lists())
-    config = {'type': 'usedcar',
+    config = {'type': type,
               'is_overdue': False,
               'sconfig': sconfig,
               'order_by': '-deal__create_time',
@@ -206,170 +147,5 @@ def ajaxUsedcarSearch(request):
         has_next = True
     else:
         has_next = False
-    records = generateRecords(deals, 'usedcar')
-    return JsonResponse({'records': records, 'has_next': has_next, 'end': int(config['start']) + 12})
-
-#useditem
-def useditemPage(request):
-    deals = UsedItem.objects.all().filter(deal__expire_time__gte=datetime.datetime.now().date()).order_by('-deal__create_time')[:12]
-    records = generateRecords(deals, 'useditem')
-    config = {'end' : 12 }
-    if deals.count()==12:
-        config.update({'has_next' : True})
-    else:
-        config.update({'has_next' : False})
-    options = useditemSearchOptions()
-    return render(request, 'webapps/search/usedItem.html', {'records' : records, 'config' : config, 'options' : options})
-
-def ajaxUseditemSearch(request):
-    sconfig= transferSearchConfig(request.GET.lists())
-    config= {'type': 'useditem',
-             'is_overdue': False,
-             'sconfig': sconfig,
-             'order_by': '-deal__create_time',
-             'start': request.GET.get('end',0),
-            }
-    deals= search(config)
-    if deals.count()==12:
-        has_next = True
-    else:
-        has_next = False
-    records = generateRecords(deals, 'useditem')
-    return JsonResponse({'records' : records, 'has_next' : has_next, 'end' : int(config['start'])+12})
-
-#carpool
-def carpoolPage(request):
-    config = {'type': 'carpool',
-              'is_overdue': False,
-              'sconfig': '',
-              'order_by': '-deal__create_time',
-              'start': 0,
-              }
-    deals= search(config)
-    records = generateRecords(deals, 'carpool')
-    config = {'end' : 12 }
-    if deals.count()==12:
-        config.update({'has_next' : True})
-    else:
-        config.update({'has_next' : False})
-    options = carpoolSearchOptions()
-    return render(request, 'webapps/search/carpool.html',{'records' : records, 'config' : config, 'options' : options})
-
-def ajaxCarpoolSearch(request):
-    sconfig= transferSearchConfig(request.GET.lists())
-    config= {'type': 'carpool',
-             'is_overdue': False,
-             'sconfig': sconfig,
-             'order_by': '-deal__create_time',
-             'start': request.GET.get('end',0),
-            }
-    deals= search(config)
-    if deals.count()==12:
-        has_next = True
-    else:
-        has_next = False
-    records = generateRecords(deals, 'carpool')
-    return JsonResponse({'records' : records, 'has_next' : has_next, 'end' : int(config['start'])+12})
-
-#mergeorder
-def mergeorderPage(request):
-    config = {'type': 'mergeorder',
-              'is_overdue': False,
-              'sconfig': '',
-              'order_by': '-deal__create_time',
-              'start': 0,
-              }
-    deals = search(config)
-    records = generateRecords(deals, 'mergeorder')
-    config = {'end': 12}
-    if deals.count() == 12:
-        config.update({'has_next': True})
-    else:
-        config.update({'has_next': False})
-    options = mergeorderSearchOptions()
-    return render(request, 'webapps/search/mergeOrder.html', {'records' : records, 'config' : config, 'options' : options})
-
-def ajaxMergeOrderSearch(request):
-    sconfig = transferSearchConfig(request.GET.lists())
-    config = {'type': 'mergeorder',
-              'is_overdue': False,
-              'sconfig': sconfig,
-              'order_by': '-deal__create_time',
-              'start': request.GET.get('end', 0),
-              }
-    deals = search(config)
-    if deals.count() == 12:
-        has_next = True
-    else:
-        has_next = False
-    records = generateRecords(deals, 'mergeorder')
-    return JsonResponse({'records': records, 'has_next': has_next, 'end': int(config['start']) + 12})
-
-# Sublease
-def subleasePage(request):
-    config = {'type': 'sublease',
-              'is_overdue': False,
-              'sconfig': '',
-              'order_by': '-deal__create_time',
-              'start': 0,
-              }
-    deals = search(config)
-    records = generateRecords(deals, 'sublease')
-    config = {'end': 12}
-    if deals.count() == 12:
-        config.update({'has_next': True})
-    else:
-        config.update({'has_next': False})
-    options = subleaseSearchOptions()
-    return render(request, 'webapps/search/sublease.html', {'records': records, 'config': config, 'options': options})
-
-def ajaxSubleaseSearch(request):
-    sconfig = transferSearchConfig(request.GET.lists())
-    config = {'type': 'sublease',
-              'is_overdue': False,
-              'sconfig': sconfig,
-              'order_by': '-deal__create_time',
-              'start': request.GET.get('end', 0),
-              }
-    deals = search(config)
-    if deals.count() == 12:
-        has_next = True
-    else:
-        has_next = False
-    records = generateRecords(deals, 'sublease')
-    return JsonResponse({'records': records, 'has_next': has_next, 'end': int(config['start']) + 12})
-
-# House Rent
-def houserentPage(request):
-    config = {'type': 'houserent',
-              'is_overdue': False,
-              'sconfig': '',
-              'order_by': '-deal__create_time',
-              'start': 0,
-              }
-    deals = search(config)
-    records = generateRecords(deals, 'houserent')
-    config = {'end': 12}
-    if deals.count() == 12:
-        config.update({'has_next': True})
-    else:
-        config.update({'has_next': False})
-    options = houserentSearchOptions()
-    return render(request, 'webapps/search/house.html', {'records': records, 'config': config, 'options': options})
-
-def ajaxHouseRentSearch(request):
-    sconfig = transferSearchConfig(request.GET.lists())
-    config = {'type': 'houserent',
-              'is_overdue': False,
-              'sconfig': sconfig,
-              'order_by': '-deal__create_time',
-              'start': request.GET.get('end', 0),
-              }
-    deals = search(config)
-    if deals.count() == 12:
-        has_next = True
-    else:
-        has_next = False
-    records = generateRecords(deals, 'houserent')
-    return JsonResponse({'records': records, 'has_next': has_next, 'end': int(config['start']) + 12})
-
+    records = generateRecords(deals, type)
+    return JsonResponse({'records': records, 'has_next': has_next, 'end': int(config['start']) + 12, 'type': type})

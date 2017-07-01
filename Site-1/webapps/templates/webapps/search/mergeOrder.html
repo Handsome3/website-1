@@ -17,24 +17,24 @@
 		<div class="my-panel" style="min-height: 700px; height: auto;">
 		<div class="my-panel-header">
 			<ul class="nav nav-tabs">
-				<li >
-					 <a href="{% url 'webapps:searchCarpool' %}">Carpool</a>
+				<li>
+					<a href="{% url 'webapps:searchPage' 'carpool' %}">找Carpool</a>
 				</li>
 				<li>
-					 <a href="{% url 'webapps:searchUsedItem' %}">二手宝贝</a>
+					<a href="{% url 'webapps:searchPage' 'useditem' %}">淘二手宝贝</a>
 				</li>
 				<li>
-					 <a href="{% url 'webapps:searchSublease' %}">Sublease</a>
-                </li>
-                <li>
-					 <a href="{% url 'webapps:searchHouseRent' %}">求合租</a>
-                </li>
-                <li>
-					 <a href="{% url 'webapps:searchUsedcar' %}">二手车</a>
-                </li>
-                <li class="active">
-					 <a href="{% url 'webapps:searchMergeOrder' %}">拼单</a>
-                </li>
+					<a href="{% url 'webapps:searchPage' 'sublease' %}">求Sublease</a>
+				</li>
+				<li>
+					<a href="{% url 'webapps:searchPage' 'houserent' %}">求合租</a>
+				</li>
+				<li>
+                    <a href="{% url 'webapps:searchPage' 'usedcar' %}">找二手车</a>
+				</li>
+				<li class="active">
+					<a href="{% url 'webapps:searchPage' 'mergeorder' %}">求拼单</a>
+				</li>				
 			</ul>
 		</div>
 	<div class="my-panel-body">	
@@ -66,32 +66,36 @@
                             	</div>
             			{% endfor %}
 		</div>
-		<div class="col-md-8 column" id="result">
+		<div class="col-md-8 column">
+		<div id="result" style="min-height: 500px;">
 					{% for record in records %}
         			<blockquote class="my-blockquote" onClick="window.open('{% url 'webapps:getDealDetail' record.id %}')">
 						<p>
-							<span style="color: #6f5499;" class="col-sm-3"><label>{{ record.order_type }}</label></span><span class="col-sm-9">{{ record.title }}</span><span class="clearfix"></span>
+							<span style="color: #6f5499;" class="col-sm-3"><label>{{ record.caption }}</label></span><span class="col-sm-9">{{ record.title }}</span><span class="clearfix"></span>
 						</p> <small>发布于{{ record.post_date|date:'Y-m-d' }} <cite>Source Title</cite></small>
 					</blockquote>
-					{% endfor %}    
-		</div> 
+					{% endfor %}  
+		</div>   	
+			<div id="loadmore" style="border-top:1px solid #ddd; text-align: center; padding: 30px 0px; {% if not config.has_next %} display: none; {% endif %}">
+				<h3 style="color: #555555;">滑动到底部加载更多...</h3>
+			</div>
+			<div id="nomore" style="border-top:1px solid #ddd; text-align: center; padding: 30px 0px; {% if config.has_next %} display: none; {% endif %}">
+				<h3 style="color: #555555;">没有更多结果了...</h3>
+			</div>
+		</div>
 		</div>
 	</div>
 </div>
-		</div>
-		</div>
+</div>
+</div>
 		{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src='{% static 'webapps/js/nprogress.js' %}'></script>
+<script src='{% static 'webapps/js/site.js' %}'></script>
 <script>
-	var sconfig={};
-	var end={{ config.end }}, has_next={{ config.has_next|lower }};
-	$(document).ready(function () {
-		$('.my-search-option-body').each(function(){$(this).children().first().attr('class','my-search-option-active')});
-	});
 	$('#date').datepicker({
          	language: "zh-CN",
             autoclose: true,
@@ -106,43 +110,17 @@
 			$(this).data('value', $(this).val());
 		search($(this));
 	});
-	$('.my-search-option').click(function(){
-		$(this).parent().find('.my-search-option-active').attr('class','my-search-option');
-		$(this).attr('class','my-search-option-active');
-		search($(this));
-	});
-	function search(obj){
-		var field = obj.data('field'), type = obj.data('type'), format = obj.data('format');
-		if (type=="exact")
-			sconfig[field]=[type, format, obj.data('value')];
-		if (type=="between")
-			sconfig[field]=[type, format, obj.data('min'), obj.data('max')];
-		sconfig.end=0;
-		console.log(sconfig);
-		$.ajax({
-			url : '{% url 'webapps:ajaxMergeOrderSearch' %}',
-			data: sconfig,
-			type : 'GET',
-			dataType: 'JSON',
-			success: function(data){
-				$('#result').empty();
-				for (i in data.records) {
-						var txt="<blockquote class='my-blockquote' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\">\
-						<p>\
-							<span style=\"color: #6f5499;\" class=\"col-sm-3\"><label>"+ data.records[i].order_type +"</label></span><span class=\"col-sm-9\">"+data.records[i].title+"</span><span class=\"clearfix\"></span>\
-						</p> <small>发布于"+data.records[i].post_date+"<cite>Source Title</cite></small>\
-					</blockquote>";
-                        $('#result').append(txt);
-                    };
-			},
-		});		
-	};
-	$(document).ajaxStart(function(){
-		NProgress.start();
-	});
-	$(document).ajaxStop(function(){
-		NProgress.done();
-	});
+	var sconfig={};
+	var end={{ config.end }}, has_next={{ config.has_next|lower }};
+	var surl='{% url 'webapps:ajaxSearch' 'mergeorder' %}';
+	$(document).ready(function () {
+		initOption();
+	})
+	$(window).scroll(function () {
+		if (parseFloat($(window).height()) + parseFloat($(window).scrollTop()) >= $(document).height() - 20 && has_next) {
+			loadMoreDeal();
+		}
+	})
 </script>
 </body>
 </html>

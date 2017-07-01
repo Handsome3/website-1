@@ -16,24 +16,24 @@
 		<div class="my-panel">
             <div class="my-panel-header">
  				<ul class="nav nav-tabs">
-				<li >
-					 <a href="{% url 'webapps:searchCarpool' %}">Carpool</a>
+				<li>
+					<a href="{% url 'webapps:searchPage' 'carpool' %}">找Carpool</a>
 				</li>
 				<li>
-					 <a href="{% url 'webapps:searchUsedItem' %}">二手宝贝</a>
+					<a href="{% url 'webapps:searchPage' 'useditem' %}">淘二手宝贝</a>
 				</li>
 				<li>
-					 <a href="{% url 'webapps:searchSublease' %}">Sublease</a>
-                </li>
-                <li>
-					 <a href="{% url 'webapps:searchHouseRent' %}">求合租</a>
-                </li>
-                <li class="active">
-					 <a href="{% url 'webapps:searchUsedcar' %}">二手车</a>
-                </li>
-                <li>
-					 <a href="{% url 'webapps:searchMergeOrder' %}">拼单</a>
-                </li>
+					<a href="{% url 'webapps:searchPage' 'sublease' %}">求Sublease</a>
+				</li>
+				<li>
+					<a href="{% url 'webapps:searchPage' 'houserent' %}">求合租</a>
+				</li>
+				<li class="active">
+                    <a href="{% url 'webapps:searchPage' 'usedcar' %}">找二手车</a>
+				</li>
+				<li>
+					<a href="{% url 'webapps:searchPage' 'mergeorder' %}">求拼单</a>
+				</li>				
 				</ul>
 			</div>
             <div class="my-panel-body">
@@ -60,7 +60,7 @@
 						<img src="{{ record.img_url }}" style="width: 100%; height:225px;">
                         <div class="caption">
                             <h4 style="color: #6f5499">
-                                ${{ record.price }}
+                                ${{ record.caption }}
                             </h4>
                             <p class="col-sm-3" align="left" style="padding: 0px; color: #999;" >
                             	描述:<br>
@@ -75,96 +75,32 @@
                     </div>
                 </div>
             {% endfor %}
-        <div class="loading" id="loading" style="display: none; height:200px;">
-            <center>
-                <svg viewBox="0 0 120 120" version="1.1">
-                    <g id="circle" class="g-circles g-circles--v1">
-                        <circle id="12" transform="translate(35, 16.698730) rotate(-30) translate(-35, -16.698730) "
-                                cx="35" cy="16.6987298" r="10"></circle>
-                        <circle id="11" transform="translate(16.698730, 35) rotate(-60) translate(-16.698730, -35) "
-                                cx="16.6987298" cy="35" r="10"></circle>
-                        <circle id="10" transform="translate(10, 60) rotate(-90) translate(-10, -60) " cx="10" cy="60"
-                                r="10"></circle>
-                        <circle id="9" transform="translate(16.698730, 85) rotate(-120) translate(-16.698730, -85) "
-                                cx="16.6987298" cy="85" r="10"></circle>
-                        <circle id="8" transform="translate(35, 103.301270) rotate(-150) translate(-35, -103.301270) "
-                                cx="35" cy="103.30127" r="10"></circle>
-                        <circle id="7" cx="60" cy="110" r="10"></circle>
-                        <circle id="6" transform="translate(85, 103.301270) rotate(-30) translate(-85, -103.301270) "
-                                cx="85" cy="103.30127" r="10"></circle>
-                        <circle id="5" transform="translate(103.301270, 85) rotate(-60) translate(-103.301270, -85) "
-                                cx="103.30127" cy="85" r="10"></circle>
-                        <circle id="4" transform="translate(110, 60) rotate(-90) translate(-110, -60) " cx="110" cy="60"
-                                r="10"></circle>
-                        <circle id="3" transform="translate(103.301270, 35) rotate(-120) translate(-103.301270, -35) "
-                                cx="103.30127" cy="35" r="10"></circle>
-                        <circle id="2" transform="translate(85, 16.698730) rotate(-150) translate(-85, -16.698730) "
-                                cx="85" cy="16.6987298" r="10"></circle>
-                        <circle id="1" cx="60" cy="10" r="10"></circle>
-                    </g>
-                    <use xlink:href="#circle" class="use"/>
-                </svg>
-                <h3>稍候，正在加载中...</h3>
-            </center>
-        </div>
-        <div class="alert alert-dismissable alert-info" id="nomoreresults" style="display: none;">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4>抱歉！</h4>
-            <strong>没有更多结果了。</strong>
-        </div>
 	</div>
+	    <div id="loadmore" style="border-top:1px solid #ddd; text-align: center; padding: 30px 0px; {% if not config.has_next %} display: none; {% endif %}">
+			<h3 style="color: #555555;">滑动到底部加载更多...</h3>
+		</div>
+		<div id="nomore" style="border-top:1px solid #ddd; text-align: center; padding: 30px 0px; {% if config.has_next %} display: none; {% endif %}">
+			<h3 style="color: #555555;">没有更多结果了...</h3>
+		</div>
 </div>
 </div>
 	{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src='{% static 'webapps/js/nprogress.js' %}'></script>
+<script src='{% static 'webapps/js/site.js' %}'></script>
 <script>
-	$(document).ready(function () {
-		$('.my-search-option-body').each(function(){$(this).children().first().attr('class','my-search-option-active')});
-	});
 	var sconfig={};
 	var end={{ config.end }}, has_next={{ config.has_next|lower }};
-	$('.my-search-option').click(function(){
-		$(this).parent().find('.my-search-option-active').attr('class','my-search-option');
-		$(this).attr('class','my-search-option-active');
-		var field = $(this).data('field'), type = $(this).data('type'), format = $(this).data('format');
-		if (type=="exact")
-			sconfig[field]=[type, format, $(this).data('value')]
-		if (type=="between")
-			sconfig[field]=[type, format, $(this).data('min'), $(this).data('max')];
-		sconfig.end=0;
-		$.ajax({
-			url : '{% url 'webapps:ajaxUsedcarSearch' %}',
-			data: sconfig,
-			type : 'GET',
-			dataType: 'JSON',
-			success: function(data){
-				$('#result').empty();
-				for (i in data.records) {
-						var txt="<div class='col-sm-6 col-md-4 col-lg-3'>\
-											<div class='thumbnail' style='cursor: pointer;' onClick=\"window.open('/deal/" + data.records[i].id + "/detail')\" onMouseOver=\"this.style.border='1px solid black'\" onMouseOut=\"this.style.border='1px solid #ddd'\">\
-											<img src='" + data.records[i].img_url + "' style='width: 100%; height: 225px;'>\
-						  					<div class='caption'>\
-												<h4 style='color: #6f5499'>$" + data.records[i].price + "</h4>\
-												<p class='col-sm-3' align='left' style='padding: 0px; color: #999' >描述:<br>日期:</p>\
-											<p class='col-sm-9' align='right'>\
-												"+data.records[i].title+"<br>\
-												"+data.records[i].post_date+"\
-											</p>\<div class='clearfix'></div>\
-											</div></div></div>";
-                        $('#result').append(txt);
-                    };
-			},
-		});
-		
-	});
-	$(document).ajaxStart(function(){
-		NProgress.start();
-	});
-	$(document).ajaxStop(function(){
-		NProgress.done();
-	});
+	var surl='{% url 'webapps:ajaxSearch' 'usedcar' %}';
+	$(document).ready(function () {
+		initOption();
+	})
+	$(window).scroll(function () {
+		if (parseFloat($(window).height()) + parseFloat($(window).scrollTop()) >= $(document).height() - 20 && has_next) {
+			loadMoreDeal();
+		}
+	})
 </script>
 </body>
 </html>

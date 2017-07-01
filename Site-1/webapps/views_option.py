@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from .models import CarBrand, CarModel
 import datetime, time
 
-maxint= 99999
+maxint= 999999
 
 def usedcarSearchOptions() :
     year= datetime.datetime.now().year
@@ -264,7 +264,8 @@ def houserentSearchOptions() :
          'field': 'roommate_gender',
          'name': '性别要求',
          'format': 'str',
-         'options':[{'label': '男女均可', 'value': 'both'},
+         'options':[{'label': '无限制', 'value': '无限制'},
+                    {'label': '男女均可', 'value': 'both'},
                     {'label': '仅男生', 'value': 'male'},
                     {'label': '仅女生', 'value': 'female'},
                     ]
@@ -288,3 +289,13 @@ def getCarModel(request):
         record = {'id': model.id, 'text': model.__str__()}
         records.append(record)
     return JsonResponse({'status': 'success', 'records': records})
+
+def getSearchOptions(type) :
+    d = {'usedcar': usedcarSearchOptions,
+         'useditem': useditemSearchOptions,
+         'sublease': subleaseSearchOptions,
+         'houserent': houserentSearchOptions,
+         'carpool': carpoolSearchOptions,
+         'mergeorder': mergeorderSearchOptions,
+         }
+    return d[type]()
