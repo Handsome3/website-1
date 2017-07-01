@@ -106,7 +106,7 @@
 				<tbody id="content">
 					{% for record in records %}
 					<tr>
-                        <td>{{ record.title|safe }}</td>
+{#                        <td>{{ record.title|safe }}</td>#}
 						<td>{{ record.type }}</td>
                         <td>{{ record.create_time|date:'Y-m-d' }}</td>
 						<td>{{ record.expire_time|date:'Y-m-d' }}</td>

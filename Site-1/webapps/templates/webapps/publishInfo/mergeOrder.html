@@ -142,6 +142,7 @@
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
             format: "yyyy-mm-dd",
+            startDate:"0",
             maxViewMode: 0,
             minViewMode: 0,
         }).on('hide', function (e) {
@@ -189,7 +190,7 @@
     function submitForm() {
 
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '/post/mergeorder/submit');
+            $("#form").attr('action', '{% url 'webapps:editMergeOrder' %}');
             $('#form').ajaxSubmit({
                 success: function (data) {
                     if (data.status == 'success') {

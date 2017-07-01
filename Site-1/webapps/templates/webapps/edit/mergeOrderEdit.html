@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>发布信息</title>
+    <title>信息修改</title>
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -20,7 +20,7 @@
         <div class="col-md-12 column">
             <div class="page-header">
                 <h1 align="left">
-                    发布信息
+                    信息修改
                 </h1>
             </div>
         </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label>拼单截止日期</label>
-                    <input name="duedate" type="text" class="datepicker form-control" placeholder="请选择日期" id="6duedate"/>
+                    <input name="duedate" type=text class="datepicker form-control" placeholder="请选择日期" id="6duedate"/>
                 </div>
                 <div class="form-group">
                     <textarea name="note" class="form-control" rows="3" placeholder="备注" id="6note"></textarea>
@@ -97,11 +97,14 @@
                     </div>
                 </div>
                 <hr>
-                <div class="form-group">
-                    <center>
-                        <button id="submitbtn" onClick="submitForm()" class="btn btn-block btn-info btn-default">发布
+                <div class="form-inline" style="padding-bottom: 40px;">
+                    <div class="col-md-6 column">
+                        <button id="submitbtn" onClick="submitForm()" class="btn btn-warning btn-default btn-block">修改
                         </button>
-                    </center>
+                    </div>
+                    <div class="col-md-6 column">
+                        <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -148,6 +151,7 @@
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
             format: "yyyy-mm-dd",
+            startDate: "0",
             maxViewMode: 0,
             minViewMode: 0,
         }).on('hide', function (e) {
@@ -177,7 +181,11 @@
                     validators: {
                         notEmpty: {
                             message: '截止日期不能为空',
-                        }
+                        },
+                        regexp: {
+                            message:'请输入yyyy-mm-dd日期格式',
+                            regexp: /^\d{4}\-\d{2}\-\d{2}$/
+                        },
                     }
                 },
                 'contact_type[]': {
@@ -212,11 +220,14 @@
     function submitForm() {
 
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '/post/mergeorder/submit');
+            $("#form").attr('action', '{% url 'webapps:editMergeorder' %}');
             $('#form').ajaxSubmit({
+                                data: {
+                    'deal_id': {{ deal.id }},
+                },
                 success: function (data) {
                     if (data.status == 'success') {
-                        var str = "/redirect?info=发布成功&next=/deal/" + data.deal_id + "/detail";
+                        var str = "/redirect?info=修改成功&next=/deal/" + {{ deal.id }} + "/detail";
                         console.log(str);
                         setTimeout("", 2000);
                         window.location.href = str;

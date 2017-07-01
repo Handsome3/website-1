@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>发布信息</title>
+    <title>信息修改</title>
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -11,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
@@ -20,7 +21,7 @@
         <div class="col-md-12 column">
             <div class="page-header">
                 <h1 align="left">
-                    发布信息
+                    信息修改
                 </h1>
             </div>
         </div>
@@ -79,11 +80,11 @@
                 </div>
                 <div class="form-group">
                     <label>月租</label>
-                    <input name="rent" type="number" class="form-control" id="4rent">
+                    <input name="rent" type=text class="form-control" id="4rent">
                 </div>
                 <div class="form-group">
                     <label>开始日期</label>
-                    <input name="start_date" type="text" class="datepicker form-control" placeholder="请选择日期"/>
+                    <input id="4start_date" name="start_date" type="text" class="datepicker form-control" placeholder="请选择日期"/>
                 </div>
                 <div class="form-group">
                     <label>合租时间</label>
@@ -127,7 +128,7 @@
                     <label>联系方式选择（可多选）</label>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                            <input id="email" type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
                         </label>
                     </div>
                     <div class="checkbox">
@@ -136,7 +137,7 @@
                                 <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
                                 <a href="/user/set/phone">马上设置</a>
                             {% else %}
-                                <input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
+                                <input id="phone" type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
                             {% endif %}
                         </label>
                     </div>
@@ -146,17 +147,20 @@
                                 <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
                                 <a href="/user/set/wechatid">马上设置</a>
                             {% else %}
-                                <input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
+                                <input id="wechat" type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
                             {% endif %}
                         </label>
                     </div>
                 </div>
                 <hr>
-                <div class="form-group">
-                    <center>
-                        <button id="submitbtn" onClick="submitForm()" class="btn btn-block btn-info btn-default">发布
+                <div class="form-inline" style="padding-bottom: 40px;">
+                    <div class="col-md-6 column">
+                        <button id="submitbtn" onClick="submitForm()" class="btn btn-warning btn-default btn-block">修改
                         </button>
-                    </center>
+                    </div>
+                    <div class="col-md-6 column">
+                        <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -201,6 +205,7 @@
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
             format: "yyyy-mm-dd",
+            startDate: "0",
             maxViewMode: 0,
             minViewMode: 0,
         }).on('hide', function (e) {
@@ -223,6 +228,10 @@
                     validators: {
                         notEmpty: {
                             message: '起始日期不能为空'
+                        },
+                        regexp: {
+                            message:'请输入yyyy-mm-dd日期格式',
+                            regexp: /^\d{4}\-\d{2}\-\d{2}$/
                         },
                     }
                 },
@@ -256,11 +265,40 @@
                 }
             }
         });
+        function fillForm() {
+            $('#4start_date').val("{{ deal.houserent.start_date }}");
+            $('#4community').val("{{ deal.houserent.community }}");
+            $('#4numOfBed').val("{{ deal.houserent.bedroom_num }}");
+            $('#4numOfBath').val("{{ deal.houserent.bathroom_num }}");
+            $('#4rent').val("{{ deal.houserent.rent }}");
+            $('#4duration').val("{{ deal.houserent.duration }}");
+            $('#4roommate_num').val("{{ deal.houserent.roommate_num}}");
+            $('#4note').val("{{ deal.houserent.note|escapejs }}");
+            {% if deal.houserent.roommate_gender == "male" %}
+                $('#onlyMale').attr("checked","true");
+            {% elif deal.houserent.roommate_gender == "female" %}
+                $('#onlyFemale').attr("checked","true");
+            {% else %}
+                $('#MaleAndFemale').attr("checked","true");
+            {% endif %}
+
+            {% if "1" in deal.contact_type %}
+                $('#email').attr("checked", "true");
+            {% endif %}
+            {% if "2" in deal.contact_type %}
+                $('#phone').attr("checked", "true");
+            {% endif %}
+            {% if "3" in deal.contact_type %}
+                $('#wechat').attr("checked", "true");
+            {% endif %}
+            $("#form").bootstrapValidator('validate');
+        };
+        fillForm();
     });
 
-    var deal_id;
+        var deal_id;
     $('#4img').fileinput({
-        uploadUrl: '/upload/images',
+        uploadUrl: "{% url 'webapps:uploadImg' %}",
         uploadAsync: false,
         language: 'zh',
         maxFileSize: 100000,
@@ -270,13 +308,33 @@
         layoutTemplates: {
             actionUpload: '',
         },
-        uploadExtraData: function (previewId, index) {   //额外参数 返回json数组
-            return {
-                'deal_id': deal_id
-            };
-        },
+        uploadExtraData: {'deal_id': {{ deal.id }}},
         maxFileCount: 9,
+        initialPreview: [
+            {% for img in images %}
+                "<img src='{{ img.image.url }}' class='file-preview-image' style='max-width:100%; max-height:100%;' alt='Desert' title='{{ img.id }}'>",
+            {% endfor %}
+        ],
+        initialPreviewConfig: [
+            {% for img in images %}
+                {
+                    caption: '{{ img }}',
+                    width: '120px',
+                    url: '{% url 'webapps:deleteImage' %}',
+                    key: {{ img.id }},
+                },
+            {% endfor %}
+        ],
+{#        防止重复上传图片？#}
+        overwriteInitial: false,
         ajaxSettings: {
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        },
+        ajaxDeleteSettings: {
             beforeSend: function (xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);
@@ -286,17 +344,21 @@
     }).on("filebatchuploadsuccess", function (event, data) {
         var response = data.response;
         if (response.status == 'success') {
-            var str = "/redirect?info=发布成功&next=/deal/" + response.deal_id + "/detail";
-            console.log(str);
             setTimeout("", 2000);
-            window.location.href = "/redirect?info=发布成功&next=/deal/" + response.deal_id + "/detail";
+            window.location.href = "/redirect?info=修改成功&next=/deal/" + response.deal_id + "/detail";
         }
     });
+    
+    
+    
     function submitForm() {
 
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '/post/houserent/submit');
+            $("#form").attr('action', '{% url 'webapps:editHouserent' %}');
             $('#form').ajaxSubmit({
+                data: {
+                    'deal_id': {{ deal.id }},
+                },
                 success: function (data) {
                     if (data.status == 'success') {
                         deal_id = data.deal_id;
