@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'option/carbrand',views_option.getCarBrand,name='getCarBrand'),
     url(r'option/carmodel',views_option.getCarModel,name='getCarModel'),
     url(r'ajax/deleteimage', views_edit.deleteImage, name='deleteImage'),
-    url(r'ajax/deal/edit', views_edit.ajaxEditDeal, name='ajaxEditDeal'),
+    url(r'ajax/deal/edit/carpool', views_edit.editCarpool, name='editCarpool'),
 
     url(r'ajax/options/carbrand', views_option.getCarBrand, name='getCarBrand'),
     url(r'ajax/options/carmodel', views_option.getCarModel, name='getCarModel'),

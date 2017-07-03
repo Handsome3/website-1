@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-# from .mysite.settings import MEDIA_ROOT
+from mysite.settings import MEDIA_ROOT
 from .models import *
 from .views import confirmaAndRedirect
 from .views_detail import getContact
@@ -138,7 +138,6 @@ def editUsedcar(request):
                 deal.usedcar.save()
             return JsonResponse({'status': 'success'})
 
-
 @login_required
 def editCarpool(request):
     if request.method == 'POST':
@@ -164,8 +163,6 @@ def editCarpool(request):
                 deal.carpool.save()
             return JsonResponse({'status': 'success'})
 
-
-
 @login_required
 def editUseditem(request):
     if request.method == 'POST':
@@ -185,7 +182,6 @@ def editUseditem(request):
                 deal.useditem.save()
             return JsonResponse({'status': 'success'})
 
-
 @login_required
 def editMergeorder(request):
     if request.method == 'POST':
@@ -202,8 +198,6 @@ def editMergeorder(request):
                 deal.mergeorder.note = note
                 deal.mergeorder.save()
             return JsonResponse({'status': 'success'})
-
-
 
 @login_required
 def editHouserent(request):
@@ -231,7 +225,6 @@ def editHouserent(request):
                 deal.houserent.note=note
                 deal.houserent.save()
             return JsonResponse({'status': 'success'})
-
 
 @login_required
 def editSublease(request):
