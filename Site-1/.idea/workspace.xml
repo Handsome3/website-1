@@ -2,11 +2,65 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5cbfcd43-92b6-4dfd-8f52-c774286524a2" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/mergeOrder.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/mergeorder.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/usedCar.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/usedcar.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_10_sublease/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_10_sublease/img_2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_10_sublease/img_3.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_10_useditem/img_2017-06-24_091843.549347.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_11_useditem/img_2017-06-24_091937.708436.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_12_useditem/img_2017-06-24_092231.661004.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_13_useditem/img_2017-06-24_092305.500129.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_14_useditem/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_14_useditem/img_2017-06-24_092405.028197.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_18_sublease/img_2017-06-28_141859.771467.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_18_sublease/img_2017-06-28_141859.851028.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_19_houserent/img_2017-06-28_163045.760787.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_19_houserent/img_2017-06-28_163045.876923.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_1_usedcar/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_2_usedcar/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_2_useditem/img_2017-06-22_105003.711117.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_2_useditem/img_2017-06-22_105003.792181.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_3_sublease/img_2017-06-22_105042.121298.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_3_sublease/img_2017-06-22_105042.168219.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_4_houserent/img_2017-06-22_105124.628324.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_4_houserent/img_2017-06-22_105124.662483.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_5_houserent/img_1.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_5_usedcar/img_2017-06-22_105251.125774.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_5_usedcar/img_2017-06-22_105251.187223.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_5_usedcar/img_2017-06-22_105251.275867.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_61_usedcar/img_2017-06-19_105856.055684.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_61_usedcar/img_2017-06-19_105856.159398.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_61_usedcar/img_2017-06-19_105856.222460.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_6_sublease/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_7_sublease/img_1.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_8_houserent/img_1.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_9_sublease/img_1.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_1/deal_9_useditem/img_2017-06-24_091748.805153.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_43_usedcar/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_49_usedcar/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_50_usedcar/img_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_58_usedcar/img.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_58_usedcar/img_FTaFQWT.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_58_usedcar/img_qux3zLr.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_62_usedcar/img_2017-06-21_111050.834621.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_62_usedcar/img_2017-06-21_111050.970483.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_62_usedcar/img_2017-06-21_111051.050624.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_63_usedcar/img_2017-06-21_135255.923182.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_63_usedcar/img_2017-06-21_135256.138015.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_63_usedcar/img_2017-06-21_135256.247284.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_12/deal_67_useditem/img_2017-06-22_100437.501670.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_29_usedcar/img_2017-06-30_095123.543911.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_30_usedcar/img_2017-06-30_101757.367570.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_30_usedcar/img_2017-06-30_101757.439307.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_31_usedcar/img_2017-06-30_103116.436373.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_34_useditem/img_2017-06-30_103853.084816.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_35_sublease/img_2017-06-30_103941.345153.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_36_houserent/img_2017-06-30_104027.641190.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_38_useditem/img_2017-06-30_122753.122851.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_39_useditem/img_2017-06-30_122828.537234.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_40_useditem/img_2017-06-30_123201.499174.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_41_useditem/img_2017-06-30_123232.000327.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/media/images/user_2/deal_42_useditem/img_2017-06-30_123316.799323.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/urls.py" afterPath="$PROJECT_DIR$/webapps/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/views_edit.py" afterPath="$PROJECT_DIR$/webapps/views_edit.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -91,8 +145,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webapps/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+            <state relative-caret-position="330">
+              <caret line="30" column="87" lean-forward="false" selection-start-line="30" selection-start-column="87" selection-end-line="30" selection-end-column="87" />
               <folding />
             </state>
           </provider>
@@ -101,8 +155,8 @@
       <file leaf-file-name="views_edit.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapps/views_edit.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="71" column="15" lean-forward="true" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
+            <state relative-caret-position="408">
+              <caret line="71" column="15" lean-forward="false" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#472#1134#0" expanded="false" />
@@ -221,6 +275,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -339,7 +394,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -656,7 +710,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11666667" sideWeight="0.4962963" order="0" side_tool="false" content_ui="combo" />
@@ -665,7 +719,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13697916" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26349208" sideWeight="0.49479166" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26349208" sideWeight="0.49479166" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11770833" sideWeight="0.5037037" order="2" side_tool="true" content_ui="tabs" />
@@ -768,7 +822,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
           <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -818,7 +871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -880,7 +932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="582" column="0" lean-forward="false" selection-start-line="582" selection-start-column="0" selection-end-line="582" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -888,7 +939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
           <caret line="519" column="0" lean-forward="false" selection-start-line="519" selection-start-column="0" selection-end-line="519" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -910,7 +960,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
           <caret line="271" column="0" lean-forward="false" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -925,7 +974,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
           <caret line="863" column="0" lean-forward="false" selection-start-line="863" selection-start-column="0" selection-end-line="863" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -940,7 +988,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
           <caret line="138" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -976,7 +1023,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1108,7 +1154,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1150,14 +1195,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4896">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webapps/views_edit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="71" column="15" lean-forward="true" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
+        <state relative-caret-position="408">
+          <caret line="71" column="15" lean-forward="false" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#472#1134#0" expanded="false" />
@@ -1178,8 +1222,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webapps/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+        <state relative-caret-position="330">
+          <caret line="30" column="87" lean-forward="false" selection-start-line="30" selection-start-column="87" selection-end-line="30" selection-end-column="87" />
           <folding />
         </state>
       </provider>
