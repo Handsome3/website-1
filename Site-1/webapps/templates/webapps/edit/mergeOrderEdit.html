@@ -11,106 +11,92 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
+{% include "webapps/header.html" %}
 <body>
-<div class="container">
-    {% include "webapps/header.html" %}
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <div class="page-header">
-                <h1 align="left">
-                    信息修改
-                </h1>
+<div class="container-fluid" style="background-color: #F0F0F0;">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+            <div class="edit-title">
+                <h1>信息修改</h1>
+                </div>
+                <div class="my-panel">
+                    <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>活动网址</label>
+                            <input name="website" type="url" class="form-control" id="6website"/>
+                        </div>
+                        <div class="form-group">
+                            <label>商品类型</label>
+                            <select name="order_type" class="form-control js-example-basic-single" id="6orderType">
+                                <option>化妆品</option>
+                                <option>零食</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>拼单截止日期</label>
+                            <input name="duedate" type=text class="datepicker form-control" placeholder="请选择日期"
+                                   id="6duedate"/>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="note" class="form-control" rows="3" placeholder="备注" id="6note"></textarea>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label>联系方式选择（可多选）</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="email" type="checkbox" value="1"
+                                           name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not phone %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
+                                        <a href="/user/set/phone">马上设置</a>
+                                    {% else %}
+                                        <input id="phone" type="checkbox" value="2" name="contact_type[]">通过电话：
+                                        {{ phone }} 联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not wechat %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
+                                        <a href="/user/set/wechatid">马上设置</a>
+                                    {% else %}
+                                        <input id="wechat" type="checkbox" value="3" name="contact_type[]">通过微信ID：
+                                        {{ wechat }} 联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-inline" style="padding-bottom: 40px;">
+                            <div class="col-md-6 column">
+                                <button id="submitbtn" onClick="submitForm()"
+                                        class="btn btn-warning btn-default btn-block">修改
+                                </button>
+                            </div>
+                            <div class="col-md-6 column">
+                                <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <ul class="nav nav-tabs">
-                <li>
-                    <a href="/post/carpool/page">Carpool</a>
-                </li>
-                <li>
-                    <a href="/post/useditem/page"> 二手宝贝</a>
-                </li>
-                <li>
-                    <a href="/post/sublease/page">Sublease</a>
-                </li>
-                <li>
-                    <a href="/post/houserent/page">合租</a>
-                </li>
-                <li>
-                    <a href="/post/usedcar/page">二手车</a>
-                </li>
-                <li class="active">
-                    <a href="/post/mergeorder/page">拼单</a>
-                </li>
-            </ul>
-            <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label>活动网址</label>
-                    <input name="website" type="url" class="form-control" id="6website"/>
-                </div>
-                <div class="form-group">
-                    <label>商品类型</label>
-                    <select name="order_type" class="form-control js-example-basic-single" id="6orderType">
-                        <option>化妆品</option>
-                        <option>零食</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>拼单截止日期</label>
-                    <input name="duedate" type=text class="datepicker form-control" placeholder="请选择日期" id="6duedate"/>
-                </div>
-                <div class="form-group">
-                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="6note"></textarea>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <label>联系方式选择（可多选）</label>
-                    <div class="checkbox">
-                        <label>
-                            <input id="email" type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            {% if not phone %}
-                                <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
-                                <a href="/user/set/phone">马上设置</a>
-                            {% else %}
-                                <input id="phone" type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
-                            {% endif %}
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            {% if not wechat %}
-                                <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
-                                <a href="/user/set/wechatid">马上设置</a>
-                            {% else %}
-                                <input id="wechat" type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
-                            {% endif %}
-                        </label>
-                    </div>
-                </div>
-                <hr>
-                <div class="form-inline" style="padding-bottom: 40px;">
-                    <div class="col-md-6 column">
-                        <button id="submitbtn" onClick="submitForm()" class="btn btn-warning btn-default btn-block">修改
-                        </button>
-                    </div>
-                    <div class="col-md-6 column">
-                        <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+</div>
 
-    {% include "webapps/footer.html" %}
+{% include "webapps/footer.html" %}
 
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -183,7 +169,7 @@
                             message: '截止日期不能为空',
                         },
                         regexp: {
-                            message:'请输入yyyy-mm-dd日期格式',
+                            message: '请输入yyyy-mm-dd日期格式',
                             regexp: /^\d{4}\-\d{2}\-\d{2}$/
                         },
                     }
@@ -222,12 +208,12 @@
         if ($('#form').data('bootstrapValidator').isValid()) {
             $("#form").attr('action', '{% url 'webapps:editMergeorder' %}');
             $('#form').ajaxSubmit({
-                                data: {
+                data: {
                     'deal_id': {{ deal.id }},
                 },
                 success: function (data) {
                     if (data.status == 'success') {
-                        var str = "/redirect?info=修改成功&next=/deal/" + {{ deal.id }} + "/detail";
+                        var str = "/redirect?info=修改成功&next=/deal/" + {{ deal.id }} +"/detail";
                         console.log(str);
                         setTimeout("", 2000);
                         window.location.href = str;

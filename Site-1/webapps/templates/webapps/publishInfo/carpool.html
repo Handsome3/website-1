@@ -1,229 +1,481 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>发布信息</title>
-{% load static %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
-<link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
+    <meta charset="utf-8">
+    <title>发布信息</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
+          rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-	{% include "webapps/header.html" %}
+{% include "webapps/header.html" %}
 <div class="container-fluid" style="background-color: #F0F0F0;">
-<div class="container">
-    <div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="my-panel">
-				<ul class="nav nav-tabs">
-                    <li class="active">
-						 <a href="/post/carpool/page">Carpool</a>
-					</li>
-					<li>
-						 <a href="/post/useditem/page"> 二手宝贝</a>
-					</li>
-                    <li>
-                    	 <a href="/post/sublease/page">Sublease</a>
-                    </li>
-                    <li>
-                    	 <a href="/post/houserent/page">合租</a>
-                    </li>
-                    <li>
-                    	 <a href="/post/usedcar/page">二手车</a>
-                    </li>
-                    <li>
-                    	 <a href="/post/mergeorder/page">拼单</a>
-                    </li>
-				</ul>
-                            <form id="form" role="form" style="margin: 10px 80px" method="post">
-                            	{% csrf_token %}
-								<div class="form-group">  
-            						<label>出发日期 </label>  
-                					<input type="text" class="datepicker form-control" id="1date" name="date"/>
-        						</div>  
-								<div class="form-group">
-					 				<label for="datetime">出发时间</label>
-                     				<input type=time class="form-control" id="1datetime" name="time"/>
-								</div>
-								<div class="form-group">
-					 				<label for="depart_place">出发地</label>
-                     				<select id="1depart" class="js-example-data-array-selected form-control" name="depart_place"></select>
-								</div>
-								<div class="form-group">
-					 				<label for="destination" >目的地</label>
-                     				<select class="form-control js-example-data-array-selected" id="1destination" name="destination"></select>
-								</div> 
-                				<div class="form-group">
-					 				<label for="passenger_num" >最大乘客人数</label>
-                     				<input type="number" class="form-control" id="1passenger_num" name="passenger_num" />
-								</div> 
-                                <div class="form-group">
-					 				<label for="price" >人均价格</label>
-                     				<input type="number" class="form-control" id="1price" name="price"/>
-								</div> 
-                                <div class="form-group">
-					 				<label for="car_type" >车辆类型</label>
-    								<select class="form-control js-example-basic-single" id="1car_type" name="car_type">
-      									<option value="couple">双门轿车</option>
-      									<option value="sedan">四门轿车</option>
-      									<option value="suv">五座SUV</option>
-      									<option value="7suv">7座SUV</option>
-      									<option value="truck">皮卡</option>
-    								</select>
-								</div> 
-                               	<hr>
-                                <div class="form-group">
-                                	<textarea class="form-control" rows="3" placeholder="备注" id="1note" name="note"></textarea>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="publish-title">
+                    <h1>信息发布</h1>
+                </div>
+                <div class="my-panel">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="/post/carpool/page">Carpool</a>
+                        </li>
+                        <li>
+                            <a href="/post/useditem/page"> 二手宝贝</a>
+                        </li>
+                        <li>
+                            <a href="/post/sublease/page">Sublease</a>
+                        </li>
+                        <li>
+                            <a href="/post/houserent/page">合租</a>
+                        </li>
+                        <li>
+                            <a href="/post/usedcar/page">二手车</a>
+                        </li>
+                        <li>
+                            <a href="/post/mergeorder/page">拼单</a>
+                        </li>
+                    </ul>
+                    <form id="form" role="form" style="margin: 10px 80px" method="post">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label class="col-sm-2" style="padding: 0px; width: 8%;">出发日期</label>
+                            <input type="text" class="datepicker form-control" id="date" name="date"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="datetime" class="col-sm-2" style="padding: 0px; width: 8%;">出发日期</label>
+                            <input type=time class="form-control" id="datetime" name="time"/>
+                        </div>
+
+                        <div class="form-group" id="depart_div">
+                            <label>出发地</label><br>
+                            <label class="col-sm-1" style="width:4%">州</label>
+                            <div class="col-sm-1">
+                                {#                                改成class #}
+                                <select id="state_s" class="form-control location-state must-fill"
+                                        name="state"></select>
+                            </div>
+                            <label class="col-sm-1" style="width:6%">城市</label>
+                            <div class="col-sm-2">
+                                <select id="city_s" class="form-control must-fill"
+                                        name="city_s"></select>
+                            </div>
+                            <label class="col-sm-1" style="width:6%">地点</label>
+                            <div class="col-sm-4">
+                                <select id="depart_place" class="form-control must-fill"
+                                        name="depart_place_id"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <a id="depart_btn" class="btn btn-default "
+                                   onclick="showNewLocation_s()">找不到出发地？</a>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div id="new_location_s" style="margin-top: 15px;margin-bottom: 15px;" hidden>
+                            <label>自定义出发地</label><br>
+                            <input id="have_new_location_s" value=0 name="have_new_location_s" hidden>
+                            <label class="col-sm-1" style="width:4%">州</label>
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <select id="new_state_s" class="form-control location-state must-fill"
+                                            name="new_state_s_id" style="width: 52px"></select>
                                 </div>
-                                <hr>
-                                <div class="form-group">
-                                	<label>联系方式选择（可多选）</label>
-                                	<div class="checkbox">
-										  <label>
-											<input type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
-										  </label>
-									</div>
-									<div class="checkbox">
-										  <label>
-										  {% if not phone %}
-											<input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，<a href="{% url 'webapps:editProfile' %}">马上设置</a>
-										  {% else %}
-										  	<input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
-										  {% endif %}
-										  </label>
-									</div>
-                               		<div class="checkbox">
-										  <label>
-										  {% if not wechat %}
-											<input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，<a href="{% url 'webapps:editProfile' %}">马上设置</a>
-									  	  {% else %}
-										  	<input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
-										  {% endif %}
-										  </label>
-									</div>
+                                <label class="col-sm-1" style="width:6%">城市</label>
+                                <div class="col-sm-3">
+                                    <input id="new_city_s" class="form-control must-fill" name="new_city_s"
+                                           placeholder="城市英文名称,如:Miami">
                                 </div>
-                                <hr>
-                                <div class="form-group">
-                					<center> <button onClick="submitForm()" class="btn btn-block btn-info btn-default">发布</button></center>
+                                <label class="col-sm-1" style="width:6%">地点</label>
+                                <div class="col-sm-4">
+                                    <input id="new_depart" class="form-control must-fill" name="new_depart"
+                                           placeholder="地址英文名称，如：University of Florida">
                                 </div>
-							</form>
-				</div>
-		</div>
-	</div>   
+                            </div>
+                            <div style="margin-top: 8px">
+                                <label class="col-sm-1" style="width:6%">地址</label>
+                                <div class="col-sm-9">
+                                    <input id="new_address_s" name="new_address_s" class="form-control"
+                                           placeholder="选填，格式Street,City,State Zipcode. 如：1000 SW 62nd Blvd, Gainesville, FL 32607">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="form-group">
+                            <label for="destination">目的地</label><br>
+                            <label class="col-sm-1" style="width:4%">州</label>
+                            <div class="col-sm-1">
+                                <select id="state_d" class="form-control location-state must-fill"
+                                        name="state"></select>
+                            </div>
+                            <label class="col-sm-1" style="width:6%">城市</label>
+                            <div class="col-sm-2">
+                                <select id="city_d" class="form-control must-fill"
+                                        name="city_d"></select>
+                            </div>
+                            <label class="col-sm-1" style="width:6%">地点</label>
+                            <div class="col-sm-4">
+                                <select class="form-control must-fill" id="destination"
+                                        name="destination_id"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <a id="destination_btn" class="btn btn-default"
+                                   onclick="showNewLocation_d()">找不到目的地？</a>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div id="new_location_d" style="margin-top: 15px;margin-bottom: 15px;" hidden>
+                            <label>自定义目的地</label><br>
+                            <input id="have_new_location_d" value=0 hidden name="have_new_location_d">
+                            <label class="col-sm-1" style="width:4%">州</label>
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <select id="new_state_d" class="form-control location-state must-fill"
+                                            name="new_state_d_id" style="width: 52px"></select>
+                                </div>
+
+                                <label class="col-sm-1" style="width:6%">城市</label>
+                                <div class="col-sm-3">
+                                    <input id="new_city_d" class="form-control must-fill" name="new_city_d"
+                                           placeholder="城市英文名称,如：Miami">
+                                </div>
+                                <label class="col-sm-1" style="width:6%">地点</label>
+                                <div class="col-sm-4">
+                                    <input id="new_destination" class="form-control must-fill" name="new_destination"
+                                           placeholder="地址英文名称，如：University of Florida">
+                                </div>
+                            </div>
+                            <div style="margin-top: 8px">
+                                <label class="col-sm-1" style="width:6%">地址</label>
+                                <div class="col-sm-9">
+                                    <input id="new_address_d" name="new_address_d" class="form-control"
+                                           placeholder="选填，格式Street,City,State Zipcode. 如：1000 SW 62nd Blvd, Gainesville, FL 32607">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="form-group">
+                            <label for="passenger_num">最大乘客人数</label>
+                            <input type="number" class="form-control" id="passenger_num" name="passenger_num"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">人均价格</label>
+                            <input type="number" class="form-control" id="price" name="price"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="car_type">车辆类型</label>
+                            <select class="form-control js-example-basic-single" id="car_type" name="car_type">
+                                <option value="couple">双门轿车</option>
+                                <option value="sedan">四门轿车</option>
+                                <option value="suv">五座SUV</option>
+                                <option value="7suv">7座SUV</option>
+                                <option value="truck">皮卡</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" placeholder="备注" id="note" name="note"></textarea>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label>联系方式选择（可多选）</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1"
+                                           name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not phone %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
+                                        <a href="{% url 'webapps:editProfile' %}">马上设置</a>
+                                    {% else %}
+                                        <input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not wechat %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
+                                        <a href="{% url 'webapps:editProfile' %}">马上设置</a>
+                                    {% else %}
+                                        <input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <center>
+                                <button onClick="submitForm()" class="btn btn-block btn-info btn-default">发布</button>
+                            </center>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-	</div>
-	    {% include "webapps/footer.html" %}
+{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
 <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 <script>
-	$(document).ready(function() {
-		$(".datepicker").datepicker({
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
             language: "zh-CN",
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
             format: "yyyy-mm-dd",
-			todayHighlight: true,
-			startDate: "0",
-        }).on('hide',function(e) { 
-			$('#form').data('bootstrapValidator') 
-			.updateStatus('date', 'NOT_VALIDATED',null) 
-			.validateField('date'); 
-		});
-		var data=[{id:0, text:"Gainesville"}];
-		$("#1depart").select2({
-        	data:data
-    	});
-		$("#1destination").select2({
-        	data:data
-    	});
-		$(".js-example-basic-single").select2({
-			minimumResultsForSearch: Infinity	
-		});
-		$("#form").bootstrapValidator({
-			message:'表单不合法',
-			feedbackIcons:{
-                	valid: 'glyphicon glyphicon-ok',
-                	invalid: 'glyphicon glyphicon-remove',
-                	validating: 'glyphicon glyphicon-refresh'
+            todayHighlight: true,
+            startDate: "0",
+        }).on('hide', function (e) {
+            $('#form').data('bootstrapValidator')
+                .updateStatus('date', 'NOT_VALIDATED', null)
+                .validateField('date');
+        });
+
+        //below are ajax requests for location options
+        $('.location-state').select2({
+            minimumResultsForSearch: Infinity,
+            language: "ch",
+            ajax: {
+                url: "{% url 'webapps:getState' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
             },
-			fields: {
-				date:{
-					message: '请选择有效的日期',
-					validators:{
-						notEmpty:{
-							message:'出发日期不能为空',
-						}	
-					},
-				},
-				time: {
-					validators:{
-						notEmpty:{
-							message: '出发时间不能为空',
-						}
-					}	
-				},
-				depart_place: {
-					validators:{
-						notEmpty:{
-							message: '出发地不能为空',
-						}
-					}	
-				},
-				destination: {
-					validators:{
-						notEmpty:{
-							message: '目的地不能为空',
-						}
-					}	
-				},
-				passenger_num:{
-					message: '请输入有效的人数',
-					validators: {
-						notEmpty: {
-							message: '乘客人数不能为空',
-						},
-						between: {
-							min: 1,
-							max: 7,
-							message: '乘客人数应在1-7之间'
-						}
-					}
-				},
-				price: {
-					message:'请输入人均价格',
-					validators: {
-						notEmpty: {
-							message: '价格不能为空'
-						},
-						between: {
-							min:0,
-							max:100,
-							message: '价格只能在0-100之间'
-						}
-					}
-				},
-				'contact_type[]': {
-					validators: {
-						choice:{
-							min: 1,
-							max: 3,
-							message: '请选择1到3种联系方式'
-						}
-					}
-				},
-			}
-		});
-	});
-	function submitForm() {
-		$("#form").bootstrapValidator('validate');
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+        });
+
+        //ajax request for city list according to state_s
+        $("#city_s").select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "请选择城市",
+            minimumInputLength: 1,
+            ajax: {
+                url: "{% url 'webapps:getCity' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var id = $('#state_s').val();
+                    return {
+                        keyword: params.term,
+                        state_id: id,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+        });
+
+        $("#depart_place").select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "请选择地点",
+            minimumInputLength: 1,
+            ajax: {
+                url: "{% url 'webapps:getLocation' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var city_id = $('#city_s').val();
+                    var state_id = $('#state_s').val();
+                    return {
+                        keyword: params.term,
+                        city_id: city_id,
+                        state_id: state_id,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+        });
+
+        //ajax request for city list according to state_d
+        $("#city_d").select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "请选择城市",
+            minimumInputLength: 1,
+            ajax: {
+                url: "{% url 'webapps:getCity' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var id = $('#state_d').val();
+                    return {
+                        keyword: params.term,
+                        state_id: id,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+        });
+
+        $("#destination").select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "请选择地点",
+            minimumInputLength: 1,
+            ajax: {
+                url: "{% url 'webapps:getLocation' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    var city_id = $('#city_d').val();
+                    var state_id = $('#state_d').val();
+                    return {
+                        keyword: params.term,
+                        city_id: city_id,
+                        state_id: state_id,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+        });
+
+        $(".js-example-basic-single").select2({
+            minimumResultsForSearch: Infinity
+        });
+
+        $("#form").bootstrapValidator({
+            message: '表单不合法',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                date: {
+                    message: '请选择有效的日期',
+                    validators: {
+                        notEmpty: {
+                            message: '出发日期不能为空',
+                        }
+                    },
+                },
+                mustfill_location: {
+                    selector: '.must-fill',
+                    validators: {
+                        notEmpty: {
+                            message: '不能为空'
+                        },
+
+                    }
+                },
+                time: {
+                    validators: {
+                        notEmpty: {
+                            message: '出发时间不能为空',
+                        }
+                    }
+                },
+                passenger_num: {
+                    message: '请输入有效的人数',
+                    validators: {
+                        notEmpty: {
+                            message: '乘客人数不能为空',
+                        },
+                        between: {
+                            min: 1,
+                            max: 7,
+                            message: '乘客人数应在1-7之间'
+                        }
+                    }
+                },
+                price: {
+                    message: '请输入人均价格',
+                    validators: {
+                        notEmpty: {
+                            message: '价格不能为空'
+                        },
+                        between: {
+                            min: 0,
+                            max: 100,
+                            message: '价格只能在0-100之间'
+                        }
+                    }
+                },
+                'contact_type[]': {
+                    validators: {
+                        choice: {
+                            min: 1,
+                            max: 3,
+                            message: '请选择1到3种联系方式'
+                        }
+                    }
+                },
+            }
+        });
+    });
+
+    function submitForm() {
+        $("#form").bootstrapValidator('validate');
         if ($('#form').data('bootstrapValidator').isValid()) {
             $("#form").attr('action', '{% url 'webapps:submitPost' 'carpool' %}');
 			$("#submitbtn").attr("disabled", true); 
@@ -241,6 +493,62 @@
         else
             alert("请正确填写表单！");
     };
+
+    //切换到自定义出发地输入
+    function showNewLocation_s() {
+        $('#state_s').val('');
+        $('#state_s').empty();
+        $('#city_s').val('');
+        $('#city_s').empty();
+        $('#depart_place').val('');
+        $('#depart_place').empty();
+
+        if ($('#have_new_location_s').val() == 0)
+            $('#have_new_location_s').val(1);
+        else
+            $('#have_new_location_s').val(0);
+        if ($('#state_s').is('[disabled=disabled]'))
+            $('#state_s').attr('disabled', false);
+        else
+            $('#state_s').attr('disabled', 'disabled');
+
+        if ($('#city_s').is('[disabled=disabled]'))
+            $('#city_s').attr('disabled', false);
+        else
+            $('#city_s').attr('disabled', 'disabled');
+
+        if ($('#depart_place').is('[disabled=disabled]'))
+            $('#depart_place').attr('disabled', false);
+        else
+            $('#depart_place').attr('disabled', 'disabled');
+        $('#new_location_s').slideToggle("slow");
+    }
+    //切换到自定义目的地输入
+    function showNewLocation_d() {
+        $('#state_d').val('');
+        $('#state_d').empty();
+        $('#city_d').val('');
+        $('#city_d').empty();
+        $('#destination').val('');
+        $('#destination').empty();
+        if ($('#have_new_location_d').val() == 0)
+            $('#have_new_location_d').val(1);
+        else
+            $('#have_new_location_d').val(0);
+        if ($('#state_d').is('[disabled=disabled]'))
+            $('#state_d').attr('disabled', false);
+        else
+            $('#state_d').attr('disabled', 'disabled');
+        if ($('#city_d').is('[disabled=disabled]'))
+            $('#city_d').attr('disabled', false);
+        else
+            $('#city_d').attr('disabled', 'disabled');
+        if ($('#destination').is('[disabled=disabled]'))
+            $('#destination').attr('disabled', false);
+        else
+            $('#destination').attr('disabled', 'disabled');
+        $('#new_location_d').slideToggle("slow");
+    }
 </script>
 </body>
 </html>

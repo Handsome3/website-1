@@ -1,9 +1,7 @@
 from django.conf import settings
 from django.conf.urls import url
-from . import views, views_user, views_post, views_upload, views_detail, views_search,views_option
-from django.conf.urls.static import static
-
 from . import views, views_user, views_post, views_upload, views_detail, views_search, views_option, views_edit
+from django.conf.urls.static import static
 
 app_name = 'webapps'
 urlpatterns = [
@@ -32,6 +30,12 @@ urlpatterns = [
     url(r'deal/repost/(?P<deal_id>[0-9]+)$', views_edit.repostDeal, name='repostDeal'),
     url(r'deal/stop/(?P<deal_id>[0-9]+)$', views_edit.stopDeal, name='stopDeal'),
     url(r'deal/delete/(?P<deal_id>[0-9]+)$', views_edit.deleteDeal, name='deleteDeal'),
+    url(r'deal/edit/editcarpool', views_edit.editCarpool, name='editCarpool'),
+    url(r'deal/edit/editmergeorder', views_edit.editMergeorder, name='editMergeorder'),
+    url(r'deal/edit/editusedcar', views_edit.editUsedcar, name='editUsedcar'),
+    url(r'deal/edit/edituseditem', views_edit.editUseditem, name='editUsedItem'),
+    url(r'deal/edit/editsublease', views_edit.editSublease, name='editSublease'),
+    url(r'deal/edit/edithouserent', views_edit.editHouserent, name='editHouserent'),
 
     #Ajax Request
     url(r'upload/images', views_upload.uploadImg, name='uploadImg'),

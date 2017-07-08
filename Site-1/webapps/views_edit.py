@@ -12,6 +12,7 @@ from mysite.settings import MEDIA_ROOT
 from .models import *
 from .views import confirmaAndRedirect
 from .views_detail import getContact
+from .views_post import getLocation,toTitleFormat,getCar
 
 
 @login_required
@@ -117,14 +118,16 @@ def changeDealInfo(request):
 
 @login_required
 def editUsedcar(request):
+    type='usedcar'
     if request.method == 'POST':
         deal = changeDealInfo(request)
+        car=getCar(request,type)
         if deal:
             year = request.POST['year']
             price = request.POST['price']
             mileage = request.POST['mileage']
-            car_model_id = request.POST.get('car_model', '')
-            car_brand_id = request.POST.get('car_brand', '')
+            car_model_id = car['car_model_id']
+            car_brand_id = car['car_brand_id']
             note = request.POST['note']
             with transaction.atomic():
                 deal.usedcar.year = year
@@ -140,13 +143,14 @@ def editUsedcar(request):
 
 @login_required
 def editCarpool(request):
+    type='carpool'
     if request.method == 'POST':
         deal = changeDealInfo(request)
         if deal:
             date = request.POST['date']
             time = request.POST['time']
-            depart = request.POST['depart']
-            destination = request.POST['destination']
+            depart_place_id = getLocation(request,type,'depart_place_id')
+            destination_id = getLocation(request,type,'destination_id')
             passenger_num = request.POST['passenger_num']
             price = request.POST['price']
             car_type = request.POST['car_type']
@@ -155,8 +159,10 @@ def editCarpool(request):
                 deal.carpool.date= date
                 deal.carpool.price = price
                 deal.carpool.time = time
-                deal.carpool.depart_place = depart
-                deal.carpool.destination = destination
+                if depart_place_id:
+                    deal.carpool.depart_place_id = depart_place_id
+                if destination_id:
+                    deal.carpool.destination_id = destination_id
                 deal.carpool.passenger_num = passenger_num
                 deal.carpool.car_type = car_type
                 deal.carpool.note = note
@@ -201,11 +207,12 @@ def editMergeorder(request):
 
 @login_required
 def editHouserent(request):
+    type='houserent'
     if request.method == 'POST':
         deal = changeDealInfo(request)
         if deal:
             start_date = request.POST['start_date']
-            community = request.POST['community']
+            community_id = getLocation(request,type,'community_id')
             bedroom_num = request.POST['bedroom_num']
             bathroom_num = request.POST['bathroom_num']
             roommate_num = request.POST['roommate_num']
@@ -215,7 +222,8 @@ def editHouserent(request):
             note = request._post['note']
             with transaction.atomic():
                 deal.houserent.start_date=start_date
-                deal.houserent.community=community
+                if community_id:
+                    deal.houserent.community_id=community_id
                 deal.houserent.bedroom_num=bedroom_num
                 deal.houserent.bathroom_num=bathroom_num
                 deal.houserent.roommate_num=roommate_num
@@ -228,12 +236,13 @@ def editHouserent(request):
 
 @login_required
 def editSublease(request):
+    type='sublease'
     if request.method == 'POST':
         deal = changeDealInfo(request)
         if deal:
             start_date = request.POST['start_date']
             end_date = request.POST['end_date']
-            community = request.POST['community']
+            community_id = getLocation(request,type,'community_id')
             bedroom_num = int(request.POST['bedroom_num'])
             bathroom_num = int(request.POST['bathroom_num'])
             renewal = request.POST['renewal']
@@ -242,7 +251,8 @@ def editSublease(request):
             with transaction.atomic():
                 deal.sublease.start_date=start_date
                 deal.sublease.end_date=end_date
-                deal.sublease.community=community
+                if community_id:
+                    deal.sublease.community_id=community_id
                 deal.sublease.bedroom_num=bedroom_num
                 deal.sublease.bathroom_num=bathroom_num
                 deal.sublease.renewal=renewal
@@ -250,3 +260,4 @@ def editSublease(request):
                 deal.sublease.note=note
                 deal.sublease.save()
             return JsonResponse({'status': 'success'})
+

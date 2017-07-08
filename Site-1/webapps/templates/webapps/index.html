@@ -9,20 +9,6 @@
 </head>
 <body>
 {% include "webapps/header.html" %}
-<div class="container">
-    <div class="row clearfix">
-		<div class="col-md-12 column">
-            <div class="jumbotron" style="text-align: center; background-color: white; padding: 40px 0px 10px 0px;">
-                <img src="{% static 'webapps/image/logo2.png' %}"
-                     style="border: 2px solid #2E68AA; border-radius: 30px;">
-                <h3>简单生活，不仅是一句口号</h3>
-                <p>
-                    在这里你可以找到日常生活中需要的各种信息！
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="container" style="margin-top: 20px;">
     <div class="col-md-2 column">
     </div>
@@ -46,26 +32,26 @@
 							<tbody>
 								<tr>
 									<td width="50%">
-										找Carpool
+										<a href="{% url 'webapps:searchPage' 'carpool' %}">找Carpool</a>
 									</td>
 									<td width="50%">
-										淘二手宝贝
+										<a href="{% url 'webapps:searchPage' 'useditem' %}">淘二手宝贝</a>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										求Sublease
+										<a href="{% url 'webapps:searchPage' 'sublease' %}">求Sublease</a>
 									</td>
 									<td>
-										求合租
+										<a href="{% url 'webapps:searchPage' 'houserent' %}">求合租</a>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										找二手车
+										<a href="{% url 'webapps:searchPage' 'usedcar' %}">找二手车</a>
 									</td>
 									<td>
-										求拼单
+										<a href="{% url 'webapps:searchPage' 'mergeorder' %}">求拼单</a>
 									</td>
 								</tr>
 							</tbody>
@@ -76,26 +62,26 @@
 							<tbody>
 								<tr>
 									<td width="50%">
-										我有Carpool
+										<a href="/post/carpool/page">我有Carpool</a>
 									</td>
-									<td width="50%">
-										我有二手宝贝
+									<td width="50%" >
+										<a href="/post/useditem/page">我有二手宝贝</a>
+									</td>
+								</tr>
+								<tr>
+									<td >
+										<a href="/post/sublease/page">我要转租</a>
+									</td>
+									<td >
+										<a href="/post/houserent/page">求合租</a>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										我要转租
+										<a  href="/post/usedcar/page">我有二手车</a>
 									</td>
 									<td>
-										求合租
-									</td>
-								</tr>
-								<tr>
-									<td>
-										我有二手车
-									</td>
-									<td>
-										我要拼单
+										<a  href="/post/mergeorder/page">我要拼单</a>
 									</td>
 								</tr>
 							</tbody>
@@ -135,6 +121,20 @@
             </p>
         </div>
         <div class="clearfix"></div>
+    </div>
+</div>
+<div class="container">
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+            <div class="jumbotron" style="text-align: center; background-color: white; padding: 40px 0px 10px 0px;">
+                <img src="{% static 'webapps/image/logo2.png' %}"
+                     style="border: 2px solid #2E68AA; border-radius: 30px;">
+                <h3>简单生活，不仅是一句口号</h3>
+                <p>
+                    在这里你可以找到日常生活中需要的各种信息！
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 {% include "webapps/footer.html" %}
