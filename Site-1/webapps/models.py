@@ -41,29 +41,54 @@ class Deal(models.Model):
 
 class CarBrand(models.Model):
     name = models.CharField(max_length=20)
-    name_ch = models.CharField(max_length=40)
     icon = models.ImageField(upload_to='carbrand', blank=True, null=True)
 
     def __str__(self):
-        return str(self.name) + "(" + str(self.name_ch) + ")"
+        return str(self.name)
 
 class CarModel(models.Model):
     brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    name_ch = models.CharField(max_length=60, blank=True, null=True)
 
     def __str__(self):
-        if self.name_ch:
-            return str(self.name) + "(" + str(self.name_ch) + ")"
-        else:
             return str(self.name)
+
+
+class State(models.Model):
+    name=models.CharField(max_length=25)
+    abbr=models.CharField(max_length=4)
+
+    def __str__(self):
+        return str(self.name)+"("+str(self.abbr)+")"
+
+class City(models.Model):
+    name=models.CharField(max_length=35)
+    state=models.ForeignKey(State,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.name)
+
+class Location(models.Model):
+    name=models.CharField(max_length=50)
+    state=models.ForeignKey(State,on_delete=models.CASCADE)
+    city=models.ForeignKey(City,on_delete=models.CASCADE)
+    address=models.CharField(max_length=80,blank=True,null=True)
+
+    def __str__(self):
+        return str(self.name)+" "+str(self.city)+" "+str(self.state)
+
+class ItemType(models.Model):
+    name_ch=models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.name_ch)
 
 class Carpool(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     date = models.DateField()
     time = models.TimeField(default="00:00:00")
-    depart_place = models.CharField(max_length=128)
-    destination = models.CharField(max_length=128)
+    depart_place = models.ForeignKey(Location,on_delete=models.CASCADE,related_name="depart_place")
+    destination = models.ForeignKey(Location,on_delete=models.CASCADE,related_name="destination")
     passenger_num = models.IntegerField()
     price = models.FloatField()
     car_type = models.CharField(max_length=20,default="sedan")
@@ -76,8 +101,8 @@ class Carpool(models.Model):
             '7suv': '七座SUV',
             'truck': '皮卡或其他',
         }
-        return "%s %s, 从 %s 到 %s, 车型为 %s" % (self.date, str(self.time)[:-3], self.depart_place,
-                                             self.destination, d[self.car_type])
+        return "%s %s, 从 %s 到 %s, 车型为 %s" % (self.date, str(self.time)[:-3], self.depart_place.name,
+                                             self.destination.name, d[self.car_type])
 
 class UsedCar(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -89,12 +114,12 @@ class UsedCar(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "%d %s %s %d迈" % (self.year, self.car_brand, self.car_model, self.mileage)
+        return "%d %s %s %d迈" % (self.year, self.car_brand.name, self.car_model.name, self.mileage)
 
 class UsedItem(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
-    item_type = models.CharField(max_length=20,default='electronic_default')
-    item_name = models.CharField(max_length=20,default='monitor_default')
+    item_type = models.ForeignKey(ItemType,on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=20,default='monitor')
     condition = models.CharField(max_length=20)
     price = models.IntegerField()
     note = models.TextField(null=True)
@@ -104,7 +129,7 @@ class UsedItem(models.Model):
 
 class Sublease(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
-    community = models.CharField(max_length=40)
+    community = models.ForeignKey(Location,max_length=50,on_delete=models.CASCADE)
     bedroom_num=models.IntegerField(default=1)
     bathroom_num=models.IntegerField(default=1)
     rent = models.FloatField()
@@ -114,11 +139,11 @@ class Sublease(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "%s 从 %s 到 %s %db%db" % (str(self.community), self.start_date, self.end_date, self.bedroom_num, self.bathroom_num)
+        return "%s 从 %s 到 %s %db%db" % (str(self.community.name), self.start_date, self.end_date, self.bedroom_num, self.bathroom_num)
 
 class HouseRent(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
-    community = models.CharField(max_length=40)
+    community = models.ForeignKey(Location,max_length=50,on_delete=models.CASCADE)
     bedroom_num=models.IntegerField(default=1)
     bathroom_num=models.IntegerField(default=1)
     rent = models.FloatField()
@@ -129,7 +154,7 @@ class HouseRent(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return '%s 从 %s 开始 租期 %s %db%db %s' % (self.community, self.start_date, self.duration, self.bedroom_num,
+        return '%s 从 %s 开始 租期 %s %db%db %s' % (self.community.name, self.start_date, self.duration, self.bedroom_num,
                                                self.bathroom_num, self.roommate_gender)
 
 class MergeOrder(models.Model):
