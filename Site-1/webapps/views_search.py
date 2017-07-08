@@ -13,7 +13,16 @@ d = {
         'sublease': Sublease.objects.all(),
         'mergeorder': MergeOrder.objects.all(),
         'houserent': HouseRent.objects.all(),
+        'deal': Deal.objects.all(),
     }
+
+typeDic = {'usedcar': '二 手 车',
+           'carpool': 'Carpool',
+           'useditem': '二 手 商 品',
+           'houserent': '合 租',
+           'sublease': 'Sublease',
+           'mergeorder': '拼 单',
+           }
 
 def generateRecords(deals, type):
     res=[]
@@ -61,6 +70,19 @@ def generateRecords(deals, type):
             else:
                 record.update({'img_url': '/static/webapps/image/image_error.svg'})
             res.append(record)
+    if type == 'deal' :
+        for deal in deals:
+            record= {
+                'id': deal.id,
+                'caption': typeDic[deal.type]+' '+deal.__str__(),
+                'title': getattr(deal, deal.type).note,
+                'post_date': deal.create_time,
+            }
+            if deal.image_set.first():
+                record.update({'img_url': deal.image_set.first().image.url})
+            else:
+                record.update({'img_url': '/static/webapps/image/image_error.svg'})
+            res.append(record)
     return res
 
 def transferSearchConfig(options):
@@ -95,10 +117,10 @@ def tranFormat(val, format):
 
 def search(config):
     deals= d[config['type']]
-    if config['is_overdue']:
-        deals= deals.filter(deal__expire_time__lt=datetime.datetime.now().date())
-    else:
-        deals= deals.filter(deal__expire_time__gte=datetime.datetime.now().date())
+    j= 'lt' if config['is_overdue'] else 'gte'
+    i= '' if config['type'] == 'deal' else 'deal__'
+    kwargs= {'{0}expire_time__{1}'.format(i, j) : datetime.datetime.now().date()}
+    deals= deals.filter(**kwargs)
     for s in config['sconfig']:
         kwargs= {}
         if s['type'] == 'between':
@@ -112,9 +134,11 @@ def search(config):
             if s['value'] == '无限制': continue
             value= tranFormat(s['value'], s['format'])
             kwargs= {'{0}'.format(s['field']): value }
+        if s['type'] == 'contain':
+            if not s['q']: continue
+            kwargs= {'{0}__contains'.format(s['field']): s['q']}
         deals= deals.filter(**kwargs)
-    start= int(config['start'])
-    deals= deals.order_by(config['order_by'])[start : start+12]
+    deals= deals.order_by(config['order_by'])
     return deals
 
 def searchPage(request, type):
@@ -149,3 +173,31 @@ def ajaxSearch(request, type):
         has_next = False
     records = generateRecords(deals, type)
     return JsonResponse({'records': records, 'has_next': has_next, 'end': int(config['start']) + 12, 'type': type})
+
+def siteSearch(request):
+    type = request.GET.get('type', 'deal')
+    page = int(request.GET.get('page', '1'))
+    sconfig = [{'field': 'kw', 'type': 'contain', 'q': request.GET['q']}]
+    if type!= 'deal': sconfig.append({'field': 'type', 'type': 'exact', 'value': type, 'format': 'str'})
+    config = {'type': 'deal',
+              'is_overdue': False,
+              'sconfig': sconfig,
+              'order_by': '-create_time',
+              }
+    deals = search(config)
+    pages= []
+    num= page-2
+    while num*10-deals.count()<10:
+        if num>0:
+            pages.append(num)
+            if len(pages) == 5:
+                break
+        num+=1
+    config = {'page': page, 'type': type, 'q': request.GET['q'], 'count': deals.count(), 'pages': pages , 'pre': page-1, 'next': page+1}
+    if len(pages)>0 and [len(pages)-1] != page:
+        config.update({'has_next': True})
+    else:
+        config.update({'has_next': False})
+    deals=deals[(page-1)*10 : page*10]
+    records = generateRecords(deals, 'deal')
+    return render(request, 'webapps/search/sitesearch.html', {'records': records, 'config': config})

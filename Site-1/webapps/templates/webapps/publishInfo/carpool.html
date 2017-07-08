@@ -226,6 +226,7 @@
 		$("#form").bootstrapValidator('validate');
         if ($('#form').data('bootstrapValidator').isValid()) {
             $("#form").attr('action', '{% url 'webapps:submitPost' 'carpool' %}');
+			$("#submitbtn").attr("disabled", true); 
             $('#form').ajaxSubmit({
                 success: function (data) {
                     if (data.status == 'success') {

@@ -190,7 +190,7 @@
     function submitForm() {
 
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '{% url 'webapps:editMergeOrder' %}');
+            $("#form").attr('action', '{% url 'webapps:submitPost' 'mergeorder' %}');
             $('#form').ajaxSubmit({
                 success: function (data) {
                     if (data.status == 'success') {

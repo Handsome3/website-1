@@ -54,6 +54,8 @@ def submitPost(request, type) :
                 kwargs.update({'%s' % key: value})
             record= d[type](**kwargs)
             record.save()
+            deal.kw= deal.__str__()
+            deal.save()
         if deal:
             return JsonResponse({"deal_id": deal.id, "status": "success"})
         else:

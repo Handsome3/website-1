@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^$', views.index),
     #search
     url(r'search/(?P<type>[a-z]+)$', views_search.searchPage, name="searchPage"),
+    url(r'sitesearch', views_search.siteSearch, name='siteSearch'),
 
     #User
     url(r'user/loginpage',views_user.loginPage, name='loginPage'),

@@ -1,0 +1,105 @@
+{% load static %}
+{% load custom %}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>快速搜索</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'webapps/css/nprogress.css' %}">
+<link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
+</head>
+
+<body>
+	{% include "webapps/header.html" %}
+<div class="container">
+	<div class="col-md-12" style="margin-top: 20px; margin-bottom: 10px;" >
+		<form id="siteSearch" role="search" action="{% url 'webapps:siteSearch' %}" method="get">
+			<div class="col-sm-6" style="height:36px; padding: 0px; border: 1px solid #b6b6b6;"><input value="{{ config.q }}" name="q" type="text" style="width: 90%; border: 0; margin-left: 7px; margin-top: 6px; padding: 0px; height:22px; outline: none;"/></div>
+			<div class="col-sm-2" style="height:36px; padding: 0px;"><input type="submit" value="快速搜索" style="width:100%; height:36px; border:0; color: #fff; background-color:#6f5499; "></div>
+			<div class="clearfix"></div>
+		</form>
+	</div>
+	<div class="col-md-12 my-sitesearch-type" style="background-color: #f8f8f8; height: 38px;">
+		{% if config.type == 'deal' %}<b>所有分类</b>{% else %}<a href="{% url 'webapps:siteSearch' %}?q={{ config.q }}">所有分类</a>{% endif %}
+		{% if config.type == 'carpool' %}<b>Carpool</b>{% else %}<a href="{% url 'webapps:siteSearch' %}?q={{ config.q }}&type=carpool">Carpool</a>{% endif %}
+		{% if config.type == 'useditem' %}<b>二手商品</b>{% else %}<a href="{% url 'webapps:siteSearch' %}?q={{ config.q }}&type=useditem">二手商品</a>{% endif %}
+		{% if config.type == 'usedcar' %}<b>二手车</b>{% else %}<a href="{% url 'webapps:siteSearch' %}?q={{ config.q }}&type=usedcar">二手车</a>{% endif %}
+		{% if config.type == 'sublease' %}<b>Sublease</b>{% else %}<a href="{% url 'webapps:siteSearch' %}?q={{ config.q }}&type=sublease">Sublease</a>{% endif %}
+		{% if config.type == 'houserent' %}<b>合租</b>{% else %}<a href="{% url 'webapps:siteSearch' %}?q={{ config.q }}&type=houserent">合租</a>{% endif %}
+		{% if config.type == 'mergeorder' %}<b>团购拼单</b>{% else %}<a href="{% url 'webapps:siteSearch' %}?q={{ config.q }}&type=mergeorder">团购拼单</a>{% endif %}
+	</div>
+	<div class="col-md-6">
+		<div style="height: 42px; line-height: 42px; font-size: 12px; color: #999;">为您找到相关结果约{{ config.count }}个</div>
+		<div id="result"  style="min-height: 550px;">
+		{% for record in records %}
+			<div class="my-sitesearch-result">
+				<h3 class="my-sitesearch-title"><a target="_blank" href="{% url 'webapps:getDealDetail' record.id %}" style="text-decoration-line: underline">{{ record.caption }}</a></h3>
+				<div class="my-sitesearch-abstract">{{ record.title }} python 动态获取对象的属性和方法,并执行它们 By admin ( 三月 2, 2011 at...而方法名或是字段名在编码代码时并不能确定,需要通过参数传递字符串的形...</div>
+				<div class="my-sitesearch-footer"><small style="color: green; font-size: 13px;">发布于 {{ record.post_date|date:'Y-m-d' }}</small></div>
+			</div>
+		{% endfor %}
+		</div>
+		<ul class="pagination">
+			{% if config.page == 1 %} 
+				<li class="disabled"><a>上一页</a></li>
+			{% else %}
+				<li><a href="{% url_replace 'page' config.pre %}">上一页</a></li>
+			{% endif %}
+			{% for page in config.pages %}
+				 {% if page != config.page %}
+					 <li><a href="{% url_replace 'page' page %}">{{ page }}</a></li>
+				 {% else %}
+				 	<li class="active"><a>{{ page }}</a></li>
+				 {% endif %}			
+			{% endfor %}
+			{% if not config.has_next %}
+				<li  class="disabled" ><a>下一页</a></li>
+			{% else %}
+				<li><a href="{% url_replace 'page' config.next %}">下一页</a></li>
+			{% endif %}
+		</ul>
+	</div>
+	<div class="col-md-offset-2 col-md-4" style="padding-left: 0px;">
+		<div style="margin-top: 45px; border-left: 1px solid #e1e1e1; padding-left: 17px;">
+			<p style="font-size: 14px; line-height: 1.29; font-weight: 700; margin-bottom: 10px;">结果筛选</p>
+			<div class="collapse navbar-collapse my-sitesearch-filter">
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">时间不限<strong class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><b style="font-size: 12px; padding: 3px 20px; display: block; color: #bbb;">时间不限</b></li>
+						<li><a href="{% url_replace 'within' 1 %}">一天内</a></li>
+						<li><a href="{% url_replace 'within' 7 %}">一周内</a></li>
+						<li><a href="{% url_replace 'within' 30 %}">一月内</a></li>
+					</ul>
+				</li>
+			</ul>
+			</div>
+			<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">热度默认<strong class="caret"></strong></a>
+					<ul class="dropdown-menu">
+					<li><b style="font-size: 12px; padding: 3px 20px; display: block; color: #bbb;">热度默认</b></li>
+					<li><a href="">从高到低</a></li>
+					<li><a href="">从低到高</a></li>
+					</ul>
+				</li>
+			</ul>
+			</div>
+		</div>
+	</div>
+</div>
+	{% include "webapps/footer.html" %}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src='{% static 'webapps/js/nprogress.js' %}'></script>
+<script src='{% static 'webapps/js/site.js' %}'></script>
+<script>
+</script>
+</body>
+</html>

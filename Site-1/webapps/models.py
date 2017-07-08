@@ -24,6 +24,7 @@ class Deal(models.Model):
     city = models.CharField(max_length = 30,default="gainesville")
     hot_index=models.FloatField(default=0)
     title=models.CharField(max_length=50, default='deal')
+    kw= models.CharField(max_length=200, default="")
 
     def __str__(self):
         if self.type == 'carpool':
