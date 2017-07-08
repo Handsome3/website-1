@@ -11,118 +11,115 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
+    <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
 <body>
-    {% include "webapps/header.html" %}
+{% include "webapps/header.html" %}
 <div class="container-fluid" style="background-color: #F0F0F0;">
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-               <div class="publish-title">
-                <h1>信息发布</h1>
-        </div>
-           <div class="my-panel">
-            <ul class="nav nav-tabs">
-                <li>
-                    <a href="/post/carpool/page">Carpool</a>
-                </li>
-                <li class="active">
-                    <a href="/post/useditem/page"> 二手宝贝</a>
-                </li>
-                <li>
-                    <a href="/post/sublease/page">Sublease</a>
-                </li>
-                <li>
-                    <a href="/post/houserent/page">合租</a>
-                </li>
-                <li>
-                    <a href="/post/usedcar/page">二手车</a>
-                </li>
-                <li>
-                    <a href="/post/mergeorder/page">拼单</a>
-                </li>
-            </ul>
-            <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="item_type">宝贝类型</label>
-                    <select name="item_type" class="form-control js-example-basic-single" id="2item_type">
-                        <option>家具</option>
-                        <option>化妆品</option>
-                        <option>服饰</option>
-                        <option>数码产品</option>
-                    </select>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="publish-title">
+                    <h1>信息发布</h1>
                 </div>
-                <div class="form-group">
-                    <label for="item_name">宝贝名称</label>
-                    <input name="item_name" type="text" id="2item_name" class="form-control"/>
+                <div class="my-panel">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="/post/carpool/page">Carpool</a>
+                        </li>
+                        <li class="active">
+                            <a href="/post/useditem/page"> 二手宝贝</a>
+                        </li>
+                        <li>
+                            <a href="/post/sublease/page">Sublease</a>
+                        </li>
+                        <li>
+                            <a href="/post/houserent/page">合租</a>
+                        </li>
+                        <li>
+                            <a href="/post/usedcar/page">二手车</a>
+                        </li>
+                        <li>
+                            <a href="/post/mergeorder/page">拼单</a>
+                        </li>
+                    </ul>
+                    <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="item_type">宝贝类型</label>
+                            <select name="item_type_id" class="form-control js-example-basic-single" id="item_type"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="item_name">宝贝名称</label>
+                            <input name="item_name" type="text" id="item_name" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">售价</label>
+                            <input name="price" type="number" class="form-control" id="price"/>
+                        </div>
+                        <div class="form-group">
+                            <label>宝贝状态</label>
+                            <select name="condition" class="form-control js-example-basic-single" id="condition">
+                                <option>全新</option>
+                                <option>九成新</option>
+                                <option>七成新</option>
+                                <option>五成新</option>
+                                <option>五成新以下</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="note" class="form-control" rows="3" placeholder="备注" id="note"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">上传宝贝照片</label>
+                            <input name="images" id="img" type="file" class="file" multiple>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label>联系方式选择（可多选）</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1"
+                                           name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not phone %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
+                                        <a href="/user/set/phone">马上设置</a>
+                                    {% else %}
+                                        <input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not wechat %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
+                                        <a href="/user/set/wechatid">马上设置</a>
+                                    {% else %}
+                                        <input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <center>
+                                <button id="submitbtn" onClick="submitForm()"
+                                        class="btn btn-block btn-info btn-default">发布
+                                </button>
+                            </center>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="2price">售价</label>
-                    <input name="price" type="number" class="form-control" id="2price"/>
-                </div>
-                <div class="form-group">
-                    <label>宝贝状态</label>
-                    <select name="condition" class="form-control js-example-basic-single" id="2condition">
-                        <option>全新</option>
-                        <option>九成新</option>
-                        <option>七成新</option>
-                        <option>五成新</option>
-                        <option>五成新以下</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="2note"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">上传宝贝照片</label>
-                    <input name="images" id="2img" type="file" class="file" multiple>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <label>联系方式选择（可多选）</label>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="1" name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            {% if not phone %}
-                                <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
-                                <a href="/user/set/phone">马上设置</a>
-                            {% else %}
-                                <input type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
-                            {% endif %}
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            {% if not wechat %}
-                                <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
-                                <a href="/user/set/wechatid">马上设置</a>
-                            {% else %}
-                                <input type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }} 联系我
-                            {% endif %}
-                        </label>
-                    </div>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <center>
-                        <button id="submitbtn" onClick="submitForm()" class="btn btn-block btn-info btn-default">发布
-                        </button>
-                    </center>
-                </div>
-            </form>
-			</div>
+            </div>
         </div>
     </div>
 </div>
-	</div>
-	    {% include "webapps/footer.html" %}
+{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -155,8 +152,31 @@
     var csrftoken = getCookie('csrftoken');
 
     $(document).ready(function () {
-        $(".js-example-basic-single").select2({
-            minimumResultsForSearch: Infinity
+        $("#item_type").select2({
+            minimumResultsForSearch: Infinity,
+            language: "ch",
+            placeholder: "请选择物品类型",
+            ajax: {
+                url: "{% url 'webapps:getItemtype' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 0,
         });
         $("#form").bootstrapValidator({
             message: '表单不合法',
@@ -193,7 +213,7 @@
         });
     });
     var deal_id;
-    $('#2img').fileinput({
+    $('#img').fileinput({
         uploadUrl: '/upload/images',
         uploadAsync: false,
         language: 'zh',
@@ -234,7 +254,7 @@
                     if (data.status == 'success') {
                         deal_id = data.deal_id;
                         $("#submitbtn").attr("disabled", true);
-                        $('#2img').fileinput('upload');
+                        $('#img').fileinput('upload');
                     }
                 }
             });

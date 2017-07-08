@@ -174,13 +174,14 @@ def editUseditem(request):
     if request.method == 'POST':
         deal = changeDealInfo(request)
         if deal:
-            item_type = request.POST['item_type']
+            item_type_id = request.POST.get('item_type_id','')
             item_name = request.POST['item_name']
             price = request.POST['price']
             condition = request.POST['condition']
             note = request.POST['note']
             with transaction.atomic():
-                deal.useditem.item_type=item_type
+                if item_type_id:
+                    deal.useditem.item_type_id=item_type_id
                 deal.useditem.item_name=item_name
                 deal.useditem.price=price
                 deal.useditem.condition=condition
@@ -194,12 +195,13 @@ def editMergeorder(request):
         deal = changeDealInfo(request)
         if deal:
             website = request.POST['website']
-            order_type = request.POST['order_type']
+            order_type_id = request.POST.get('order_type','')
             duedate = request.POST['duedate']
             note = request._post['note']
             with transaction.atomic():
                 deal.mergeorder.website=website
-                deal.mergeorder.order_type=order_type
+                if order_type_id:
+                    deal.mergeorder.order_type_id=order_type_id
                 deal.mergeorder.duedate=duedate
                 deal.mergeorder.note = note
                 deal.mergeorder.save()
