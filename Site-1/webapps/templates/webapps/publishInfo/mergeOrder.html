@@ -20,6 +20,9 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
+               <div class="publish-title">
+                <h1>信息发布</h1>
+        </div>
            <div class="my-panel">
             <ul class="nav nav-tabs">
                 <li>
@@ -190,7 +193,7 @@
     function submitForm() {
 
         if ($('#form').data('bootstrapValidator').isValid()) {
-            $("#form").attr('action', '{% url 'webapps:editMergeOrder' %}');
+            $("#form").attr('action', '/post/houserent/submit');
             $('#form').ajaxSubmit({
                 success: function (data) {
                     if (data.status == 'success') {

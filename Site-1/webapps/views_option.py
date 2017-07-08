@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 
-from .models import CarBrand, CarModel
+from .models import CarBrand, CarModel,State,City,Location
 import datetime, time
 
 maxint= 999999
@@ -276,7 +276,7 @@ def houserentSearchOptions() :
 def getCarBrand(request):
     records = []
     for brand in CarBrand.objects.all():
-        record = {'id': brand.id, 'text': brand.__str__()}
+        record = {'id': brand.id, 'text': brand.name}
         records.append(record)
     return JsonResponse({'status': 'success', 'records': records})
 
@@ -286,9 +286,46 @@ def getCarModel(request):
         return JsonResponse({'status': 'fail'})
     records = []
     for model in CarModel.objects.filter(brand_id=brand_id):
-        record = {'id': model.id, 'text': model.__str__()}
+        record = {'id': model.id, 'text': model.name}
         records.append(record)
     return JsonResponse({'status': 'success', 'records': records})
+
+def getState(request):
+    records=[]
+    states=State.objects.all()
+    for state in states:
+        record={'id':state.id, 'text': state.abbr}
+        records.append(record)
+    return JsonResponse({'status': 'success','records': records})
+
+def getCity(request):
+    state_id = request.GET.get('state_id','')
+    keyword = request.GET.get('keyword','')
+    if not state_id:
+        return JsonResponse({'status':'fail'})
+    else:
+        records=[]
+        cities = City.objects.filter(state_id=state_id)
+        for city in cities:
+            if keyword.lower() in str(city.name).lower():
+                record={'id':city.id, 'text': city.name}
+                records.append(record)
+        return JsonResponse({'status': 'success','records': records})
+
+def getLocation(request):
+    state_id = request.GET.get('state_id','')
+    city_id = request.GET.get('city_id','')
+    keyword = request.GET.get('keyword','')
+    if not state_id:
+        return JsonResponse({'status':'fail'})
+    else:
+        records=[]
+        locations = Location.objects.filter(state_id=state_id,city_id=city_id)
+        for location in locations:
+            if keyword.lower() in str(location.name).lower():
+                record={'id':location.id, 'text': location.name}
+                records.append(record)
+        return JsonResponse({'status': 'success','records': records})
 
 def getSearchOptions(type) :
     d = {'usedcar': usedcarSearchOptions,

@@ -14,97 +14,126 @@
     <link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
 
-<body>
 {% include "webapps/header.html" %}
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <div class="page-header">
-                <h1 align="left">
-                    信息修改
-                </h1>
+<body>
+<div class="container-fluid" style="background-color: #F0F0F0;">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="edit-title">
+                    <h1>信息修改</h1>
+                </div>
+                <div class="my-panel">
+                    <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>车辆年份</label>
+                            <input id="year" name="year" type="text" class="datepicker form-control"
+                                   placeholder="请选择年份"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-1" style="padding: 0px;">车辆品牌</label>
+                            <div class="col-sm-3" style="padding: 0px 20px 0px 0px;">
+                                <select name="car_brand_id" class="form-control js-example-basic-single"
+                                        id="car_brand">
+                                </select>
+                            </div>
+                            <label class="col-sm-1" style="padding: 0px;">车辆型号</label>
+                            <div class="col-sm-3" style="padding: 0px;">
+                                <select name="car_model_id" class="col-sm-4 form-control js-example-basic-single"
+                                        id="car_model">
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <a id="depart_btn" class="btn btn-default "
+                                   onclick="showNewCarInput()">找不到车辆信息？</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div id="new_car" class="form-group" hidden>
+                            <input id="have_new_car" value=0 name="have_new_car" hidden>
+                            <label class="col-sm-1" style="padding: 0px;">车辆品牌</label>
+                            <div class="col-sm-3" style="padding: 0px 20px 0px 0px;">
+                                <input name="new_car_brand_name" class="form-control js-example-basic-single"
+                                       id="new_car_brand">
+                            </div>
+                            <label class="col-sm-1" style="padding: 0px;">车辆型号</label>
+                            <div class="col-sm-3" style="padding: 0px;">
+                                <input name="new_car_model_name"
+                                       class="col-sm-4 form-control js-example-basic-single"
+                                       id="new_car_model">
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <label>里程</label>
+                            <input name="mileage" type="number" class="form-control" id="mileage"/>
+                        </div>
+                        <div class="form-group">
+                            <label>售价</label>
+                            <input name="price" type="number" class="form-control" id="price"/>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="note" class="form-control" rows="3" placeholder="备注" id="note"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">上传车辆照片</label>
+                            <input name="images" id="img" type="file" multiple>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label>联系方式选择（可多选）</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="email" type="checkbox" value="1"
+                                           name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not phone %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
+                                        <a href="/user/set/phone">马上设置</a>
+                                    {% else %}
+                                        <input id="phone" type="checkbox" value="2" name="contact_type[]">通过电话：
+                                        {{ phone }} 联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    {% if not wechat %}
+                                        <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
+                                        <a href="/user/set/wechatid">马上设置</a>
+                                    {% else %}
+                                        <input id="wechat" type="checkbox" value="3" name="contact_type[]">通过微信ID：
+                                        {{ wechat }}
+                                        联系我
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-inline" style="padding-bottom: 40px;">
+                            <div class="col-md-6 column">
+                                <button id="submitbtn" onClick="submitForm()"
+                                        class="btn btn-warning btn-default btn-block">修改
+                                </button>
+                            </div>
+                            <div class="col-md-6 column">
+                                <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label>车辆年份</label>
-                    <input id="5year" name="year" type="text" class="datepicker form-control" placeholder="请选择年份"/>
-                </div>
-                <div class="form-group">
-                    <div class="form-inline">
-                        <label>车辆制造商</label>
-                        <select style="width: 30%" name="car_brand" class="form-control js-example-basic-single"
-                                id="5car_brand">
-                        </select>
-                        <label>车辆型号</label>
-                        <select style="width: 30%" name="car_model" class="form-control js-example-basic-single"
-                                id="5car_model">
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>里程</label>
-                    <input name="mileage" type="number" class="form-control" id="5mileage"/>
-                </div>
-                <div class="form-group">
-                    <label>售价</label>
-                    <input name="price" type="number" class="form-control" id="5price"/>
-                </div>
-                <div class="form-group">
-                    <textarea name="note" class="form-control" rows="3" placeholder="备注" id="5note"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">上传车辆照片</label>
-                    <input name="images" id="5img" type="file" multiple>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <label>联系方式选择（可多选）</label>
-                    <div class="checkbox">
-                        <label>
-                            <input id="email" type="checkbox" value="1"
-                                   name="contact_type[]">通过邮箱： {{ request.user.username }} 联系我
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            {% if not phone %}
-                                <input type="checkbox" value="none" disabled="disabled">您还未设置手机号码，
-                                <a href="/user/set/phone">马上设置</a>
-                            {% else %}
-                                <input id="phone" type="checkbox" value="2" name="contact_type[]">通过电话： {{ phone }} 联系我
-                            {% endif %}
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            {% if not wechat %}
-                                <input type="checkbox" value="none" disabled="disabled">您还未设置微信ID，
-                                <a href="/user/set/wechatid">马上设置</a>
-                            {% else %}
-                                <input id="wechat" type="checkbox" value="3" name="contact_type[]">通过微信ID： {{ wechat }}
-                                联系我
-                            {% endif %}
-                        </label>
-                    </div>
-                </div>
-                <hr>
-                <div class="form-inline" style="padding-bottom: 40px;">
-                    <div class="col-md-6 column">
-                        <button id="submitbtn" onClick="submitForm()" class="btn btn-warning btn-default btn-block">修改
-                        </button>
-                    </div>
-                    <div class="col-md-6 column">
-                        <button onClick="window.close()" class="btn btn-default btn-primary btn-block">取消</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+</div>
 </div>
 {% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -148,13 +177,13 @@
             minViewMode: 2,
         }).on('hide', function (e) {
             $('#form').data('bootstrapValidator')
-                .updateStatus($('#5year'), 'NOT_VALIDATED', null)
-                .validateField($('#5year'));
+                .updateStatus($('#year'), 'NOT_VALIDATED', null)
+                .validateField($('#year'));
         });
-        $("#5car_brand").select2({
+        $("#car_brand").select2({
             minimumResultsForSearch: Infinity,
             language: "ch",
-            placeholder: "{{ deal.usedcar.car_brand }}",
+            placeholder: "{{ deal.usedcar.car_brand.name }}",
             ajax: {
                 url: "{% url 'webapps:getCarBrand' %}",
                 dataType: 'json',
@@ -172,19 +201,21 @@
                 },
                 cache: true,
             },
-        }).on("select2:select", function () {
-            $('#5car_model').val("");
-            $("#5car_model").empty();
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 0,
         });
-        $('#5car_model').select2({
+
+        $('#car_model').select2({
             minimumResultsForSearch: Infinity,
-            placeholder: "{{ deal.usedcar.car_model }}",
+            placeholder: '{{ deal.usedcar.car_model.name }}',
             ajax: {
                 url: "{% url 'webapps:getCarModel' %}",
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {
-                    var id = $('#5car_brand').val();
+                    var id = $('#car_brand').val();
                     return {
                         q: params.term,
                         brand_id: id,
@@ -197,6 +228,7 @@
                 },
                 cache: true,
             },
+            minimumInputLength: 0,
         });
         $("#form").bootstrapValidator({
             message: '表单不合法',
@@ -251,15 +283,29 @@
                         }
                     }
                 },
-            }
+                new_car_brand_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '车辆品牌不能为空'
+                        },
+                    }
+                },
+                new_car_model_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '车辆型号不能为空'
+                        },
+                    }
+                },
+            },
         });
         function fillForm() {
-            $('#5year').val("{{ deal.usedcar.year }}");
-            $('#5car_brand').val("{{ deal.usedcar.car_brand.id }}");
-            $('#5car_model').val("{{ deal.usedcar.car_model.id }}");
-            $('#5mileage').val("{{ deal.usedcar.mileage }}");
-            $('#5price').val("{{ deal.usedcar.price }}");
-            $('#5note').val("{{ deal.usedcar.note|escapejs }}");
+            $('#year').val("{{ deal.usedcar.year }}");
+            $('#car_brand').val("{{ deal.usedcar.car_brand.id }}");
+            $('#car_model').val("{{ deal.usedcar.car_model.id }}");
+            $('#mileage').val("{{ deal.usedcar.mileage }}");
+            $('#price').val("{{ deal.usedcar.price }}");
+            $('#note').val("{{ deal.usedcar.note|escapejs }}");
             {% if "1" in deal.contact_type %}
                 $('#email').attr("checked", "true");
             {% endif %}
@@ -273,8 +319,8 @@
         };
         fillForm();
     });
-    var deal_id;
-    $('#5img').fileinput({
+
+    $('#img').fileinput({
         uploadUrl: "{% url 'webapps:uploadImg' %}",
         uploadAsync: false,
         language: 'zh',
@@ -302,7 +348,7 @@
                 },
             {% endfor %}
         ],
-{#        防止重复上传图片？#}
+        {#        防止重复上传图片？#}
         overwriteInitial: false,
         ajaxSettings: {
             beforeSend: function (xhr, settings) {
@@ -335,8 +381,8 @@
                 success: function (data) {
                     if (data.status == 'success') {
                         $("#submitbtn").attr("disabled", true);
-{#在提交deal成功后上传图片，若图片上传不成功会有bug             #}
-                        $('#5img').fileinput('upload');
+                        {#在提交deal成功后上传图片，若图片上传不成功会有bug             #}
+                        $('#img').fileinput('upload');
                     }
                 }
             });
@@ -344,6 +390,25 @@
         else
             alert("请正确填写表单！");
     };
+    function showNewCarInput() {
+        $('#car_brand').val('');
+        $('#car_brand').empty();
+        $('#car_model').val('');
+        $('#car_model').empty();
+        if ($('#have_new_car').val() == 0)
+            $('#have_new_car').val(1);
+        else
+            $('#have_new_car').val(0);
+        if ($('#car_model').is('[disabled=disabled]'))
+            $('#car_model').attr('disabled', false);
+        else
+            $('#car_model').attr('disabled', 'disabled');
+        if ($('#car_brand').is('[disabled=disabled]'))
+            $('#car_brand').attr('disabled', false);
+        else
+            $('#car_brand').attr('disabled', 'disabled');
+        $('#new_car').slideToggle("slow");
+    }
 </script>
 </body>
 </html>
