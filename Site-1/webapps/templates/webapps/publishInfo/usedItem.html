@@ -20,9 +20,6 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <div class="publish-title">
-                    <h1>信息发布</h1>
-                </div>
                 <div class="my-panel">
                     <ul class="nav nav-tabs">
                         <li>
@@ -48,7 +45,7 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="item_type">宝贝类型</label>
-                            <select name="item_type_id" class="form-control js-example-basic-single" id="item_type"></select>
+                            <select name="item_type_id" class="form-control" id="item_type"></select>
                         </div>
                         <div class="form-group">
                             <label for="item_name">宝贝名称</label>
@@ -152,6 +149,9 @@
     var csrftoken = getCookie('csrftoken');
 
     $(document).ready(function () {
+		$('.js-example-basic-single').select2({
+			minimumResultsForSearch: Infinity,
+		});
         $("#item_type").select2({
             minimumResultsForSearch: Infinity,
             language: "ch",
