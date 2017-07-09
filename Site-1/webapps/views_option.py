@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 
-from .models import CarBrand, CarModel,State,City,Location
+from .models import CarBrand, CarModel,State,City,Location,ItemType
 import datetime, time
 
 maxint= 999999
@@ -311,6 +311,14 @@ def getCity(request):
                 record={'id':city.id, 'text': city.name}
                 records.append(record)
         return JsonResponse({'status': 'success','records': records})
+
+def getItemtype(request):
+    records=[]
+    itemtypes = ItemType.objects.all()
+    for itemtype in itemtypes:
+        record={'id':itemtype.id,'text':itemtype.name_ch}
+        records.append(record)
+    return JsonResponse({'status':'success','records':records})
 
 def getLocation(request):
     state_id = request.GET.get('state_id','')

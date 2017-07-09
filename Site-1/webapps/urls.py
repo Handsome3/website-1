@@ -53,6 +53,9 @@ urlpatterns = [
     url(r'ajax/options/city', views_option.getCity, name='getCity'),
     url(r'ajax/options/location', views_option.getLocation, name='getLocation'),
 
+    url(r'ajax/options/itemtype', views_option.getItemtype, name='getItemtype'),
+
+
     url(r'ajax/user/changepw', views_user.changePw, name='changePw'),
     url(r'ajax/user/changeProfile', views_user.changeProfile, name='changeProfile'),
 

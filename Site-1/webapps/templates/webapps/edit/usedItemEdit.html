@@ -20,32 +20,28 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
-            <div class="edit-title">
-                <h1>信息修改</h1>
+                <div class="edit-title">
+                    <h1>信息修改</h1>
                 </div>
                 <div class="my-panel">
                     <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="item_type">宝贝类型</label>
-                            <select name="item_type" class="form-control js-example-basic-single" id="2item_type">
-                                <option>家具</option>
-                                <option>化妆品</option>
-                                <option>服饰</option>
-                                <option>数码产品</option>
-                            </select>
+                            <select name="item_type_id" class="form-control js-example-basic-single"
+                                    id="item_type"></select>
                         </div>
                         <div class="form-group">
                             <label for="item_name">宝贝名称</label>
-                            <input name="item_name" type="text" id="2item_name" class="form-control"/>
+                            <input name="item_name" type="text" id="item_name" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label for="2price">售价</label>
-                            <input name="price" type=text class="form-control" id="2price"/>
+                            <label for="price">售价</label>
+                            <input name="price" type=text class="form-control" id="price"/>
                         </div>
                         <div class="form-group">
                             <label>宝贝状态</label>
-                            <select name="condition" class="form-control js-example-basic-single" id="2condition">
+                            <select name="condition" class="form-control js-example-basic-single" id="condition">
                                 <option>全新</option>
                                 <option>九成新</option>
                                 <option>七成新</option>
@@ -54,11 +50,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea name="note" class="form-control" rows="3" placeholder="备注" id="2note"></textarea>
+                            <textarea name="note" class="form-control" rows="3" placeholder="备注" id="note"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="control-label">上传宝贝照片</label>
-                            <input name="images" id="2img" type="file" class="file" multiple>
+                            <input name="images" id="img" type="file" class="file" multiple>
                         </div>
                         <hr>
                         <div class="form-group">
@@ -146,8 +142,31 @@
     var csrftoken = getCookie('csrftoken');
 
     $(document).ready(function () {
-        $(".js-example-basic-single").select2({
-            minimumResultsForSearch: Infinity
+        $("#item_type").select2({
+            minimumResultsForSearch: Infinity,
+            language: "ch",
+            placeholder: "{{ deal.useditem.item_type.name_ch }}",
+            ajax: {
+                url: "{% url 'webapps:getItemtype' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.records,
+                    };
+                },
+                cache: true,
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 0,
         });
         $("#form").bootstrapValidator({
             message: '表单不合法',
@@ -183,11 +202,11 @@
             }
         });
         function fillForm() {
-            $('#2price').val("{{ deal.useditem.price}}");
-            $('#2item_type').val("{{ deal.useditem.item_type }}");
-            $('#2item_name').val("{{ deal.useditem.item_name }}");
-            $('#2condition').val("{{ deal.useditem.condition }}");
-            $('#2note').val("{{ deal.useditem.note }}");
+            $('#price').val("{{ deal.useditem.price}}");
+            $('#item_type').val("{{ deal.useditem.item_type.id }}");
+            $('#item_name').val("{{ deal.useditem.item_name }}");
+            $('#condition').val("{{ deal.useditem.condition }}");
+            $('#note').val("{{ deal.useditem.note }}");
             {% if "1" in deal.contact_type %}
                 $('#email').attr("checked", "true");
             {% endif %}
@@ -202,7 +221,7 @@
         fillForm();
     });
     var deal_id;
-    $('#2img').fileinput({
+    $('#img').fileinput({
         uploadUrl: "{% url 'webapps:uploadImg' %}",
         uploadAsync: false,
         language: 'zh',
@@ -265,7 +284,7 @@
                     if (data.status == 'success') {
                         deal_id = data.deal_id;
                         $("#submitbtn").attr("disabled", true);
-                        $('#2img').fileinput('upload');
+                        $('#img').fileinput('upload');
                     }
                 }
             });

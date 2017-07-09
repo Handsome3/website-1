@@ -163,7 +163,7 @@ class HouseRent(models.Model):
 class MergeOrder(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
     website = models.URLField(max_length=100,default='www.google.com')
-    order_type = models.CharField(max_length=30)
+    order_type = models.ForeignKey(ItemType,on_delete=models.CASCADE)
     duedate = models.DateField(default='2017-12-31')
     note = models.TextField(null=True)
 
