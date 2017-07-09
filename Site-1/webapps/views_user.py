@@ -58,6 +58,8 @@ def userlogin(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
+            if request.POST.get('usecookie', '0') == '0':
+                request.session.set_expiry(0)
             return views.confirmaAndRedirect(request, '登录成功', next)
         else:
             return render(request, 'webapps/login.html', {'info': '用户名或密码错误！'})

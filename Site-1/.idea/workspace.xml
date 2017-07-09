@@ -2,19 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5cbfcd43-92b6-4dfd-8f52-c774286524a2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webapps/migrations/0002_deal_kw.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/admin.py" afterPath="$PROJECT_DIR$/webapps/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/webapps/migrations/0001_initial.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/models.py" afterPath="$PROJECT_DIR$/webapps/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/edit/carpoolEdit.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/edit/carpoolEdit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/header.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/personInfo.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/personInfo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/search/mergeOrder.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/search/mergeOrder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/signup.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/signup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/userInfo.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/userInfo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/urls.py" afterPath="$PROJECT_DIR$/webapps/urls.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/mergeOrder.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/mergeorder.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/usedCar.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/usedcar.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/usedItem.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/useditem.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/webapps/templates/webapps/search/mergeOrder.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/search/mergeorder.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/webapps/templates/webapps/search/usedCar.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/search/usedcar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/detail.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/login.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/carpool.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/carpool.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/houserent.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/houserent.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/sublease.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/publishInfo/sublease.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/search/carpool.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/search/carpool.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/templates/webapps/search/usedItem.html" afterPath="$PROJECT_DIR$/webapps/templates/webapps/search/usedItem.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/views_detail.py" afterPath="$PROJECT_DIR$/webapps/views_detail.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/views_option.py" afterPath="$PROJECT_DIR$/webapps/views_option.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/views_post.py" afterPath="$PROJECT_DIR$/webapps/views_post.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/views_search.py" afterPath="$PROJECT_DIR$/webapps/views_search.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webapps/views_user.py" afterPath="$PROJECT_DIR$/webapps/views_user.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -64,12 +69,12 @@
     <favorites_list name="Site-1" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapps/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="78" column="22" lean-forward="true" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
+            <state relative-caret-position="578">
+              <caret line="98" column="22" lean-forward="true" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -78,18 +83,18 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapps/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
+            <state relative-caret-position="17">
               <caret line="39" column="17" lean-forward="false" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views_edit.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webapps/views_edit.py">
+      <file leaf-file-name="views_user.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webapps/views_user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="87" column="37" lean-forward="false" selection-start-line="87" selection-start-column="37" selection-end-line="87" selection-end-column="37" />
+            <state relative-caret-position="459">
+              <caret line="73" column="24" lean-forward="false" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -98,38 +103,44 @@
       <file leaf-file-name="views_post.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapps/views_post.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="173" column="36" lean-forward="true" selection-start-line="173" selection-start-column="36" selection-end-line="173" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views_option.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/webapps/views_option.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="154" column="18" lean-forward="true" selection-start-line="154" selection-start-column="18" selection-end-line="154" selection-end-column="18" />
+            <state relative-caret-position="395">
+              <caret line="41" column="25" lean-forward="false" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
               <folding>
-                <element signature="e#169#2557#0" expanded="false" />
-                <element signature="e#2592#4287#0" expanded="false" />
-                <element signature="e#4322#5767#0" expanded="false" />
-                <element signature="e#5805#6182#0" expanded="false" />
-                <element signature="e#6218#8333#0" expanded="false" />
-                <element signature="e#8370#10569#0" expanded="false" />
-                <element signature="e#10601#10806#0" expanded="false" />
-                <element signature="e#10838#11179#0" expanded="false" />
-                <element signature="e#11208#11422#0" expanded="false" />
+                <element signature="e#517#800#0" expanded="false" />
+                <element signature="e#2883#4030#0" expanded="false" />
+                <element signature="e#4083#7150#0" expanded="false" />
+                <element signature="e#7180#7320#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views_search.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webapps/views_search.py">
+      <file leaf-file-name="views_option.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webapps/views_option.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="179" column="68" lean-forward="false" selection-start-line="179" selection-start-column="68" selection-end-line="179" selection-end-column="68" />
+            <state relative-caret-position="255">
+              <caret line="145" column="27" lean-forward="false" selection-start-line="145" selection-start-column="27" selection-end-line="145" selection-end-column="27" />
+              <folding>
+                <element signature="e#178#2566#0" expanded="false" />
+                <element signature="e#2601#4171#0" expanded="false" />
+                <element signature="e#4206#5651#0" expanded="false" />
+                <element signature="e#6109#8261#0" expanded="false" />
+                <element signature="e#8298#10531#0" expanded="false" />
+                <element signature="e#10563#10768#0" expanded="false" />
+                <element signature="e#10800#11141#0" expanded="false" />
+                <element signature="e#11170#11384#0" expanded="false" />
+                <element signature="e#11412#11902#0" expanded="false" />
+                <element signature="e#11934#12167#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views_detail.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/webapps/views_detail.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -186,12 +197,9 @@
         <option value="$PROJECT_DIR$/webapps/views_upload.py" />
         <option value="$PROJECT_DIR$/webapps/utilities.py" />
         <option value="$PROJECT_DIR$/webapps/templates/webapps/error.html" />
-        <option value="$PROJECT_DIR$/webapps/views_user.py" />
         <option value="$PROJECT_DIR$/webapps/views.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.txt" />
-        <option value="$PROJECT_DIR$/webapps/views_detail.py" />
         <option value="$PROJECT_DIR$/test.txt" />
-        <option value="$PROJECT_DIR$/webapps/views_option.py" />
         <option value="$PROJECT_DIR$/static/webapps/js/site.js" />
         <option value="$PROJECT_DIR$/webapps/views_edit.py" />
         <option value="$PROJECT_DIR$/mysite/settings.py" />
@@ -199,9 +207,12 @@
         <option value="$PROJECT_DIR$/webapps/templatetags/custom.py" />
         <option value="$PROJECT_DIR$/webapps/admin.py" />
         <option value="$PROJECT_DIR$/webapps/urls.py" />
-        <option value="$PROJECT_DIR$/webapps/views_search.py" />
         <option value="$PROJECT_DIR$/webapps/models.py" />
+        <option value="$PROJECT_DIR$/webapps/views_user.py" />
         <option value="$PROJECT_DIR$/webapps/views_post.py" />
+        <option value="$PROJECT_DIR$/webapps/views_detail.py" />
+        <option value="$PROJECT_DIR$/webapps/views_option.py" />
+        <option value="$PROJECT_DIR$/webapps/views_search.py" />
       </list>
     </option>
   </component>
@@ -235,6 +246,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -286,7 +298,55 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templatetags" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Site-1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Site-1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Site-1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Site-1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="edit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -306,7 +366,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -640,7 +699,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11770833" sideWeight="0.5037037" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36084655" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30793652" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -705,7 +764,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="115" />
+      <option name="time" value="122" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Python.DjangoServer">
@@ -995,20 +1054,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/views_user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="125" column="21" lean-forward="false" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/views_detail.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="29" column="14" lean-forward="false" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webapps/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
@@ -1016,30 +1061,6 @@
           <folding>
             <element signature="e#0#32#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/views_search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="179" column="68" lean-forward="false" selection-start-line="179" selection-start-column="68" selection-end-line="179" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="39" column="17" lean-forward="false" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/views_edit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="87" column="37" lean-forward="false" selection-start-line="87" selection-start-column="37" selection-end-line="87" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1051,37 +1072,83 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/webapps/views_edit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="87" column="37" lean-forward="false" selection-start-line="87" selection-start-column="37" selection-end-line="87" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapps/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="39" column="17" lean-forward="false" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapps/views_user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="73" column="24" lean-forward="false" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/webapps/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="78" column="22" lean-forward="true" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
+        <state relative-caret-position="578">
+          <caret line="98" column="22" lean-forward="true" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webapps/views_post.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="173" column="36" lean-forward="true" selection-start-line="173" selection-start-column="36" selection-end-line="173" selection-end-column="36" />
-          <folding />
+        <state relative-caret-position="395">
+          <caret line="41" column="25" lean-forward="false" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
+          <folding>
+            <element signature="e#517#800#0" expanded="false" />
+            <element signature="e#2883#4030#0" expanded="false" />
+            <element signature="e#4083#7150#0" expanded="false" />
+            <element signature="e#7180#7320#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webapps/views_option.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="154" column="18" lean-forward="true" selection-start-line="154" selection-start-column="18" selection-end-line="154" selection-end-column="18" />
+        <state relative-caret-position="255">
+          <caret line="145" column="27" lean-forward="false" selection-start-line="145" selection-start-column="27" selection-end-line="145" selection-end-column="27" />
           <folding>
-            <element signature="e#169#2557#0" expanded="false" />
-            <element signature="e#2592#4287#0" expanded="false" />
-            <element signature="e#4322#5767#0" expanded="false" />
-            <element signature="e#5805#6182#0" expanded="false" />
-            <element signature="e#6218#8333#0" expanded="false" />
-            <element signature="e#8370#10569#0" expanded="false" />
-            <element signature="e#10601#10806#0" expanded="false" />
-            <element signature="e#10838#11179#0" expanded="false" />
-            <element signature="e#11208#11422#0" expanded="false" />
+            <element signature="e#178#2566#0" expanded="false" />
+            <element signature="e#2601#4171#0" expanded="false" />
+            <element signature="e#4206#5651#0" expanded="false" />
+            <element signature="e#6109#8261#0" expanded="false" />
+            <element signature="e#8298#10531#0" expanded="false" />
+            <element signature="e#10563#10768#0" expanded="false" />
+            <element signature="e#10800#11141#0" expanded="false" />
+            <element signature="e#11170#11384#0" expanded="false" />
+            <element signature="e#11412#11902#0" expanded="false" />
+            <element signature="e#11934#12167#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapps/views_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="182" column="34" lean-forward="true" selection-start-line="182" selection-start-column="34" selection-end-line="182" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapps/views_detail.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

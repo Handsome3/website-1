@@ -19,9 +19,6 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <div class="publish-title">
-                    <h1>信息发布</h1>
-                </div>
                 <div class="my-panel">
                     <ul class="nav nav-tabs">
                         <li class="active">
@@ -52,15 +49,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="datetime" class="col-sm-2" style="padding: 0px; width: 8%;">出发日期</label>
-                            <input type=time class="form-control" id="datetime" name="time"/>
+                            <label for="datetime" class="col-sm-2" style="padding: 0px; width: 8%;">出发时间</label>
+                            <input type="time" class="form-control" id="datetime" name="time"/>
                         </div>
 
                         <div class="form-group" id="depart_div">
                             <label>出发地</label><br>
                             <label class="col-sm-1" style="width:4%">州</label>
                             <div class="col-sm-1">
-                                {#                                改成class #}
                                 <select id="state_s" class="form-control location-state must-fill"
                                         name="state"></select>
                             </div>
@@ -79,35 +75,37 @@
                                    onclick="showNewLocation_s()">找不到出发地？</a>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
-
-                        <div id="new_location_s" style="margin-top: 15px;margin-bottom: 15px;" hidden>
+						
+                       <div class="clearfix"></div>
+                       
+                        <div id="new_location_s" style="margin-top: 15px;margin-bottom: 15px; border: 1px solid #ddd;" hidden>
+                           <div class="form-group">
                             <label>自定义出发地</label><br>
-                            <input id="have_new_location_s" value=0 name="have_new_location_s" hidden>
+                            <input id="have_new_location_s" value="0" name="have_new_location_s" hidden>
                             <label class="col-sm-1" style="width:4%">州</label>
-                            <div class="row">
-                                <div class="col-sm-1">
-                                    <select id="new_state_s" class="form-control location-state must-fill"
+                            <div class="col-sm-1">
+                                <select id="new_state_s" class="form-control location-state must-fill"
                                             name="new_state_s_id" style="width: 52px"></select>
-                                </div>
+                            </div>
                                 <label class="col-sm-1" style="width:6%">城市</label>
                                 <div class="col-sm-3">
                                     <input id="new_city_s" class="form-control must-fill" name="new_city_s"
                                            placeholder="城市英文名称,如:Miami">
                                 </div>
                                 <label class="col-sm-1" style="width:6%">地点</label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <input id="new_depart" class="form-control must-fill" name="new_depart"
                                            placeholder="地址英文名称，如：University of Florida">
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div style="margin-top: 8px">
+                            <div class="form-group" style="margin-top: 8px">
                                 <label class="col-sm-1" style="width:6%">地址</label>
                                 <div class="col-sm-9">
                                     <input id="new_address_s" name="new_address_s" class="form-control"
                                            placeholder="选填，格式Street,City,State Zipcode. 如：1000 SW 62nd Blvd, Gainesville, FL 32607">
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
 
@@ -138,33 +136,34 @@
 
                         <div class="clearfix"></div>
 
-                        <div id="new_location_d" style="margin-top: 15px;margin-bottom: 15px;" hidden>
+                        <div id="new_location_d" style="margin-top: 15px;margin-bottom: 15px; border: 1px solid #ddd;" hidden>
+                           <div class="form-group">
                             <label>自定义目的地</label><br>
-                            <input id="have_new_location_d" value=0 hidden name="have_new_location_d">
+                            <input id="have_new_location_d" value="0" hidden name="have_new_location_d">
                             <label class="col-sm-1" style="width:4%">州</label>
-                            <div class="row">
                                 <div class="col-sm-1">
                                     <select id="new_state_d" class="form-control location-state must-fill"
                                             name="new_state_d_id" style="width: 52px"></select>
                                 </div>
-
                                 <label class="col-sm-1" style="width:6%">城市</label>
                                 <div class="col-sm-3">
                                     <input id="new_city_d" class="form-control must-fill" name="new_city_d"
                                            placeholder="城市英文名称,如：Miami">
                                 </div>
                                 <label class="col-sm-1" style="width:6%">地点</label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <input id="new_destination" class="form-control must-fill" name="new_destination"
                                            placeholder="地址英文名称，如：University of Florida">
                                 </div>
-                            </div>
-                            <div style="margin-top: 8px">
+                            <div class="clearfix"></div>
+							</div>
+                            <div class="form-group" style="margin-top: 8px">
                                 <label class="col-sm-1" style="width:6%">地址</label>
                                 <div class="col-sm-9">
                                     <input id="new_address_d" name="new_address_d" class="form-control"
                                            placeholder="选填，格式Street,City,State Zipcode. 如：1000 SW 62nd Blvd, Gainesville, FL 32607">
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
 

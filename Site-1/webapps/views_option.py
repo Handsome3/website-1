@@ -69,14 +69,10 @@ def usedcarSearchOptions() :
 
 def useditemSearchOptions():
     options = [{ 'type' : 'exact',
-                'field' : 'item_type',
+                'field' : 'item_type_id',
                 'name' : '宝贝类型',
-                'format' : 'str',
+                'format' : 'int',
                 'options' : [{'label' : '无限制', 'value' : '无限制'},
-                             {'label' : '家具', 'value' : '家具'},
-                            {'label': '化妆品', 'value': '化妆品'},
-                            {'label': '服饰', 'value': '服饰'},
-                            {'label': '数码产品', 'value': '数码产品'}
                             ],
                  },
                {'type': 'between',
@@ -104,6 +100,8 @@ def useditemSearchOptions():
                             ],
                 },
     ]
+    for type in ItemType.objects.all():
+        options[0]['options'].append({'label': type.name_ch, 'value': type.id})
     return options
 
 def carpoolSearchOptions() :
@@ -143,26 +141,24 @@ def carpoolSearchOptions() :
 def mergeorderSearchOptions() :
     options= [
             {'type': 'exact',
-             'field': 'order_type',
+             'field': 'order_type_id',
              'name': '商品类型',
-             'format': 'str',
+             'format': 'int',
              'options': [{'label': '无限制', 'value': '无限制'},
-                         {'label': '化妆品', 'value': '化妆品'},
-                         {'label': '零食', 'value': '零食'},
                         ]
              },
     ]
+    for type in ItemType.objects.all():
+        options[0]['options'].append({'label': type.name_ch, 'value': type.id})
     return options
 
 def subleaseSearchOptions() :
     options=[
         {'type': 'exact',
-         'field': 'community',
+         'field': 'community_id',
          'name': '小区名称',
-         'format': 'str',
+         'format': 'int',
          'options': [{'label': '无限制', 'value': '无限制'},
-                     {'label': 'Campus Lodge', 'value': 'Campus Lodge'},
-                     {'label': 'Pavilion', 'value': 'Pavilion'},
                      ]
         },
         {'type': 'between',
@@ -211,6 +207,8 @@ def subleaseSearchOptions() :
                      ]
          }
     ]
+    for location in Location.objects.filter(state_id=1, city_id=1, is_community=True):
+        options[0]['options'].append({'label': location.name, 'value': location.id})
     return options
 
 def houserentSearchOptions() :
@@ -220,8 +218,6 @@ def houserentSearchOptions() :
          'name': '小区名称',
          'format': 'str',
          'options': [{'label': '无限制', 'value': '无限制'},
-                     {'label': 'Campus Lodge', 'value': 'Campus Lodge'},
-                     {'label': 'Pavilion', 'value': 'Pavilion'},
                      ]
          },
         {'type': 'between',
@@ -271,6 +267,8 @@ def houserentSearchOptions() :
                     ]
          },
     ]
+    for location in Location.objects.filter(state_id=1, city_id=1, is_community=True):
+        options[0]['options'].append({'label': location.name, 'value': location.id})
     return options
 
 def getCarBrand(request):

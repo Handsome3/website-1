@@ -33,7 +33,10 @@ def postPage(request, type):
 def submitPost(request, type):
     if request.method == 'POST':
         create_time = datetime.date.today()
-        expire_time = create_time + relativedelta.relativedelta(months=1)
+        if type == 'carpool':
+            expire_time= request.POST['date']
+        else:
+            expire_time = create_time + relativedelta.relativedelta(months=1)
         user = request.user
         contact = request.POST.getlist('contact_type[]')
         contact_type = ""

@@ -52,7 +52,7 @@ def generateRecords(deals, type):
         for deal in deals:
             record= {
                 'id': deal.deal.id,
-                'caption': deal.order_type,
+                'caption': deal.order_type.__str__(),
                 'title': deal.__str__(),
                 'post_date': deal.deal.create_time,
             }

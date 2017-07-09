@@ -31,9 +31,14 @@
 				</thead>
 				<tbody>
 					{% for key, value in text.items %}
+					
 						<tr>
 							<td> {{ key }} </td>
+							{% if '日期' in key %}
+							<td> {{ value|date:'Y-m-d' }} </td>
+							{% else %}
 							<td> {{ value }} </td>
+							{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>

@@ -20,9 +20,6 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <div class="publish-title">
-                    <h1>信息发布</h1>
-                </div>
                 <div class="my-panel">
                     <ul class="nav nav-tabs">
                         <li>
@@ -351,7 +348,6 @@
                             message: '结束日期不能为空',
                         },
                         callback: {
-                            {#                            日期对比可能存在问题#}
                             message: '请选择正确的日期',
                             callback: function (value, validator) {
                                 var start = $('#start_date').val();

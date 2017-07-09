@@ -14,6 +14,13 @@ typeDic = {'usedcar': '二 手 车',
            'mergeorder': '拼 单',
            }
 
+card= {'couple': '双门轿车',
+            'sedan': '四门轿车',
+            'suv': '五座SUV',
+            '7suv': '七座SUV',
+            'truck': '皮卡或其他',
+        }
+
 def getCarpool(deal):
     carpool = deal.carpool
     res={
@@ -23,7 +30,7 @@ def getCarpool(deal):
         '目的地' : carpool.destination,
         '最大乘客人数' : carpool.passenger_num,
         '人均价格' : carpool.price,
-        '车辆类型' : carpool.car_type,
+        '车辆类型' : card[carpool.car_type],
     }
     if carpool.note:
         res.update({'补充说明' : carpool.note})
@@ -136,7 +143,7 @@ def getDealDetail(request, deal_id):
         'mergeorder' : getMergeOrder,
         'houserent' : getHouseRent,
     }
-    text = {"发布时间": deal.create_time}
+    text = {"发布日期": deal.create_time}
     text.update(d[deal.type](deal))
     images=Image.objects.filter(deal=deal)
 

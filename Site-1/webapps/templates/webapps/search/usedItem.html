@@ -64,13 +64,12 @@
                             </h4>
                             <p class="col-sm-3" align="left" style="padding: 0px; color: #999;" >
                             	描述:<br><br>
-                            	日期:
                             </p>
                             <p class="col-sm-9" align="right">
                                 {{ record.title }}<br>
-                                {{ record.post_date|date:'Y-m-d' }}
                             </p>
                             <div class="clearfix"></div>
+                            <div style="padding: 0px; color: green;">发布于{{ record.post_date|date:'Y-m-d' }}</div>                     
                         </div>
                     </div>
                 </div>
