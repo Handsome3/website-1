@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html>
 <head>
@@ -6,11 +7,11 @@
 {% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'webapps/css/bootstrapValidator.min.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'webapps/css/site.css' %}">
 </head>
-
 <body>
-<div class="container">
 	{% include "webapps/header.html" %}
+<div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="page-header">
@@ -21,7 +22,7 @@
 		</div>
 	</div>
 	<div class="row clearfix">
-		<div class="col-md-8 column">
+		<div class="col-md-8 column" style="min-height: 600px;">
 			<form id="form" class="form-horizontal" role="form" action="/user/register" method="post">
 				{% csrf_token %}
 				<div class="form-group">
@@ -75,26 +76,11 @@
 			</div>
 		</div>
 		<div class="col-md-4 column">
-			<div class="media">
-				 <a href="#" class="pull-left"><img src="{% static 'webapps/image/test.jpg' %}" class="media-object" alt='sss' /></a>
-				<div class="media-body">
-					<h4 class="media-heading">
-						Nested media heading
-					</h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-					<div class="media">
-						 <a href="#" class="pull-left"><img src="{% static 'webapps/image/test.jpg' %}" class="media-object" alt='dddd' /></a>
-						<div class="media-body">
-							<h4 class="media-heading">
-								Nested media heading
-							</h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-						</div>
-					</div>
-				</div>
-			</div>
+			
 		</div>
 	</div>
-	{% include "webapps/footer.html" %}
 </div>
+	{% include "webapps/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>

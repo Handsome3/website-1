@@ -13,7 +13,7 @@ urlpatterns = [
     #User
     url(r'user/loginpage',views_user.loginPage, name='loginPage'),
     url(r'user/getuserinfo',views_user.getUserInfo, name='getuserinfo'),
-    url(r'user/signup', views_user.signup),
+    url(r'user/signup', views_user.signup, name='signupPage'),
     url(r'user/register', views_user.register),
     url(r'user/denglu', views_user.userlogin),
     url(r'user/logout', views_user.userlogout),
@@ -49,6 +49,9 @@ urlpatterns = [
 
     url(r'ajax/options/carbrand', views_option.getCarBrand, name='getCarBrand'),
     url(r'ajax/options/carmodel', views_option.getCarModel, name='getCarModel'),
+    url(r'ajax/options/state', views_option.getState, name='getState'),
+    url(r'ajax/options/city', views_option.getCity, name='getCity'),
+    url(r'ajax/options/location', views_option.getLocation, name='getLocation'),
 
     url(r'ajax/user/changepw', views_user.changePw, name='changePw'),
     url(r'ajax/user/changeProfile', views_user.changeProfile, name='changeProfile'),

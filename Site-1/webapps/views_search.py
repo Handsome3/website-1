@@ -177,7 +177,7 @@ def ajaxSearch(request, type):
 def siteSearch(request):
     type = request.GET.get('type', 'deal')
     page = int(request.GET.get('page', '1'))
-    sconfig = [{'field': 'kw', 'type': 'contain', 'q': request.GET['q']}]
+    sconfig = [{'field': 'kw', 'type': 'contain', 'q': request.GET['q'].lower()}]
     if type!= 'deal': sconfig.append({'field': 'type', 'type': 'exact', 'value': type, 'format': 'str'})
     config = {'type': 'deal',
               'is_overdue': False,
@@ -194,7 +194,7 @@ def siteSearch(request):
                 break
         num+=1
     config = {'page': page, 'type': type, 'q': request.GET['q'], 'count': deals.count(), 'pages': pages , 'pre': page-1, 'next': page+1}
-    if len(pages)>0 and [len(pages)-1] != page:
+    if len(pages)>0 and pages[len(pages)-1] != page:
         config.update({'has_next': True})
     else:
         config.update({'has_next': False})

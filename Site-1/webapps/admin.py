@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
 from webapps.models import UserPro
-from .models import Deal, Carpool, UsedItem, UsedCar, HouseRent, Sublease, MergeOrder, Image, CarBrand, CarModel
+from .models import *
 
 
 class UserProInline(admin.StackedInline):
@@ -29,3 +29,8 @@ admin.site.register(CarModel)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
+admin.site.register(State)
+admin.site.register(City)
+admin.site.register(Location)
+admin.site.register(ItemType)

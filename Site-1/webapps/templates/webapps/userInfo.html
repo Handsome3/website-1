@@ -30,7 +30,6 @@
 					</div>
 					<div id="panel-element-943900" class="panel-collapse collapse">
 						<div class="panel-body">
-                          	<label><a href="{% url 'webapps:getuserinfo' %}"><span class="badge pull-right">{{ config.countPost.total }}</span>全部</a></label><br>
                             <label><a href="{% url 'webapps:getuserinfo' %}">全部<font
                                     color="red">({{ config.countPost.total }})</font></a></label><br>
                             <label><a href="{% url 'webapps:getuserinfo' %}?type=carpool">Carpool<font
@@ -84,10 +83,10 @@
                 <ul class="nav nav-tabs" style="padding-left: 25%">
                     <li {% if not config.is_overdue %} class="active"{% endif %}
                                                        style="width: 35%; text-align: center; ">
-                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}">正在发布<span class="badge">10</span></a>
+                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}">正在发布</a>
                     </li>
                     <li {% if config.is_overdue %} class="active"{% endif %} style="width: 35%; text-align: center;">
-                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}&overdue=True">已停止发布<span class="badge">10</span></a>
+                        <a href="{% url 'webapps:getuserinfo' %}?type={{ config.type }}&saved={{ config.is_save }}&overdue=True">已停止发布</a>
                     </li>
                 </ul>
             </div>

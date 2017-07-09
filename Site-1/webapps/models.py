@@ -74,6 +74,7 @@ class Location(models.Model):
     state=models.ForeignKey(State,on_delete=models.CASCADE)
     city=models.ForeignKey(City,on_delete=models.CASCADE)
     address=models.CharField(max_length=80,blank=True,null=True)
+    is_community= models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.name)+" "+str(self.city)+" "+str(self.state)
@@ -115,7 +116,7 @@ class UsedCar(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "%d %s %s %d迈" % (self.year, self.car_brand.name, self.car_model.name, self.mileage)
+        return "%s %s %s %s迈" % (self.year, self.car_brand.name, self.car_model.name, self.mileage)
 
 class UsedItem(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -140,7 +141,8 @@ class Sublease(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return "%s 从 %s 到 %s %db%db" % (str(self.community.name), self.start_date, self.end_date, self.bedroom_num, self.bathroom_num)
+        t= "%s 从 %s 到 %s %sb%sb" % (str(self.community), self.start_date, self.end_date, self.bedroom_num, self.bathroom_num)
+        return t
 
 class HouseRent(models.Model):
     deal = models.OneToOneField(Deal, on_delete=models.CASCADE, primary_key=True)
@@ -155,7 +157,7 @@ class HouseRent(models.Model):
     note = models.TextField(null=True)
 
     def __str__(self):
-        return '%s 从 %s 开始 租期 %s %db%db %s' % (self.community.name, self.start_date, self.duration, self.bedroom_num,
+        return '%s 从 %s 开始 租期 %s %sb%sb %s' % (self.community, self.start_date, self.duration, self.bedroom_num,
                                                self.bathroom_num, self.roommate_gender)
 
 class MergeOrder(models.Model):

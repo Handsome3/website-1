@@ -75,7 +75,7 @@ def submitPost(request, type):
                 kwargs.update({'%s' % key: value})
             record = d[type](**kwargs)
             record.save()
-            deal.kw= deal.__str__()
+            deal.kw= deal.__str__().lower()
             deal.save()
         if deal:
             return JsonResponse({"deal_id": deal.id, "status": "success"})
@@ -174,7 +174,7 @@ def getLocation(request, type, locationName):
                     city = cities[0]
                 new_community = toTitleFormat(request.POST['new_community'])
                 new_address = toTitleFormat(request.POST['new_address'])
-                location = Location(name=new_community, city=city, state_id=state_id, address=new_address)
+                location = Location(name=new_community, city=city, state_id=state_id, address=new_address, is_community=True)
                 location.save()
             return location.id
         else:
