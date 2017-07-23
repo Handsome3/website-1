@@ -81,6 +81,8 @@ def submitPost(request, type):
             deal.kw= deal.__str__().lower()
             deal.save()
         if deal:
+            if type=='houserent' or type=='sublease':
+                record.community.is_community=True
             return JsonResponse({"deal_id": deal.id, "status": "success"})
         else:
             return JsonResponse({'status': 'fail'})

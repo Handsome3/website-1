@@ -66,4 +66,5 @@ urlpatterns = [
 
     #Redirect
     url(r'redirect', views.redirect),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
