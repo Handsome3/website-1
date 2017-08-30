@@ -23,22 +23,22 @@
                 <div class="my-panel">
                     <ul class="nav nav-tabs">
                         <li>
-                            <a href="/post/carpool/page">Carpool</a>
+                            <a href="/post/carpool/page", onclick="return showAlert()">Carpool</a>
                         </li>
                         <li>
-                            <a href="/post/useditem/page"> 二手宝贝</a>
+                            <a href="/post/useditem/page", onclick="return showAlert()"> 二手宝贝</a>
                         </li>
                         <li class="active">
-                            <a href="/post/sublease/page">Sublease</a>
+                            <a href="/post/sublease/page", onclick="return showAlert()">Sublease</a>
                         </li>
                         <li>
-                            <a href="/post/houserent/page">合租</a>
+                            <a href="/post/houserent/page", onclick="return showAlert()">合租</a>
                         </li>
                         <li>
-                            <a href="/post/usedcar/page">二手车</a>
+                            <a href="/post/usedcar/page", onclick="return showAlert()">二手车</a>
                         </li>
                         <li>
-                            <a href="/post/mergeorder/page">拼单</a>
+                            <a href="/post/mergeorder/page", onclick="return showAlert()">拼单</a>
                         </li>
                     </ul>
                     <form id="form" role="form" style="margin: 20px 80px" method="post" enctype="multipart/form-data">
@@ -205,6 +205,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{% static 'webapps/js/bootstrapValidator.js' %}"></script>
+<script src="{% static 'webapps/js/site.js' %}"></script>
 <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 <script>
     function getCookie(name) {
@@ -365,6 +366,16 @@
                         },
 
                     }
+                },
+                images:{
+                  validators:{
+                      file:{
+                          extension:'jpeg,jpg,png,gif,bmp',
+                          type:'image/jpeg,image/png,image/gif,image/x-ms-bmp',
+                          maxSize: 1024*1024*2,
+                          message:'只支持文件格式为jpg,png,bmp和gif且大小不超过2MB的图片'
+                      }
+                  }
                 },
                 rent: {
                     validators: {

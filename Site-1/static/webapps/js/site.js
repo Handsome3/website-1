@@ -99,3 +99,7 @@ function sendRequest(type) {
                 },
 		});
 }
+
+function showAlert(){
+    return confirm('填写信息将不会被保存，是否继续？')
+}

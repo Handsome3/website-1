@@ -379,6 +379,16 @@
                         }
                     }
                 },
+                images:{
+                  validators:{
+                      file:{
+                          extension:'jpeg,jpg,png,gif,bmp',
+                          type:'image/jpeg,image/png,image/gif,image/x-ms-bmp',
+                          maxSize: 1024*1024*2,
+                          message:'只支持文件格式为jpg,png,bmp和gif且大小不超过2MB的图片'
+                      }
+                  }
+                },
                 renewal: {
                     validators: {
                         notEmpty: {

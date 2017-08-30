@@ -45,7 +45,11 @@ def register(request):
             user=User.objects.create_user(username=username, password=password, first_name=firstname)
             userPro= UserPro(user=user, phone=phone, wechat=wechat)
             userPro.save()
-        return views.confirmaAndRedirect(request, '注册成功', '/user/loginpage')
+            user=authenticate(username=username,password=password)
+            login(request,user)
+            if request.POST.get('usecookie', '0') == '0':
+                request.session.set_expiry(0)
+            return views.confirmaAndRedirect(request, '注册成功', '/')
     return render(request, 'webapps/login.html')
 
 def userlogin(request):
